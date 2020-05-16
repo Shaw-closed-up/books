@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>模型构造 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>模型构造</h1>
+<p>让我们回顾一下在<a href="../chapter_deep-learning-basics/mlp-gluon.html">“多层感知机的简洁实现”</a>一节中含单隐藏层的多层感知机的实现方法。我们首先构造<code>Sequential</code>实例，然后依次添加两个全连接层。其中第一层的输出大小为256，即隐藏层单元个数是256；第二层的输出大小为10，即输出层单元个数是10。我们在上一章的其他
+节中也使用了<code>Sequential</code>类构造模型。这里我们介绍另外一种基于<code>Block</code>类的模型构造方法：它让模型构造更加灵活。</p>
+<h2>继承<code>Block</code>类来构造模型</h2>
+<p><code>Block</code>类是<code>nn</code>模块里提供的一个模型构造类，我们可以继承它来定义我们想要的模型。下面继承<code>Block</code>类构造本节开头提到的多层感知机。这里定义的<code>MLP</code>类重载了<code>Block</code>类的<code>__init__</code>函数和<code>forward</code>函数。它们分别用于创建模型参数和定义前向计算。前向计算也即正向传播。</p>
+<p>```{.python .input  n=1}
+from mxnet import nd
+from mxnet.gluon import nn</p>
+<p>class MLP(nn.Block):
+    # 声明带有模型参数的层，这里声明了两个全连接层
+    def <strong>init</strong>(self, <strong>kwargs):
+        # 调用MLP父类Block的构造函数来进行必要的初始化。这样在构造实例时还可以指定其他函数
+        # 参数，如“模型参数的访问、初始化和共享”一节将介绍的模型参数params
+        super(MLP, self).<strong>init</strong>(</strong>kwargs)
+        self.hidden = nn.Dense(256, activation='relu')  # 隐藏层
+        self.output = nn.Dense(10)  # 输出层</p>
+<pre><code># 定义模型的前向计算，即如何根据输入x计算返回所需要的模型输出
+def forward(self, x):
+    return self.output(self.hidden(x))
+</code></pre>
+<pre><code>
+以上的`MLP`类中无须定义反向传播函数。系统将通过自动求梯度而自动生成反向传播所需的`backward`函数。
+
+我们可以实例化`MLP`类得到模型变量`net`。下面的代码初始化`net`并传入输入数据`X`做一次前向计算。其中，`net(X)`会调用`MLP`继承自`Block`类的`__call__`函数，这个函数将调用`MLP`类定义的`forward`函数来完成前向计算。
+
+```{.python .input  n=2}
+X = nd.random.uniform(shape=(2, 20))
+net = MLP()
+net.initialize()
+net(X)
+</code></pre>
+
+<p>注意，这里并没有将<code>Block</code>类命名为<code>Layer</code>（层）或者<code>Model</code>（模型）之类的名字，这是因为该类是一个可供自由组建的部件。它的子类既可以是一个层（如Gluon提供的<code>Dense</code>类），又可以是一个模型（如这里定义的<code>MLP</code>类），或者是模型的一个部分。我们下面通过两个例子来展示它的灵活性。</p>
+<h2><code>Sequential</code>类继承自<code>Block</code>类</h2>
+<p>我们刚刚提到，<code>Block</code>类是一个通用的部件。事实上，<code>Sequential</code>类继承自<code>Block</code>类。当模型的前向计算为简单串联各个层的计算时，可以通过更加简单的方式定义模型。这正是<code>Sequential</code>类的目的：它提供<code>add</code>函数来逐一添加串联的<code>Block</code>子类实例，而模型的前向计算就是将这些实例按添加的顺序逐一计算。</p>
+<p>下面我们实现一个与<code>Sequential</code>类有相同功能的<code>MySequential</code>类。这或许可以帮助读者更加清晰地理解<code>Sequential</code>类的工作机制。</p>
+<p>```{.python .input  n=3}
+class MySequential(nn.Block):
+    def <strong>init</strong>(self, <strong>kwargs):
+        super(MySequential, self).<strong>init</strong>(</strong>kwargs)</p>
+<pre><code>def add(self, block):
+    # block是一个Block子类实例，假设它有一个独一无二的名字。我们将它保存在Block类的
+    # 成员变量_children里，其类型是OrderedDict。当MySequential实例调用
+    # initialize函数时，系统会自动对_children里所有成员初始化
+    self._children[block.name] = block
+
+def forward(self, x):
+    # OrderedDict保证会按照成员添加时的顺序遍历成员
+    for block in self._children.values():
+        x = block(x)
+    return x
+</code></pre>
+<pre><code>
+我们用`MySequential`类来实现前面描述的`MLP`类，并使用随机初始化的模型做一次前向计算。
+
+```{.python .input  n=4}
+net = MySequential()
+net.add(nn.Dense(256, activation='relu'))
+net.add(nn.Dense(10))
+net.initialize()
+net(X)
+</code></pre>
+
+<p>可以观察到这里<code>MySequential</code>类的使用跟<a href="../chapter_deep-learning-basics/mlp-gluon.html">“多层感知机的简洁实现”</a>一节中<code>Sequential</code>类的使用没什么区别。</p>
+<h2>构造复杂的模型</h2>
+<p>虽然<code>Sequential</code>类可以使模型构造更加简单，且不需要定义<code>forward</code>函数，但直接继承<code>Block</code>类可以极大地拓展模型构造的灵活性。下面我们构造一个稍微复杂点的网络<code>FancyMLP</code>。在这个网络中，我们通过<code>get_constant</code>函数创建训练中不被迭代的参数，即常数参数。在前向计算中，除了使用创建的常数参数外，我们还使用<code>NDArray</code>的函数和Python的控制流，并多次调用相同的层。</p>
+<p>```{.python .input  n=5}
+class FancyMLP(nn.Block):
+    def <strong>init</strong>(self, <strong>kwargs):
+        super(FancyMLP, self).<strong>init</strong>(</strong>kwargs)
+        # 使用get_constant创建的随机权重参数不会在训练中被迭代（即常数参数）
+        self.rand_weight = self.params.get_constant(
+            'rand_weight', nd.random.uniform(shape=(20, 20)))
+        self.dense = nn.Dense(20, activation='relu')</p>
+<pre><code>def forward(self, x):
+    x = self.dense(x)
+    # 使用创建的常数参数，以及NDArray的relu函数和dot函数
+    x = nd.relu(nd.dot(x, self.rand_weight.data()) + 1)
+    # 复用全连接层。等价于两个全连接层共享参数
+    x = self.dense(x)
+    # 控制流，这里我们需要调用asscalar函数来返回标量进行比较
+    while x.norm().asscalar() &gt; 1:
+        x /= 2
+    if x.norm().asscalar() &lt; 0.8:
+        x *= 10
+    return x.sum()
+</code></pre>
+<pre><code>
+在这个`FancyMLP`模型中，我们使用了常数权重`rand_weight`（注意它不是模型参数）、做了矩阵乘法操作（`nd.dot`）并重复使用了相同的`Dense`层。下面我们来测试该模型的随机初始化和前向计算。
+
+```{.python .input  n=6}
+net = FancyMLP()
+net.initialize()
+net(X)
+</code></pre>
+
+<p>因为<code>FancyMLP</code>和<code>Sequential</code>类都是<code>Block</code>类的子类，所以我们可以嵌套调用它们。</p>
+<p>```{.python .input  n=7}
+class NestMLP(nn.Block):
+    def <strong>init</strong>(self, <strong>kwargs):
+        super(NestMLP, self).<strong>init</strong>(</strong>kwargs)
+        self.net = nn.Sequential()
+        self.net.add(nn.Dense(64, activation='relu'),
+                     nn.Dense(32, activation='relu'))
+        self.dense = nn.Dense(16, activation='relu')</p>
+<pre><code>def forward(self, x):
+    return self.dense(self.net(x))
+</code></pre>
+<p>net = nn.Sequential()
+net.add(NestMLP(), nn.Dense(20), FancyMLP())</p>
+<p>net.initialize()
+net(X)
+```</p>
+<h2>小结</h2>
+<ul>
+<li>可以通过继承<code>Block</code>类来构造模型。</li>
+<li><code>Sequential</code>类继承自<code>Block</code>类。</li>
+<li>虽然<code>Sequential</code>类可以使模型构造更加简单，但直接继承<code>Block</code>类可以极大地拓展模型构造的灵活性。</li>
+</ul>
+<h2>练习</h2>
+<ul>
+<li>如果不在<code>MLP</code>类的<code>__init__</code>函数里调用父类的<code>__init__</code>函数，会出现什么样的错误信息？</li>
+<li>如果去掉<code>FancyMLP</code>类里面的<code>asscalar</code>函数，会有什么问题？</li>
+<li>如果将<code>NestMLP</code>类中通过<code>Sequential</code>实例定义的<code>self.net</code>改为<code>self.net = [nn.Dense(64, activation='relu'), nn.Dense(32, activation='relu')]</code>，会有什么问题？</li>
+</ul>
+<h2>扫码直达<a href="https://discuss.gluon.ai/t/topic/986">讨论区</a></h2>
+<p><img alt="" src="../img/qr_model-construction.svg" /></p>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

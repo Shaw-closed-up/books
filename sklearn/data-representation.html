@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>sklearn 数据表示 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  <li><a href="./index.html"> 如何学习本课程</a></li>
+<li><a href="./intro.html"> sklearn简介</a></li>
+<li><a href="./setup.html"> sklearn安装</a></li>
+<li><a href="./modelling.html"> sklearn建模过程</a></li>
+<li><a href="./data-representation.html"> sklearn数据表示</a></li>
+<li><a href="./estimator.html"> sklearn估算器</a></li>
+<li><a href="./conventions.html"> sklearn约定</a></li>
+<li><a href="./linear.html"> sklearn线性建模之线性回归</a></li>
+<li><a href="./logistic.html"> sklearn线性建模之逻辑回归</a></li>
+<li><a href="./ridge.html"> sklearn线性建模之岭回归</a></li>
+<li><a href="./bayes.html"> sklearn线性建模之贝叶斯岭回归</a></li>
+<li><a href="./sgd.html"> sklearn随机梯度下降(SGD)</a></li>
+<li><a href="./svm.html"> sklearn支持向量机(SVM)</a></li>
+<li><a href="./knn.html"> sklearnK近邻(KNN)</a></li>
+<li><a href="./nbc.html"> sklearn朴素贝叶斯分类(NBC)</a></li>
+<li><a href="./dt.html"> sklearn决策树(DT)</a></li>
+<li><a href="./rf.html"> sklearn随机决策树(RF)</a></li>
+<li><a href="./cluster.html"> skelarn聚类(cluster)</a></li>
+<li><a href="./pca.html"> sklearn降维(PCA)</a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>sklearn 数据表示</h1>
+<p>学习即将根据数据创建模型。为此，计算机必须首先了解数据。接下来，我们将讨论表示数据的各种方式，以便计算机可以理解-</p>
+<p>在Scikit学习中表示数据的最佳方法是表格。表格表示数据的二维网格，其中行表示数据集的各个元素，列表示与这些单个元素相关的数量。</p>
+<h3>例</h3>
+<p>通过下面给出的示例，我们可以借助python <strong><em>sklearn</em></strong>库以Pandas DataFrame的形式下载<strong>*IRIS数据集*</strong>。</p>
+<pre><code class="python">from sklearn import datasets
+iris = datasets.load_iris()
+iris.head()
+</code></pre>
+
+<p>从上面的输出中，我们可以看到数据的每一行代表一个观察到的花朵，行数代表数据集中的花朵总数。通常，我们将矩阵的行称为样本。</p>
+<p>另一方面，数据的每一列代表描述每个样品的定量信息。通常，我们将矩阵的列称为特征。</p>
+<h2>数据作为特征矩阵</h2>
+<p>特征矩阵可以定义为表格布局，其中信息可以被认为是二维矩阵。它存储在名为<strong>X</strong>的变量中，并假定是二维的，形状为[n_samples，n_features]。通常，它包含在NumPy数组或Pandas DataFrame中。如前所述，样本始终代表数据集描述的单个对象，而要素代表以定量方式描述每个样本的不同观察结果。</p>
+<h2>数据作为目标数组</h2>
+<p>除了用X表示的功能矩阵外，我们还有目标数组。也称为标签。用y表示。标签或目标数组通常是一维，长度为n_samples。它通常包含在NumPy <strong><em>数组</em></strong>或Pandas <strong><em>系列中</em></strong>。目标数组可以同时具有值，连续数值和离散值。</p>
+<h3>目标数组与功能列有何不同？</h3>
+<p>我们可以通过一点来区分两者，即目标数组通常是我们要从数据中预测的数量，即，从统计角度来说，它是因变量。</p>
+<h3>例</h3>
+<p>在下面的示例中，我们从IRIS数据集中基于其他测量值来预测花朵的种类。在这种情况下，“种类”列将被视为要素。</p>
+<pre><code class="python">%matplotlib inline
+import seaborn as sns
+import pandas as pd
+
+iris = pd.read_csv('/share/datasets/seaborn-data/iris.csv')
+sns.set()
+
+#画图时间较久，需要稍等半分钟左右
+sns.pairplot(iris, hue='species', height=3);
+</code></pre>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>5.1 二维卷积层 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  
+    <li>简介</li>
+    <li><a href="/d2l-pytorch/chapter01_DL-intro/deep-learning-intro.html">1. 深度学习简介</a></li>
+    <li>预备知识</li>
+    <li><a href="/d2l-pytorch/chapter02_prerequisite/2.1_install.html">2.1 环境配置</a></li>
+    <li><a href="/d2l-pytorch/chapter02_prerequisite/2.2_tensor.html">2.2 数据操作</a></li>
+    <a href="/d2l-pytorch/chapter02_prerequisite/2.3_autograd.html">2.3 自动求梯度</a></li>
+    <li>深度学习基础</li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.1_linear-regression.html">3.1 线性回归</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.2_linear-regression-scratch.html">3.2 线性回归的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.3_linear-regression-pytorch.html">3.3 线性回归的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.4_softmax-regression.html">3.4 softmax回归</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.5_fashion-mnist.html">3.5 图像分类数据集（Fashion-MNIST）</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.6_softmax-regression-scratch.html">3.6 softmax回归的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.7_softmax-regression-pytorch.html">3.7 softmax回归的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.8_mlp.html">3.8 多层感知机</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.9_mlp-scratch.html">3.9 多层感知机的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.10_mlp-pytorch.html">3.10 多层感知机的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.11_underfit-overfit.html">3.11 模型选择、欠拟合和过拟合</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.12_weight-decay.html">3.12 权重衰减</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.13_dropout.html">3.13 丢弃法</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.14_backprop.html">3.14 正向传播、反向传播和计算图</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.15_numerical-stability-and-init.html">3.15 数值稳定性和模型初始化</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.16_kaggle-house-price.html">3.16 实战Kaggle比赛：房价预测</a></li>
+    <li>深度学习计算</li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.1_model-construction.html">4.1 模型构造</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.2_parameters.html">4.2 模型参数的访问、初始化和共享</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.3_deferred-init.html">4.3 模型参数的延后初始化</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.4_custom-layer.html">4.4 自定义层</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.5_read-write.html">4.5 读取和存储</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.6_use-gpu.html">4.6 GPU计算</a></li>
+    <li>卷积神经网络</li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.1_conv-layer.html">5.1 二维卷积层</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.2_padding-and-strides.html">5.2 填充和步幅</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.3_channels.html">5.3 多输入通道和多输出通道</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.4_pooling.html">5.4 池化层</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.5_lenet.html">5.5 卷积神经网络（LeNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.6_alexnet.html">5.6 深度卷积神经网络（AlexNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.7_vgg.html">5.7 使用重复元素的网络（VGG）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.8_nin.html">5.8 网络中的网络（NiN）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.9_googlenet.html">5.9 含并行连结的网络（GoogLeNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.10_batch-norm.html">5.10 批量归一化</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.11_resnet.html">5.11 残差网络（ResNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.12_densenet.html">5.12 稠密连接网络（DenseNet）</a></li>
+    <li>循环神经网络</li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.1_lang-model.html">6.1 语言模型</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.2_rnn.html">6.2 循环神经网络</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.3_lang-model-dataset.html">6.3 语言模型数据集（周杰伦专辑歌词）</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.4_rnn-scratch.html">6.4 循环神经网络的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.5_rnn-pytorch.html">6.5 循环神经网络的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.6_bptt.html">6.6 通过时间反向传播</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.7_gru.html">6.7 门控循环单元（GRU）</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.8_lstm.html">6.8 长短期记忆（LSTM）</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.9_deep-rnn.html">6.9 深度循环神经网络</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.10_bi-rnn.html">6.10 双向循环神经网络</a></li>
+    <li>优化算法</li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.1_optimization-intro.html">7.1 优化与深度学习</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.2_gd-sgd.html">7.2 梯度下降和随机梯度下降</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.3_minibatch-sgd.html">7.3 小批量随机梯度下降</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.4_momentum.html">7.4 动量法</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.5_adagrad.html">7.5 AdaGrad算法</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.6_rmsprop.html">7.6 RMSProp算法</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.7_adadelta.html">7.7 AdaDelta算法</a></li>
+    <a href="/d2l-pytorch/chapter07_optimization/7.8_adam.html">7.8 Adam算法</a></li>
+    <li>计算性能</li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.1_hybridize.html">8.1 命令式和符号式混合编程</a></li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.2_async-computation.html">8.2 异步计算</a></li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.3_auto-parallelism.html">8.3 自动并行计算</a></li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.4_multiple-gpus.html">8.4 多GPU计算</a></li>
+    <li>计算机视觉</li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.1_image-augmentation.html">9.1 图像增广</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.2_fine-tuning.html">9.2 微调</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.3_bounding-box.html">9.3 目标检测和边界框</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.4_anchor.html">9.4 锚框</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.5_multiscale-object-detection.html">9.5 多尺度目标检测</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.6_object-detection-dataset.html">9.6 目标检测数据集（皮卡丘）</a></li>
+    <li>9.7 单发多框检测（SSD）</li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.8_rcnn.html">9.8 区域卷积神经网络（R-CNN）系列</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.9_semantic-segmentation-and-dataset.html">9.9 语义分割和数据集</a></li>
+    <li>9.10 全卷积网络（FCN）</li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.11_neural-style.html">9.11 样式迁移</a></li>
+    <li>9.12 实战Kaggle比赛：图像分类（CIFAR-10）</li>
+    <li>9.13 实战Kaggle比赛：狗的品种识别（ImageNet Dogs）<li>
+    <li>自然语言处理</li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.1_word2vec.html">10.1 词嵌入（word2vec）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.2_approx-training.html">10.2 近似训练</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.3_word2vec-pytorch.html">10.3 word2vec的实现</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.4_fasttext.html">10.4 子词嵌入（fastText）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.5_glove.html">10.5 全局向量的词嵌入（GloVe）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.6_similarity-analogy.html">10.6 求近义词和类比词</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.7_sentiment-analysis-rnn.html">10.7 文本情感分类：使用循环神经网络</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.8_sentiment-analysis-cnn.html">10.8 文本情感分类：使用卷积神经网络（textCNN）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.9_seq2seq.html">10.9 编码器—解码器（seq2seq）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.10_beam-search.html">10.10 束搜索</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.11_attention.html">10.11 注意力机制</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.12_machine-translation.html">10.12 机器翻译</a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>5.1 二维卷积层</h1>
+<p>卷积神经网络（convolutional neural network）是含有卷积层（convolutional layer）的神经网络。本章中介绍的卷积神经网络均使用最常见的二维卷积层。它有高和宽两个空间维度，常用来处理图像数据。本节中，我们将介绍简单形式的二维卷积层的工作原理。</p>
+<h2>5.1.1 二维互相关运算</h2>
+<p>虽然卷积层得名于卷积（convolution）运算，但我们通常在卷积层中使用更加直观的互相关（cross-correlation）运算。在二维卷积层中，一个二维输入数组和一个二维核（kernel）数组通过互相关运算输出一个二维数组。
+我们用一个具体例子来解释二维互相关运算的含义。如图5.1所示，输入是一个高和宽均为3的二维数组。我们将该数组的形状记为$3 \times 3$或（3，3）。核数组的高和宽分别为2。该数组在卷积计算中又称卷积核或过滤器（filter）。卷积核窗口（又称卷积窗口）的形状取决于卷积核的高和宽，即$2 \times 2$。图5.1中的阴影部分为第一个输出元素及其计算所使用的输入和核数组元素：$0\times0+1\times1+3\times2+4\times3=19$。</p>
+<div align=center>
+<img width="250" src="../img/chapter05/5.1_correlation.svg"/>
+</div>
+
+<div align=center>图5.1 二维互相关运算</div>
+
+<p>在二维互相关运算中，卷积窗口从输入数组的最左上方开始，按从左往右、从上往下的顺序，依次在输入数组上滑动。当卷积窗口滑动到某一位置时，窗口中的输入子数组与核数组按元素相乘并求和，得到输出数组中相应位置的元素。图5.1中的输出数组高和宽分别为2，其中的4个元素由二维互相关运算得出：</p>
+<p>$$
+0\times0+1\times1+3\times2+4\times3=19,\
+1\times0+2\times1+4\times2+5\times3=25,\
+3\times0+4\times1+6\times2+7\times3=37,\
+4\times0+5\times1+7\times2+8\times3=43.\
+$$</p>
+<p>下面我们将上述过程实现在<code>corr2d</code>函数里。它接受输入数组<code>X</code>与核数组<code>K</code>，并输出数组<code>Y</code>。</p>
+<pre><code class="python">import torch 
+from torch import nn
+
+def corr2d(X, K):  # 本函数已保存在d2lzh_pytorch包中方便以后使用
+    h, w = K.shape
+    Y = torch.zeros((X.shape[0] - h + 1, X.shape[1] - w + 1))
+    for i in range(Y.shape[0]):
+        for j in range(Y.shape[1]):
+            Y[i, j] = (X[i: i + h, j: j + w] * K).sum()
+    return Y
+</code></pre>
+
+<p>我们可以构造图5.1中的输入数组<code>X</code>、核数组<code>K</code>来验证二维互相关运算的输出。</p>
+<pre><code class="python">X = torch.tensor([[0, 1, 2], [3, 4, 5], [6, 7, 8]])
+K = torch.tensor([[0, 1], [2, 3]])
+corr2d(X, K)
+</code></pre>
+
+<p>输出：</p>
+<pre><code>tensor([[19., 25.],
+        [37., 43.]])
+</code></pre>
+
+<h2>5.1.2 二维卷积层</h2>
+<p>二维卷积层将输入和卷积核做互相关运算，并加上一个标量偏差来得到输出。卷积层的模型参数包括了卷积核和标量偏差。在训练模型的时候，通常我们先对卷积核随机初始化，然后不断迭代卷积核和偏差。</p>
+<p>下面基于<code>corr2d</code>函数来实现一个自定义的二维卷积层。在构造函数<code>__init__</code>里我们声明<code>weight</code>和<code>bias</code>这两个模型参数。前向计算函数<code>forward</code>则是直接调用<code>corr2d</code>函数再加上偏差。</p>
+<pre><code class="python">class Conv2D(nn.Module):
+    def __init__(self, kernel_size):
+        super(Conv2D, self).__init__()
+        self.weight = nn.Parameter(torch.randn(kernel_size))
+        self.bias = nn.Parameter(torch.randn(1))
+
+    def forward(self, x):
+        return corr2d(x, self.weight) + self.bias
+</code></pre>
+
+<p>卷积窗口形状为$p \times q$的卷积层称为$p \times q$卷积层。同样，$p \times q$卷积或$p \times q$卷积核说明卷积核的高和宽分别为$p$和$q$。</p>
+<h2>5.1.3 图像中物体边缘检测</h2>
+<p>下面我们来看一个卷积层的简单应用：检测图像中物体的边缘，即找到像素变化的位置。首先我们构造一张$6\times 8$的图像（即高和宽分别为6像素和8像素的图像）。它中间4列为黑（0），其余为白（1）。</p>
+<pre><code class="python">X = torch.ones(6, 8)
+X[:, 2:6] = 0
+X
+</code></pre>
+
+<p>输出：</p>
+<pre><code>tensor([[1., 1., 0., 0., 0., 0., 1., 1.],
+        [1., 1., 0., 0., 0., 0., 1., 1.],
+        [1., 1., 0., 0., 0., 0., 1., 1.],
+        [1., 1., 0., 0., 0., 0., 1., 1.],
+        [1., 1., 0., 0., 0., 0., 1., 1.],
+        [1., 1., 0., 0., 0., 0., 1., 1.]])
+</code></pre>
+
+<p>然后我们构造一个高和宽分别为1和2的卷积核<code>K</code>。当它与输入做互相关运算时，如果横向相邻元素相同，输出为0；否则输出为非0。</p>
+<pre><code class="python">K = torch.tensor([[1, -1]])
+</code></pre>
+
+<p>下面将输入<code>X</code>和我们设计的卷积核<code>K</code>做互相关运算。可以看出，我们将从白到黑的边缘和从黑到白的边缘分别检测成了1和-1。其余部分的输出全是0。</p>
+<pre><code class="python">Y = corr2d(X, K)
+Y
+</code></pre>
+
+<p>输出：</p>
+<pre><code>tensor([[ 0.,  1.,  0.,  0.,  0., -1.,  0.],
+        [ 0.,  1.,  0.,  0.,  0., -1.,  0.],
+        [ 0.,  1.,  0.,  0.,  0., -1.,  0.],
+        [ 0.,  1.,  0.,  0.,  0., -1.,  0.],
+        [ 0.,  1.,  0.,  0.,  0., -1.,  0.],
+        [ 0.,  1.,  0.,  0.,  0., -1.,  0.]])
+</code></pre>
+
+<p>由此，我们可以看出，卷积层可通过重复使用卷积核有效地表征局部空间。</p>
+<h2>5.1.4 通过数据学习核数组</h2>
+<p>最后我们来看一个例子，它使用物体边缘检测中的输入数据<code>X</code>和输出数据<code>Y</code>来学习我们构造的核数组<code>K</code>。我们首先构造一个卷积层，其卷积核将被初始化成随机数组。接下来在每一次迭代中，我们使用平方误差来比较<code>Y</code>和卷积层的输出，然后计算梯度来更新权重。</p>
+<pre><code class="python"># 构造一个核数组形状是(1, 2)的二维卷积层
+conv2d = Conv2D(kernel_size=(1, 2))
+
+step = 20
+lr = 0.01
+for i in range(step):
+    Y_hat = conv2d(X)
+    l = ((Y_hat - Y) ** 2).sum()
+    l.backward()
+
+    # 梯度下降
+    conv2d.weight.data -= lr * conv2d.weight.grad
+    conv2d.bias.data -= lr * conv2d.bias.grad
+
+    # 梯度清0
+    conv2d.weight.grad.fill_(0)
+    conv2d.bias.grad.fill_(0)
+    if (i + 1) % 5 == 0:
+        print('Step %d, loss %.3f' % (i + 1, l.item()))
+</code></pre>
+
+<p>输出：</p>
+<pre><code>Step 5, loss 1.844
+Step 10, loss 0.206
+Step 15, loss 0.023
+Step 20, loss 0.003
+</code></pre>
+
+<p>可以看到，20次迭代后误差已经降到了一个比较小的值。现在来看一下学习到的卷积核的参数。</p>
+<pre><code class="python">print(&quot;weight: &quot;, conv2d.weight.data)
+print(&quot;bias: &quot;, conv2d.bias.data)
+</code></pre>
+
+<p>输出：</p>
+<pre><code>
+weight:  tensor([[ 0.9948, -1.0092]])
+bias:  tensor([0.0080])
+</code></pre>
+
+<p>可以看到，学到的卷积核的权重参数与我们之前定义的核数组<code>K</code>较接近，而偏置参数接近0。</p>
+<h2>5.1.5 互相关运算和卷积运算</h2>
+<p>实际上，卷积运算与互相关运算类似。<strong>为了得到卷积运算的输出，我们只需将核数组左右翻转并上下翻转，再与输入数组做互相关运算</strong>。可见，卷积运算和互相关运算虽然类似，但如果它们使用相同的核数组，对于同一个输入，输出往往并不相同。</p>
+<p>那么，你也许会好奇卷积层为何能使用互相关运算替代卷积运算。其实，在深度学习中核数组都是学出来的：卷积层无论使用互相关运算或卷积运算都不影响模型预测时的输出。为了解释这一点，假设卷积层使用互相关运算学出图5.1中的核数组。设其他条件不变，使用卷积运算学出的核数组即图5.1中的核数组按上下、左右翻转。也就是说，图5.1中的输入与学出的已翻转的核数组再做卷积运算时，依然得到图5.1中的输出。为了与大多数深度学习文献一致，如无特别说明，本书中提到的卷积运算均指互相关运算。</p>
+<blockquote>
+<p>注：感觉深度学习中的卷积运算实际上是互相关运算是个面试题考点。</p>
+</blockquote>
+<h2>5.1.6 特征图和感受野</h2>
+<p>二维卷积层输出的二维数组可以看作是输入在空间维度（宽和高）上某一级的表征，也叫特征图（feature map）。影响元素$x$的前向计算的所有可能输入区域（可能大于输入的实际尺寸）叫做$x$的感受野（receptive field）。以图5.1为例，输入中阴影部分的四个元素是输出中阴影部分元素的感受野。我们将图5.1中形状为$2 \times 2$的输出记为$Y$，并考虑一个更深的卷积神经网络：将$Y$与另一个形状为$2 \times 2$的核数组做互相关运算，输出单个元素$z$。那么，$z$在$Y$上的感受野包括$Y$的全部四个元素，在输入上的感受野包括其中全部9个元素。可见，我们可以通过更深的卷积神经网络使特征图中单个元素的感受野变得更加广阔，从而捕捉输入上更大尺寸的特征。</p>
+<p>我们常使用“元素”一词来描述数组或矩阵中的成员。在神经网络的术语中，这些元素也可称为“单元”。当含义明确时，本书不对这两个术语做严格区分。</p>
+<h2>小结</h2>
+<ul>
+<li>二维卷积层的核心计算是二维互相关运算。在最简单的形式下，它对二维输入数据和卷积核做互相关运算然后加上偏差。</li>
+<li>我们可以设计卷积核来检测图像中的边缘。</li>
+<li>我们可以通过数据来学习卷积核。</li>
+</ul>
+<hr />
+<blockquote>
+<p>注：除代码外本节与原书此节基本相同，<a href="https://zh.d2l.ai/chapter_convolutional-neural-networks/conv-layer.html">原书传送门</a></p>
+</blockquote>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

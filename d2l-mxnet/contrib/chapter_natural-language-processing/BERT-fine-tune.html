@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>通过下游任务微调BERT - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>通过下游任务微调BERT</h1>
+<p>在“双向语言表征模型（BERT）”章节中，我们提到BERT在预训练阶段完成后，如果要适用于广泛的任务时，只需要一个额外的输出层，就可以对预训练的 BERT表示进行微调，从而无需对特定于任务进行大量模型结构的修改。
+在这一节我们将介绍如何将BERT接入下游任务，并通过下游任务微调BERT。</p>
+<h2>下游任务接入方式</h2>
+<p>在获得训练好的BERT后，最终只需在BERT的输出层上加简单的多层感知机或线性分类器即可。</p>
+<h3>单句分类任务</h3>
+<p>单句分类任务如情感分析、文本分类。</p>
+<blockquote>
+<p>输入：This movie is great. 
+标签：积极</p>
+</blockquote>
+<p>直接取“[CLS]”位置的输出表示接入全连接层作为输出。</p>
+<p><img alt="单句分类任务" src="../img/bert_single_sentence.svg" /></p>
+<h3>句对分类任务</h3>
+<p>句对分类任务如自然语言推理。</p>
+<blockquote>
+<p>前提：Two blond women are hugging one another.
+假设：There are women showing affection.
+关系：蕴含 （展示爱意可以由互相拥抱推理得出）</p>
+</blockquote>
+<p>需要将两个句子拼接，在每个句子的结束位置加入“[SEP]”标记，最终取“[CLS]”位置的输出表示接入全连接层作为输出。</p>
+<p><img alt="句对分类任务" src="../img/bert_sentence_pair.svg" /></p>
+<h3>问答任务</h3>
+<p>问答是指给定问题和描述文本，这是从描述文本中找到答案。
+对于问答这种抽取式任务，取第二个句子每个位置的输出表示作为下游任务的输入。</p>
+<blockquote>
+<p>文本：Input_0: KDD 2019 is held in Anchorage
+问题: Where is KDD held
+输出: 在文本中标定“Anchorage”</p>
+</blockquote>
+<p><img alt="问答任务" src="../img/bert_question_answering.svg" /></p>
+<h3>序列标注任务</h3>
+<p>序列标注任务如命名实体识别，确定一个词是否是命名实体，例如人员，组织和位置。</p>
+<p>取除了特殊标记外其他位置的输出表示接入全连接层作为输出。</p>
+<blockquote>
+<p>输入: Jim bought 3000 shares of Amazon in 2006.
+输出: [person]              [organization] [time]</p>
+</blockquote>
+<p><img alt="序列标注任务" src="../img/bert_named_entity_recognition.svg" /></p>
+<h2>小结</h2>
+<ul>
+<li>只需在BERT的输出层上加简单的多层感知机或线性分类器即可接入下游任务。</li>
+<li>单句分类任务和句对分类任务取“[CLS]”位置的输出表示接入全连接层作为输出。</li>
+<li>问答任务取第二个句子每个位置的输出表示作为下游任务的输入。</li>
+<li>序列标注任务取除了特殊标记外其他位置的输出表示接入全连接层作为输出。</li>
+</ul>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

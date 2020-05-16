@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>7.4 动量法 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  
+    <li>简介</li>
+    <li><a href="/d2l-pytorch/chapter01_DL-intro/deep-learning-intro.html">1. 深度学习简介</a></li>
+    <li>预备知识</li>
+    <li><a href="/d2l-pytorch/chapter02_prerequisite/2.1_install.html">2.1 环境配置</a></li>
+    <li><a href="/d2l-pytorch/chapter02_prerequisite/2.2_tensor.html">2.2 数据操作</a></li>
+    <a href="/d2l-pytorch/chapter02_prerequisite/2.3_autograd.html">2.3 自动求梯度</a></li>
+    <li>深度学习基础</li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.1_linear-regression.html">3.1 线性回归</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.2_linear-regression-scratch.html">3.2 线性回归的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.3_linear-regression-pytorch.html">3.3 线性回归的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.4_softmax-regression.html">3.4 softmax回归</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.5_fashion-mnist.html">3.5 图像分类数据集（Fashion-MNIST）</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.6_softmax-regression-scratch.html">3.6 softmax回归的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.7_softmax-regression-pytorch.html">3.7 softmax回归的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.8_mlp.html">3.8 多层感知机</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.9_mlp-scratch.html">3.9 多层感知机的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.10_mlp-pytorch.html">3.10 多层感知机的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.11_underfit-overfit.html">3.11 模型选择、欠拟合和过拟合</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.12_weight-decay.html">3.12 权重衰减</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.13_dropout.html">3.13 丢弃法</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.14_backprop.html">3.14 正向传播、反向传播和计算图</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.15_numerical-stability-and-init.html">3.15 数值稳定性和模型初始化</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.16_kaggle-house-price.html">3.16 实战Kaggle比赛：房价预测</a></li>
+    <li>深度学习计算</li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.1_model-construction.html">4.1 模型构造</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.2_parameters.html">4.2 模型参数的访问、初始化和共享</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.3_deferred-init.html">4.3 模型参数的延后初始化</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.4_custom-layer.html">4.4 自定义层</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.5_read-write.html">4.5 读取和存储</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.6_use-gpu.html">4.6 GPU计算</a></li>
+    <li>卷积神经网络</li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.1_conv-layer.html">5.1 二维卷积层</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.2_padding-and-strides.html">5.2 填充和步幅</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.3_channels.html">5.3 多输入通道和多输出通道</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.4_pooling.html">5.4 池化层</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.5_lenet.html">5.5 卷积神经网络（LeNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.6_alexnet.html">5.6 深度卷积神经网络（AlexNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.7_vgg.html">5.7 使用重复元素的网络（VGG）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.8_nin.html">5.8 网络中的网络（NiN）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.9_googlenet.html">5.9 含并行连结的网络（GoogLeNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.10_batch-norm.html">5.10 批量归一化</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.11_resnet.html">5.11 残差网络（ResNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.12_densenet.html">5.12 稠密连接网络（DenseNet）</a></li>
+    <li>循环神经网络</li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.1_lang-model.html">6.1 语言模型</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.2_rnn.html">6.2 循环神经网络</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.3_lang-model-dataset.html">6.3 语言模型数据集（周杰伦专辑歌词）</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.4_rnn-scratch.html">6.4 循环神经网络的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.5_rnn-pytorch.html">6.5 循环神经网络的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.6_bptt.html">6.6 通过时间反向传播</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.7_gru.html">6.7 门控循环单元（GRU）</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.8_lstm.html">6.8 长短期记忆（LSTM）</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.9_deep-rnn.html">6.9 深度循环神经网络</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.10_bi-rnn.html">6.10 双向循环神经网络</a></li>
+    <li>优化算法</li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.1_optimization-intro.html">7.1 优化与深度学习</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.2_gd-sgd.html">7.2 梯度下降和随机梯度下降</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.3_minibatch-sgd.html">7.3 小批量随机梯度下降</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.4_momentum.html">7.4 动量法</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.5_adagrad.html">7.5 AdaGrad算法</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.6_rmsprop.html">7.6 RMSProp算法</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.7_adadelta.html">7.7 AdaDelta算法</a></li>
+    <a href="/d2l-pytorch/chapter07_optimization/7.8_adam.html">7.8 Adam算法</a></li>
+    <li>计算性能</li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.1_hybridize.html">8.1 命令式和符号式混合编程</a></li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.2_async-computation.html">8.2 异步计算</a></li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.3_auto-parallelism.html">8.3 自动并行计算</a></li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.4_multiple-gpus.html">8.4 多GPU计算</a></li>
+    <li>计算机视觉</li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.1_image-augmentation.html">9.1 图像增广</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.2_fine-tuning.html">9.2 微调</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.3_bounding-box.html">9.3 目标检测和边界框</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.4_anchor.html">9.4 锚框</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.5_multiscale-object-detection.html">9.5 多尺度目标检测</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.6_object-detection-dataset.html">9.6 目标检测数据集（皮卡丘）</a></li>
+    <li>9.7 单发多框检测（SSD）</li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.8_rcnn.html">9.8 区域卷积神经网络（R-CNN）系列</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.9_semantic-segmentation-and-dataset.html">9.9 语义分割和数据集</a></li>
+    <li>9.10 全卷积网络（FCN）</li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.11_neural-style.html">9.11 样式迁移</a></li>
+    <li>9.12 实战Kaggle比赛：图像分类（CIFAR-10）</li>
+    <li>9.13 实战Kaggle比赛：狗的品种识别（ImageNet Dogs）<li>
+    <li>自然语言处理</li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.1_word2vec.html">10.1 词嵌入（word2vec）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.2_approx-training.html">10.2 近似训练</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.3_word2vec-pytorch.html">10.3 word2vec的实现</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.4_fasttext.html">10.4 子词嵌入（fastText）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.5_glove.html">10.5 全局向量的词嵌入（GloVe）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.6_similarity-analogy.html">10.6 求近义词和类比词</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.7_sentiment-analysis-rnn.html">10.7 文本情感分类：使用循环神经网络</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.8_sentiment-analysis-cnn.html">10.8 文本情感分类：使用卷积神经网络（textCNN）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.9_seq2seq.html">10.9 编码器—解码器（seq2seq）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.10_beam-search.html">10.10 束搜索</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.11_attention.html">10.11 注意力机制</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.12_machine-translation.html">10.12 机器翻译</a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>7.4 动量法</h1>
+<p>在7.2节（梯度下降和随机梯度下降）中我们提到，目标函数有关自变量的梯度代表了目标函数在自变量当前位置下降最快的方向。因此，梯度下降也叫作最陡下降（steepest descent）。在每次迭代中，梯度下降根据自变量当前位置，沿着当前位置的梯度更新自变量。然而，如果自变量的迭代方向仅仅取决于自变量当前位置，这可能会带来一些问题。</p>
+<h2>7.4.1 梯度下降的问题</h2>
+<p>让我们考虑一个输入和输出分别为二维向量$\boldsymbol{x} = [x_1, x_2]^\top$和标量的目标函数$f(\boldsymbol{x})=0.1x_1^2+2x_2^2$。与7.2节中不同，这里将$x_1^2$系数从$1$减小到了$0.1$。下面实现基于这个目标函数的梯度下降，并演示使用学习率为$0.4$时自变量的迭代轨迹。</p>
+<pre><code class="python">%matplotlib inline
+import sys
+sys.path.append(&quot;..&quot;) 
+import d2lzh_pytorch as d2l
+import torch
+
+eta = 0.4 # 学习率
+
+def f_2d(x1, x2):
+    return 0.1 * x1 ** 2 + 2 * x2 ** 2
+
+def gd_2d(x1, x2, s1, s2):
+    return (x1 - eta * 0.2 * x1, x2 - eta * 4 * x2, 0, 0)
+
+d2l.show_trace_2d(f_2d, d2l.train_2d(gd_2d))
+</code></pre>
+
+<p>输出：</p>
+<pre><code>epoch 20, x1 -0.943467, x2 -0.000073
+</code></pre>
+
+<div align=center>
+<img width="300" src="../img/chapter07/7.4_output1.png"/>
+</div>
+
+<p>可以看到，同一位置上，目标函数在竖直方向（$x_2$轴方向）比在水平方向（$x_1$轴方向）的斜率的绝对值更大。因此，给定学习率，梯度下降迭代自变量时会使自变量在竖直方向比在水平方向移动幅度更大。那么，我们需要一个较小的学习率从而避免自变量在竖直方向上越过目标函数最优解。然而，这会造成自变量在水平方向上朝最优解移动变慢。</p>
+<p>下面我们试着将学习率调得稍大一点，此时自变量在竖直方向不断越过最优解并逐渐发散。</p>
+<pre><code class="python">eta = 0.6
+d2l.show_trace_2d(f_2d, d2l.train_2d(gd_2d))
+</code></pre>
+
+<p>输出：</p>
+<pre><code>epoch 20, x1 -0.387814, x2 -1673.365109
+</code></pre>
+
+<div align=center>
+<img width="300" src="../img/chapter07/7.4_output2.png"/>
+</div>
+
+<h2>7.4.2 动量法</h2>
+<p>动量法的提出是为了解决梯度下降的上述问题。由于小批量随机梯度下降比梯度下降更为广义，本章后续讨论将沿用7.3节（小批量随机梯度下降）中时间步$t$的小批量随机梯度$\boldsymbol{g}_t$的定义。设时间步$t$的自变量为$\boldsymbol{x}_t$，学习率为$\eta_t$。
+在时间步$0$，动量法创建速度变量$\boldsymbol{v}_0$，并将其元素初始化成0。在时间步$t&gt;0$，动量法对每次迭代的步骤做如下修改：</p>
+<p>$$
+\begin{aligned}
+\boldsymbol{v}<em>t &amp;\leftarrow \gamma \boldsymbol{v}</em>{t-1} + \eta_t \boldsymbol{g}<em>t, \
+\boldsymbol{x}_t &amp;\leftarrow \boldsymbol{x}</em>{t-1} - \boldsymbol{v}_t,
+\end{aligned}
+$$</p>
+<p>其中，动量超参数$\gamma$满足$0 \leq \gamma &lt; 1$。当$\gamma=0$时，动量法等价于小批量随机梯度下降。</p>
+<p>在解释动量法的数学原理前，让我们先从实验中观察梯度下降在使用动量法后的迭代轨迹。</p>
+<pre><code class="python">def momentum_2d(x1, x2, v1, v2):
+    v1 = gamma * v1 + eta * 0.2 * x1
+    v2 = gamma * v2 + eta * 4 * x2
+    return x1 - v1, x2 - v2, v1, v2
+
+eta, gamma = 0.4, 0.5
+d2l.show_trace_2d(f_2d, d2l.train_2d(momentum_2d))
+</code></pre>
+
+<p>输出：</p>
+<pre><code>epoch 20, x1 -0.062843, x2 0.001202
+</code></pre>
+
+<div align=center>
+<img width="300" src="../img/chapter07/7.4_output3.png"/>
+</div>
+
+<p>可以看到使用较小的学习率$\eta=0.4$和动量超参数$\gamma=0.5$时，动量法在竖直方向上的移动更加平滑，且在水平方向上更快逼近最优解。下面使用较大的学习率$\eta=0.6$，此时自变量也不再发散。</p>
+<pre><code class="python">eta = 0.6
+d2l.show_trace_2d(f_2d, d2l.train_2d(momentum_2d))
+</code></pre>
+
+<p>输出：</p>
+<pre><code>epoch 20, x1 0.007188, x2 0.002553
+</code></pre>
+
+<div align=center>
+<img width="300" src="../img/chapter07/7.4_output4.png"/>
+</div>
+
+<h3>7.4.2.1 指数加权移动平均</h3>
+<p>为了从数学上理解动量法，让我们先解释一下指数加权移动平均（exponentially weighted moving average）。给定超参数$0 \leq \gamma &lt; 1$，当前时间步$t$的变量$y_t$是上一时间步$t-1$的变量$y_{t-1}$和当前时间步另一变量$x_t$的线性组合：</p>
+<p>$$y_t = \gamma y_{t-1} + (1-\gamma) x_t.$$</p>
+<p>我们可以对$y_t$展开：</p>
+<p>$$
+\begin{aligned}
+y_t  &amp;= (1-\gamma) x_t + \gamma y_{t-1}\
+         &amp;= (1-\gamma)x_t + (1-\gamma) \cdot \gamma x_{t-1} + \gamma^2y_{t-2}\
+         &amp;= (1-\gamma)x_t + (1-\gamma) \cdot \gamma x_{t-1} + (1-\gamma) \cdot \gamma^2x_{t-2} + \gamma^3y_{t-3}\
+         &amp;\ldots
+\end{aligned}
+$$</p>
+<p>令$n = 1/(1-\gamma)$，那么 $\left(1-1/n\right)^n = \gamma^{1/(1-\gamma)}$。因为</p>
+<p>$$ \lim_{n \rightarrow \infty}  \left(1-\frac{1}{n}\right)^n = \exp(-1) \approx 0.3679,$$</p>
+<p>所以当$\gamma \rightarrow 1$时，$\gamma^{1/(1-\gamma)}=\exp(-1)$，如$0.95^{20} \approx \exp(-1)$。如果把$\exp(-1)$当作一个比较小的数，我们可以在近似中忽略所有含$\gamma^{1/(1-\gamma)}$和比$\gamma^{1/(1-\gamma)}$更高阶的系数的项。例如，当$\gamma=0.95$时，</p>
+<p>$$y_t \approx 0.05 \sum_{i=0}^{19} 0.95^i x_{t-i}.$$</p>
+<p>因此，在实际中，我们常常将$y_t$看作是对最近$1/(1-\gamma)$个时间步的$x_t$值的加权平均。例如，当$\gamma = 0.95$时，$y_t$可以被看作对最近20个时间步的$x_t$值的加权平均；当$\gamma = 0.9$时，$y_t$可以看作是对最近10个时间步的$x_t$值的加权平均。而且，离当前时间步$t$越近的$x_t$值获得的权重越大（越接近1）。</p>
+<h3>7.4.2.2 由指数加权移动平均理解动量法</h3>
+<p>现在，我们对动量法的速度变量做变形：</p>
+<p>$$\boldsymbol{v}<em>t \leftarrow \gamma \boldsymbol{v}</em>{t-1} + (1 - \gamma) \left(\frac{\eta_t}{1 - \gamma} \boldsymbol{g}_t\right). $$</p>
+<p>由指数加权移动平均的形式可得，速度变量$\boldsymbol{v}<em>t$实际上对序列${\eta</em>{t-i}\boldsymbol{g}_{t-i} /(1-\gamma):i=0,\ldots,1/(1-\gamma)-1}$做了指数加权移动平均。换句话说，相比于小批量随机梯度下降，<strong>动量法在每个时间步的自变量更新量近似于将最近$1/(1-\gamma)$个时间步的普通更新量（即学习率乘以梯度）做了指数加权移动平均后再除以$1-\gamma$</strong>。所以，在动量法中，自变量在各个方向上的移动幅度不仅取决当前梯度，还取决于过去的各个梯度在各个方向上是否一致。在本节之前示例的优化问题中，所有梯度在水平方向上为正（向右），而在竖直方向上时正（向上）时负（向下）。这样，我们就可以使用较大的学习率，从而使自变量向最优解更快移动。</p>
+<h2>7.4.3 从零开始实现</h2>
+<p>相对于小批量随机梯度下降，动量法需要对每一个自变量维护一个同它一样形状的速度变量，且超参数里多了动量超参数。实现中，我们将速度变量用更广义的状态变量<code>states</code>表示。</p>
+<pre><code class="python">features, labels = d2l.get_data_ch7()
+
+def init_momentum_states():
+    v_w = torch.zeros((features.shape[1], 1), dtype=torch.float32)
+    v_b = torch.zeros(1, dtype=torch.float32)
+    return (v_w, v_b)
+
+def sgd_momentum(params, states, hyperparams):
+    for p, v in zip(params, states):
+        v.data = hyperparams['momentum'] * v.data + hyperparams['lr'] * p.grad.data
+        p.data -= v.data
+</code></pre>
+
+<p>我们先将动量超参数<code>momentum</code>设0.5，这时可以看成是特殊的小批量随机梯度下降：其小批量随机梯度为最近2个时间步的2倍小批量梯度的加权平均。</p>
+<blockquote>
+<p>注：个人认为这里不应该是“加权平均”而应该是“加权和”，因为根据7.4.2.2节分析，加权平均最后除以了$1-\gamma$，所以就相当于没有进行平均。</p>
+</blockquote>
+<pre><code class="python">d2l.train_ch7(sgd_momentum, init_momentum_states(),
+              {'lr': 0.02, 'momentum': 0.5}, features, labels)
+</code></pre>
+
+<p>输出：</p>
+<pre><code>loss: 0.245518, 0.042304 sec per epoch
+</code></pre>
+
+<div align=center>
+<img width="300" src="../img/chapter07/7.4_output5.png"/>
+</div>
+
+<p>将动量超参数<code>momentum</code>增大到0.9，这时依然可以看成是特殊的小批量随机梯度下降：其小批量随机梯度为最近10个时间步的10倍小批量梯度的加权平均。我们先保持学习率0.02不变。</p>
+<blockquote>
+<p>同理，这里不应该是“加权平均”而应该是“加权和”。</p>
+</blockquote>
+<pre><code class="python">d2l.train_ch7(sgd_momentum, init_momentum_states(),
+              {'lr': 0.02, 'momentum': 0.9}, features, labels)
+</code></pre>
+
+<p>输出：</p>
+<pre><code>loss: 0.252046, 0.095708 sec per epoch
+</code></pre>
+
+<div align=center>
+<img width="300" src="../img/chapter07/7.4_output6.png"/>
+</div>
+
+<p>可见目标函数值在后期迭代过程中的变化不够平滑。直觉上，10倍小批量梯度比2倍小批量梯度大了5倍，我们可以试着将学习率减小到原来的1/5。此时目标函数值在下降了一段时间后变化更加平滑。</p>
+<blockquote>
+<p>这也印证了刚刚的观点。</p>
+</blockquote>
+<pre><code class="python">d2l.train_ch7(sgd_momentum, init_momentum_states(),
+              {'lr': 0.004, 'momentum': 0.9}, features, labels)
+</code></pre>
+
+<p>输出：</p>
+<pre><code>loss: 0.242905, 0.073496 sec per epoch
+</code></pre>
+
+<div align=center>
+<img width="300" src="../img/chapter07/7.4_output7.png"/>
+</div>
+
+<h2>7.4.4 简洁实现</h2>
+<p>在PyTorch中，只需要通过参数<code>momentum</code>来指定动量超参数即可使用动量法。</p>
+<pre><code class="python">d2l.train_pytorch_ch7(torch.optim.SGD, {'lr': 0.004, 'momentum': 0.9},
+                    features, labels)
+</code></pre>
+
+<p>输出：</p>
+<pre><code>loss: 0.253280, 0.060247 sec per epoch
+</code></pre>
+
+<div align=center>
+<img width="300" src="../img/chapter07/7.4_output8.png"/>
+</div>
+
+<h2>小结</h2>
+<ul>
+<li>动量法使用了指数加权移动平均的思想。它将过去时间步的梯度做了加权平均，且权重按时间步指数衰减。</li>
+<li>动量法使得相邻时间步的自变量更新在方向上更加一致。</li>
+</ul>
+<hr />
+<blockquote>
+<p>注：除代码外本节与原书此节基本相同，<a href="https://zh.d2l.ai/chapter_optimization/momentum.html">原书传送门</a></p>
+</blockquote>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

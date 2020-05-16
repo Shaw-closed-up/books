@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>Scipy 线性代数(Linalg) - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  <li><a href="./index.html"> 如何学习本课程 </a></li>
+<li><a href="./intro.html"> SciPy 简介 </a></li>
+<li><a href="./setup.html"> SciPy 安装 </a></li>
+<li><a href="./basic.html"> SciPy 基本功能 </a></li>
+<li><a href="./cluster.html"> SciPy 簇聚 </a></li>
+<li><a href="./constant.html"> Scipy 常量 </a></li>
+<li><a href="./fftpack.html"> Scipy 快速傅立叶变换 </a></li>
+<li><a href="./integrate.html"> SciPy 积分 </a></li>
+<li><a href="./interpolate.html"> SciPy 插值 </a></li>
+<li><a href="./io.html"> SciPy 输入和输出 </a></li>
+<li><a href="./linalg.html"> SciPy 线性代数 </a></li>
+<li><a href="./ndimage.html"> SciPy 图像处理 </a></li>
+<li><a href="./optimize.html"> SciPy 优化算法 </a></li>
+<li><a href="./stats.html"> SciPy 统计函数 </a></li>
+<li><a href="./spatial.html"> SciPy 空间度量 </a></li>
+<li><a href="./odr.html"> SciPy 正交距离回归 </a></li>
+<li><a href="./special.html"> SciPy 特殊包 </a>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>Scipy 线性代数(Linalg)</h1>
+<p>SciPy是使用优化的ATLAS LAPACK和BLAS库构建的。 它具有非常快的线性代数能力。 所有这些线性代数例程都需要一个可以转换为二维数组的对象。 这些例程的输出也是一个二维数组。</p>
+<p><strong>SciPy.linalg与NumPy.linalg</strong></p>
+<p><code>scipy.linalg</code>包含<code>numpy.linalg</code>中的所有函数。 另外，<code>scipy.linalg</code>还有一些不在<code>numpy.linalg</code>中的高级函数。 在<code>numpy.linalg</code>上使用<code>scipy.linalg</code>的另一个优点是它总是用<code>BLAS/LAPACK</code>支持编译，而对于NumPy，这是可选的。 因此，根据NumPy的安装方式，SciPy版本可能会更快。</p>
+<h2>线性方程组</h2>
+<p><code>scipy.linalg.solve</code>特征为未知的<code>x</code>，<code>y</code>值求解线性方程<code>a * x + b * y = Z</code>。</p>
+<p>作为一个例子，假设需要解下面的联立方程。
+<img alt="img" src="./images/788090306_94523.png" /></p>
+<p>要求解<code>x</code>，<code>y</code>，<code>z</code>值的上述方程式，可以使用矩阵求逆来求解向量，如下所示。
+<img alt="img" src="./images/917090306_49173.png" /></p>
+<p>但是，最好使用<code>linalg.solve</code>命令，该命令可以更快，更稳定。</p>
+<p>求解函数采用两个输入<code>'a'</code>和<code>'b'</code>，其中<code>'a'</code>表示系数，<code>'b'</code>表示相应的右侧值并返回解矩阵。</p>
+<p>现在来看看下面的例子。</p>
+<pre><code class="python">#importing the scipy and numpy packages
+from scipy import linalg
+import numpy as np
+
+#Declaring the numpy arrays
+a = np.array([[3, 2, 0], [1, -1, 0], [0, 5, 1]])
+b = np.array([2, 4, -1])
+
+#Passing the values to the solve function
+x = linalg.solve(a, b)
+
+#printing the result array
+print(x)
+</code></pre>
+
+<h2>查找一个行列式</h2>
+<p>方阵A的行列式通常表示为<code>| A |</code>并且是线性代数中经常使用的量。 在SciPy中，这是使用<code>det()</code>函数计算的。 它将矩阵作为输入并返回一个标量值。</p>
+<p>下面来看看一个例子。</p>
+<pre><code class="python">#importing the scipy and numpy packages
+from scipy import linalg
+import numpy as np
+
+#Declaring the numpy array
+A = np.array([[1,2],[3,4]])
+
+#Passing the values to the det function
+x = linalg.det(A)
+
+#printing the result
+print(x)
+</code></pre>
+
+<h2>特征值和特征向量</h2>
+<p>特征值 - 特征向量问题是最常用的线性代数运算之一。 我们可以通过考虑以下关系式来找到方阵(A)的特征值(λ)和相应的特征向量(v)</p>
+<pre><code>Av = λv
+</code></pre>
+
+<p><code>scipy.linalg.eig</code>从普通或广义特征值问题计算特征值。 该函数返回特征值和特征向量。</p>
+<p>让我们来看看下面的例子。</p>
+<pre><code class="python">#importing the scipy and numpy packages
+from scipy import linalg
+import numpy as np
+
+#Declaring the numpy array
+A = np.array([[1,2],[3,4]])
+
+#Passing the values to the eig function
+l, v = linalg.eig(A)
+
+#printing the result for eigen values
+print(l)
+
+#printing the result for eigen vectors
+print(v)
+</code></pre>
+
+<h2>奇异值分解</h2>
+<p>奇异值分解(SVD)可以被认为是特征值问题扩展到非矩阵的矩阵。</p>
+<p><code>scipy.linalg.svd</code>将矩阵<code>'a'</code>分解为两个酉矩阵<code>'U'</code>和<code>'Vh'</code>，以及一个奇异值(实数，非负)的一维数组<code>'s'</code>，使得<code>a == U * S * Vh</code>，其中<code>'S'</code>是具有主对角线<code>'s'</code>的适当形状的零点矩阵。</p>
+<p>让我们来看看下面的例子。参考以下代码 - </p>
+<pre><code class="python">#importing the scipy and numpy packages
+from scipy import linalg
+import numpy as np
+
+#Declaring the numpy array
+a = np.random.randn(3, 2) + 1.j*np.random.randn(3, 2)
+
+#Passing the values to the eig function
+U, s, Vh = linalg.svd(a)
+
+# printing the result
+print(U, Vh, s)
+</code></pre>
+
+<p><code class=gatsby-kernelname data-language=python></code></p>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

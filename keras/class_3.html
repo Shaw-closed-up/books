@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>Keras入门课3：使用CNN识别cifar10数据集 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  <li>文章目录</li>
+<li><a href="./class_1.html">Keras入门课1 -- 用MLP识别mnist手写字符</a></li>
+<li><a href="./class_2.html">Keras入门课2 -- 使用CNN识别mnist手写数字</a></li>
+<li><a href="./class_3.html">Keras入门课3 -- 使用CNN识别cifar10数据集</a></li>
+<li><a href="./class_4.html">Keras入门课4 -- 使用ResNet识别cifar10数据集</a></li>
+<li><a href="./class_5.html">Keras入门课5 -- 网络可视化及训练监控</a></li>
+<li>
+<p>知识点目录  数据处理相关</p>
+</li>
+<li>
+<p><a href="./class_1.html">载入Keras中预置的数据库及数据库数据的基本变换</a></p>
+</li>
+<li><a href="./class_2.html">根据不同的模型数据要求，给原始数据图像增加维度</a></li>
+<li>
+<p><a href="./class_3.html">使用Keras内置的ImageDataGenerator来做数据增强</a></p>
+</li>
+<li>
+<p>知识点目录   模型相关（Model）</p>
+</li>
+<li>
+<p><a href="./class_1.html">Sequential模型的定义，以及如何添加层</a></p>
+</li>
+<li><a href="./class_3.html">另一种使用Sequential()构建模型的方法，更加的简单快捷</a></li>
+<li><a href="./class_4.html">使用函数式模型（Functional）更加自由的构建模型</a></li>
+<li><a href="./class_4.html">将通过Functional方式定义的层初始化为一个模型（Model）</a></li>
+<li><a href="./class_1.html">使用compile对网络进行配置</a></li>
+<li><a href="./class_1.html">使用fit方法来对小数据库进行训练</a></li>
+<li><a href="./class_3.html">使用fit_generator来进行针对增强数据的训练</a></li>
+<li><a href="./class_1.html">使用evaluate方法来对模型进行效果评估</a></li>
+<li>
+<p><a href="./class_3.html">保存模型</a></p>
+</li>
+<li>
+<p>知识点目录   网络层相关（Layers）</p>
+</li>
+<li>
+<p><a href="./class_1.html">如何对Dense层及Dropout层进行基本的配置</a></p>
+</li>
+<li><a href="./class_2.html">Conv2D卷积层和MaxPooling2D池化层的使用</a></li>
+<li>
+<p><a href="./class_4.html">使用keras.layers.add方法，将两个张量进行相加</a></p>
+</li>
+<li>
+<p>知识点目录   经典网络</p>
+</li>
+<li>
+<p><a href="./class_4.html">搭建一个精简版的ResNet网络</a></p>
+</li>
+<li>
+<p>知识点目录   训练技巧</p>
+</li>
+<li>
+<p><a href="./class_4.html">在训练中调用回调函数</a></p>
+</li>
+<li><a href="./class_4.html">使用LearningRateScheduler在训练过程中动态的调节学习率</a></li>
+<li><a href="./class_4.html">使用ModelCheckpoint保存checkpoint</a></li>
+<li>
+<p><a href="./class_4.html">使用ReduceLROnPlateau在训练进入平台期的时候动态调节学习率</a></p>
+</li>
+<li>
+<p>知识点目录    其他</p>
+</li>
+<li>
+<p><a href="./class_5.html">何用TensorBoard监控训练过程</a></p>
+</li>
+<li><a href="./class_5.html">如何保存网络结构图</a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>Keras入门课3：使用CNN识别cifar10数据集</h1>
+<p>cifar10是一个日常物品的数据集，一共有10类，属于是比较小的数据集。这次用一个4个卷积层加2个全连接层的典型CNN网络来进行分类</p>
+<pre><code class="python">import keras
+from keras.datasets import cifar10
+from keras.preprocessing.image import ImageDataGenerator
+from keras.models import Sequential
+from keras.layers import Dense, Dropout, Activation, Flatten
+from keras.layers import Conv2D, MaxPooling2D
+</code></pre>
+
+<p>↓首先载入cifar10数据集，和mnist数据集的载入方法一致，本地没有数据的话会先下载</p>
+<pre><code class="python">(x_train,y_train),(x_test,y_test) = cifar10.load_data()
+</code></pre>
+
+<p>cifar10数据集图像大小是32*32的3通道彩图，训练集5万张，测试集1万张。和之前的mnist数据集不同，由于是彩色的，所以样本直接就是4维的。</p>
+<pre><code class="python">print(x_train.shape,y_train.shape)
+print(x_test.shape,y_test.shape)
+</code></pre>
+
+<pre><code class="python">import matplotlib.pyplot as plt
+plt.imshow(x_train[0])
+plt.show()
+plt.imshow(x_train[1])
+plt.show()
+</code></pre>
+
+<p>可以看到数据读入没有问题，第一张是蛤蟆，第二张是一个卡车。</p>
+<p>↓规范化数据</p>
+<pre><code class="python">x_train = x_train/255
+x_test = x_test/255
+y_train = keras.utils.to_categorical(y_train,10)
+y_test = keras.utils.to_categorical(y_test,10)
+</code></pre>
+
+<p>↓构建模型。之前构建模型都是先生成一个model，然后使用add方法来一层一层的加，现在用另一种更方便的方法。直接在Sequential初始化的时候按数组一个一个写进去就可以了。</p>
+<pre><code class="python">model = Sequential([
+    Conv2D(32,(3,3),padding='same',input_shape=(32,32,3),activation='relu'),
+    Conv2D(32,(3,3),activation='relu'),
+    MaxPooling2D(pool_size=(2,2)),
+    Dropout(0.25),
+
+    Conv2D(64,(3,3),padding='same',activation='relu'),
+    Conv2D(64,(3,3),activation='relu'),
+    MaxPooling2D(pool_size=(2,2)),
+    Dropout(0.25),
+
+    Flatten(),
+    Dense(512,activation='relu'),
+    Dropout(0.5),
+    Dense(10,activation='softmax')    
+])
+</code></pre>
+
+<pre><code class="python">model.summary()
+</code></pre>
+
+<p>↓指定优化函数的参数</p>
+<pre><code class="python">opt = keras.optimizers.rmsprop(lr=0.0001,decay=1e-6)
+</code></pre>
+
+<pre><code class="python">model.compile(loss='categorical_crossentropy',
+             optimizer=opt,
+             metrics=['accuracy'])
+</code></pre>
+
+<h3>至此直接调用fit方法就可以进行训练了。但是为了模型更快的收敛以及更好的泛化性能，往往我们会对图像做一些变换，比如缩放、平移、旋转等等。下面我们要用keras自带的图像增强来对图像做一些变换</h3>
+<p>↓这里生成了一个数据增强器，包含了范围20°内的随机旋转，±15%的缩放以及随机的水平翻转。可调的参数还有很多，具体的可以查看文档。</p>
+<pre><code class="python">datagen = ImageDataGenerator(
+    rotation_range = 20,
+    zoom_range = 0.15,
+    horizontal_flip = True,
+)
+</code></pre>
+
+<pre><code class="python"># datagen.fit(x_train) 只有使用featurewise_center，featurewise_std_normalization或zca_whitening时需要此函数
+</code></pre>
+
+<p>↓通过ImageDataGenerator生成的数据需要使用model的fit_generator方法来进行训练，其中的workers参数表示多线程运算。</p>
+<p>datagen的flow方法可以按批次的生成训练所需数据，注意这里生成的数据都是经过了数据增强的，并且是实时的。</p>
+<pre><code class="python">model.fit_generator(datagen.flow(x_train,y_train,batch_size=64),steps_per_epoch = 1000,epochs = 2,
+                    validation_data=(x_test,y_test),workers=4,verbose=1)
+</code></pre>
+
+<p>↓保存模型，包括了模型的结构以及参数。后缀用h5</p>
+<pre><code class="python">model.save('cifar10_trained_model.h5')
+</code></pre>
+
+<pre><code class="python">scores = model.evaluate(x_test,y_test,verbose=1)
+print('Test loss:',scores[0])
+print('Test accuracy:',scores[1])
+</code></pre>
+
+<h3>总结</h3>
+<ol>
+<li>学习了一种新的使用Sequential()构建模型的方法，更加的简单快捷</li>
+<li>学习了使用Keras内置的ImageDataGenerator来做数据增强的方法</li>
+<li>调用model的fit_generator来进行针对增强数据的训练</li>
+<li>学习了如何保存模型</li>
+</ol>
+<p>本文代码链接：https://github.com/tsycnh/Keras-Tutorials/blob/master/class_3.ipynb</p>
+<p>参考</p>
+<blockquote>
+<p>https://github.com/keras-team/keras/blob/master/examples
+https://keras-cn.readthedocs.io/en/latest/preprocessing/image/</p>
+</blockquote>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

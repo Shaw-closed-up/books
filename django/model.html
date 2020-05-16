@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+    <link href="/static/xterm/xterm.css" rel="stylesheet" type="text/css"/>
+
+    <link href="/static/css/docs.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css"/>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" id="font-awesome-css" href="https://cdn.freeaihub.com/asset/css/font-awesome.min.4.2.0.css" type="text/css" media="all">
+    <link rel="stylesheet" id="google-code-prettify-css" href="https://cdn.freeaihub.com/asset/css/prettify-2.1.css?ver=2.1
+" type="text/css" media="all">
+
+    <title>Django 模型 - FreeAIHub</title>
+  
+    <style>
+
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+        flex: 1;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: calc(100vh - 96px);
+      }
+      .xterm-wrapper{
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      .entry-content {
+          word-break: break-word;
+          height: calc(100vh - 60px);
+          overflow-y: scroll;
+          padding: 30px;
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light">
+
+        <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar text-center">
+      <a class="navbar-brand mr-0 mr-md-2" aria-label="引导程序" href="/">
+        <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+      </a>
+      <ul class="navbar-nav ml-md-auto">
+        <li class="nav-item">
+          <a href="/" class="nav-link pl-2 pr-1 mx-1 py-3 my-n2">首页</a>
+        </li>
+        <li class="nav-item">
+          <a href="/" class="nav-link pl-2 pr-1 mx-1 py-3 my-n2">课程页面</a>
+        </li>
+      </ul>
+    </header>
+
+
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-3 col-xl-2 bd-sidebar">    
+            <form class="bd-search d-flex align-items-center justify-content-end">
+              <button class="btn bd-search-docs-toggle d-md-none p-0 ml-3 collapsed" type="button" data-toggle="collapse" data-target="#bd-docs-nav" aria-controls="bd-docs-nav" aria-expanded="false" aria-label="切换文档导航">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" role="img" focusable="false"><title>Menu</title><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg>
+              </button>
+            </form>
+            <div class="bd-links collapse" id="bd-docs-nav" aria-label="主导航">
+              <div class="bd-toc-item active">
+                <a class="bd-toc-link" href="#">如何学习本课程</a>
+                <ul class="nav bd-sidenav">
+                  <li class="active bd-sidenav-active"><a href="./intro.html"> 简介 </a></li>
+                  <li><a href="./index.html"> 如何学习本课程 </a></li>
+<li><a href="./intro.html"> Django 介绍 </a></li>
+<li><a href="./setup.html"> Django环境安装配置 </a></li>
+<li><a href="./project.html"> Django创建工程 </a></li>
+<li><a href="./app.html"> Django应用程序app </a></li>
+<li><a href="./view.html"> Django创建视图 </a></li>
+<li><a href="./template.html"> Django模板 </a></li>
+<li><a href="./dtl.html"> Django模板语言(DTL) </a></li>
+<li><a href="./model.html"> Django模型 </a></li>
+<li><a href="./form.html"> Django表单 </a></li>
+<li><a href="./form-detail.html"> Django表单详解 </a></li>
+<li><a href="./admin.html"> Django管理员界面 </a></li>
+                </ul>
+
+              </div>
+
+
+          </div>
+          </div>
+          <div class="entry-content col-md-9 col-xl-5 py-md-3 pl-md-5 bd-content">
+              
+          <h1>Django 模型</h1>
+<p>Django 对各种数据库提供了很好的支持，包括：PostgreSQL、MySQL、SQLite、Oracle。</p>
+<p>Django 为这些数据库提供了统一的调用API。 我们可以根据自己业务需求选择不同的数据库。</p>
+<p>MySQL 是 Web 应用中最常用的数据库。本章节我们将以sqlite作为实例进行介绍。你可以通过本站的<a href="/sqlite/"> sqlite 教程</a> 了解更多Mysql的基础知识。</p>
+<h2>使用Django 插入数据</h2>
+<h3>查看数据库配置文件</h3>
+<pre><code class="bash">cd ~ &amp;&amp; cat myproject/myproject/settings.py
+</code></pre>
+
+<p>查看在项目的 settings.py 文件中找到 DATABASES 配置项，sqlite3默认已经写好。</p>
+<pre><code class="python">DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+</code></pre>
+
+<h3>创建APP</h3>
+<p>Django规定，如果要使用模型，必须要创建一个app。我们使用以下命令创建一个名为sqlapp的 app:</p>
+<pre><code>cd ~/myproject &amp;&amp; django-admin startapp sqlapp
+tree sqlapp #查看sqlapp的目录结构
+</code></pre>
+
+<h3>定义模型</h3>
+<pre><code class="bash">cd ~ &amp;&amp; vim myproject/sqlapp/models.py #修改
+</code></pre>
+
+<p><code>models.py</code>代码如下：</p>
+<pre><code class="python">from django.db import models
+
+# Create your models here.
+class Test(models.Model):
+    name = models.CharField(max_length=20)
+</code></pre>
+
+<p>以上的类名代表了数据库表名，且继承了models.Model，类里面的字段代表数据表中的字段(name)，数据类型则由CharField（相当于varchar）、DateField（相当于datetime）， max_length 参数限定长度。</p>
+<h3>将应用sqltest加入至项目</h3>
+<p>接下来在settings.py中找到INSTALLED_APPS这一项，如下：</p>
+<pre><code class="bash">cd ~ &amp;&amp; vim myproject/myproject/settings.py #修改
+</code></pre>
+
+<pre><code class="python">INSTALLED_APPS = (
+    'sqlapp',               # 添加此项
+)
+</code></pre>
+
+<p>在命令行中运行：</p>
+<pre><code class="bash">cd ~ 
+python3 myproject/manage.py migrate   # 创建表结构
+python3 myproject/manage.py makemigrations sqlapp  # 让 Django 知道我们在我们的模型有一些变更
+python3 myproject/manage.py migrate 
+</code></pre>
+
+<p>看到几行 "Applying sqlapp." 的字样，你的数据表就创建好了。</p>
+<p>表名组成结构为：应用名_类名（如：sqlapp_test）。</p>
+<p><strong>注意：</strong>尽管我们没有在models给表设置主键，但是Django会自动添加一个id作为主键。</p>
+<h3>创建数据库操作文件</h3>
+<p>添加数据需要先创建对象，然后再执行 save 函数，相当于SQL中的INSERT：</p>
+<pre><code class="bash">cd ~ &amp;&amp; vim myproject/myproject/sqlops.py
+</code></pre>
+
+<pre><code class="python"># -*- coding: utf-8 -*-
+
+from django.http import HttpResponse
+
+from sqlapp.models import Test
+
+# 数据库操作
+def insert(request):
+    test1 = Test(name='Django Models')
+    test1.save()
+    return HttpResponse(&quot;&lt;p&gt;数据添加成功！&lt;/p&gt;&quot;)
+</code></pre>
+
+<h3>配置URL访问路由</h3>
+<pre><code class="bash">cd ~ &amp;&amp; vim myproject/myproject/urls.py #修改
+</code></pre>
+
+<p>urls.py: 文件代码：</p>
+<pre><code class="python">from django.conf.urls import *
+from . import sqlops
+
+urlpatterns = [
+    url(r'^insert$', sqlops.insert),
+]
+</code></pre>
+
+<h3>运行项目</h3>
+<p>现在，您的项目创建和配置，确保它能工作。</p>
+<pre><code>python3 ./myproject/manage.py runserver 0.0.0.0:80
+</code></pre>
+
+<h3>访问项目</h3>
+<p>使用你在后端信息条上的<code>后端的id</code>.freeaihub.cn/insert，即可进行访问。</p>
+<p>或者在后端上直接点击+号，在弹出的信息条中点击，打开浏览器打开后端的80端口。也可以进行访问.</p>
+<h3>使用sqlite进行验证</h3>
+<p>sqlite3数据库文件默认在<code>~/myproject/</code>下，您可以一边不断刷新web页面，一边观察数据文件的变化。</p>
+<pre><code class="bash">watch stat ~/myproject/db.sqlite3
+</code></pre>
+
+<h3>访问项目</h3>
+<p>使用浏览器打开:{url}</p>
+            
+          </div>
+
+          <div class="d-none d-xl-block col-xl-5 bd-toc xterm-wrapper">
+             <!-- 导航 -->
+            <ul class="nav nav-tabs" id="myTab">
+              <li class="nav-item">
+                <a class="nav-link"  href="#home">Terminal</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="#profile">VNC</a>
+              </li>
+            </ul>
+            <!-- 带显示效果的内容 -->
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="home" >
+                <div id="term-content">
+                  <div id="terminal"></div>
+                </div>
+                 
+              </div>
+			
+            <div class="tab-pane fade position-relative" id="profile">	
+
+              <div id="top_bar">
+                  <div id="status">Loading</div>
+                  <!-- <div id="sendCtrlAltDelButton">Send CtrlAltDel</div> -->
+              </div>
+              <div id="screen">
+                  <!-- This is where the remote screen will appear -->
+              </div>
+			      </div>
+           
+        </div>
+          </div>
+        </div> <!-- / .row -->
+      </div>
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <link rel="stylesheet" id="yarppRelatedCss-css" href="https://cdn.freeaihub.com/asset/css/related.css
+?ver=4.9.14" type="text/css" media="all">
+    <script type='text/javascript' src='https://cdn.freeaihub.com/asset/js/prettify.js?ver=2.1'></script>
+    <script type='text/javascript' src='https://cdn.freeaihub.com/asset/js/power.js?ver=2.1'></script>
+    <script type='text/javascript' src='https://cdn.freeaihub.com/asset/js/wp-embed.min.js?ver=4.9.14'></script>
+    <!-- Theme JS -->
+
+    <script src="/static/js/popper.min.js"></script>
+
+    <script src="/static/xterm/xterm.js"></script>
+    <script src="/static/xterm/xterm-addon-fit.js"></script>
+    <script src="/static/xterm/xterm-addon-attach.js"></script>
+    <!-- Promise polyfill for IE11 -->
+    <script src="/vendor/promise.js"></script>
+        
+    <!-- ES2015/ES6 modules polyfill -->
+    <script nomodule src="/vendor/browser-es-module-loader/dist/browser-es-module-loader.js"></script>
+ 
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+     <script>
+        var terminal; // 终端
+        var sockId;  // 终端 id
+        var socket; // websocket 服务
+
+        const isWindows = ['Windows', 'Win16', 'Win32', 'WinCE'].indexOf(navigator.platform) >= 0;
+        terminal = new Terminal({
+            windowsMode: isWindows,
+            convertEol: true,
+            fontFamily: `'Fira Mono', monospace`,
+            fontSize: 16,
+            fontWeight: 400,
+            rendererType: "canvas" // canvas 或者 dom
+        });
+        const fitAddon = new FitAddon.FitAddon();
+        terminal.loadAddon(fitAddon);
+
+        terminal.open(document.getElementById('terminal'));
+        terminal.element.style.padding = '20px';
+        fitAddon.fit();
+
+        terminal.onData(function(data) {
+            socket.send(JSON.stringify({'data': data}));
+            fitAddon.fit();
+        });
+
+        $.ajax({
+          type: 'get',
+          url: 'https://api.freeaihub.com/api/env/get/webssh',
+          mode: "no-cors",
+          dataType: "json",
+          xhrFields: {
+              withCredentials: true
+          },
+          crossDomain: true,  
+          success: async function(data) {
+            if(data.errno == 0){
+              let { ...json } =  data.data
+              let formdata = new FormData();
+              formdata.append("hostname", json.hostname);
+              formdata.append("username", json.username);
+              formdata.append("port", json.port);
+              formdata.append("password", json.password);
+              formdata.append("term", json.term);
+              let response = await fetch(
+                json.host,
+                  {
+                      method: 'POST',
+                      body: formdata
+                  }
+              )
+
+          
+
+              sockId = await response.json();
+            
+              let socketHost = json.ssh_host +=`/ws?id=${sockId.id}`;
+              console.log(socketHost)
+              socket = new WebSocket(socketHost);
+
+              socket.onopen = () => {
+                terminal.loadAddon(new AttachAddon.AttachAddon(socket));
+                terminal._initialized = true;
+              }
+
+              socket.onmessage= (term) => {
+                if(!terminal._initialized){
+                    return
+                }
+                terminal._initialized = false;
+                socket.send(JSON.stringify({ resize: [term.cols, term.rows] }));
+              }
+
+            }
+
+          }
+        })
+
+     </script> 
+    <script>
+      function randomWord(randomFlag, min, max){
+        let str = "",
+            range = min,
+            arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+    
+        // 随机产生
+        if(randomFlag){
+            range = Math.round(Math.random() * (max-min)) + min;
+        }
+        for(let i=0; i<range; i++){
+            let pos = Math.round(Math.random() * (arr.length-1));
+            str += arr[pos];
+        }
+        return str;
+      }
+
+
+    let uuidCookie = randomWord(false, 16)  
+
+
+    if(Cookies.get('uuid') == null) {
+        Cookies.set('uuid', uuidCookie, { path: '/', domain: '.freeaihub.com'})
+    }
+    </script>
+
+     <!-- actual script modules -->
+    <script type="module" crossorigin="anonymous">
+         // RFB holds the API to connect and communicate with a VNC server
+         import RFB from '/core/rfb.js';
+ 
+         let rfb;
+         let desktopName;
+ 
+         // When this function is called we have
+         // successfully connected to a server
+         function connectedToServer(e) {
+            //  status("Connected to " + desktopName);
+         }
+ 
+         // This function is called when we are disconnected
+         function disconnectedFromServer(e) {
+             if (e.detail.clean) {
+                 status("Disconnected");
+             } else {
+                 status("Something went wrong, connection is closed");
+             }
+         }
+ 
+         // When this function is called, the server requires
+         // credentials to authenticate
+         function credentialsAreRequired(e) {
+             const password = prompt("Password Required:");
+             rfb.sendCredentials({ password: password });
+         }
+ 
+         // When this function is called we have received
+         // a desktop name from the server
+         function updateDesktopName(e) {
+             desktopName = e.detail.name;
+         }
+ 
+         // Since most operating systems will catch Ctrl+Alt+Del
+         // before they get a chance to be intercepted by the browser,
+         // we provide a way to emulate this key sequence.
+         function sendCtrlAltDel() {
+             rfb.sendCtrlAltDel();
+             return false;
+         }
+ 
+         // Show a status text in the top bar
+         function status(text) {
+             document.getElementById('status').textContent = text;
+         }
+ 
+         // This function extracts the value of one variable from the
+         // query string. If the variable isn't defined in the URL
+         // it returns the default value instead.
+         function readQueryVariable(name, defaultValue) {
+             // A URL with a query parameter can look like this:
+             // https://www.example.com?myqueryparam=myvalue
+             //
+             // Note that we use location.href instead of location.search
+             // because Firefox < 53 has a bug w.r.t location.search
+             const re = new RegExp('.*[?&]' + name + '=([^&#]*)'),
+                   match = document.location.href.match(re);
+ 
+             if (match) {
+                 // We have to decode the URL since want the cleartext value
+                 return decodeURIComponent(match[1]);
+             }
+ 
+             return defaultValue;
+         }
+ 
+        //  document.getElementById('sendCtrlAltDelButton')
+        //      .onclick = sendCtrlAltDel;
+         
+        $('#myTab a:first').tab('show');//初始化显示哪个tab 
+      
+        $('#myTab a').click(function (e) { 
+          e.preventDefault();//阻止a链接的跳转行为 
+          $(this).tab('show');//显示当前选中的链接及关联的content 
+        })  
+
+        $('#myTab a[href="#profile"]').on('click', function (e) {
+          $.ajax({
+           type: 'get',
+           url: 'https://api.freeaihub.com/api/env/get/vnc',
+           mode: "no-cors",
+           dataType: "json",
+           xhrFields: {
+               withCredentials: true
+           },
+           crossDomain: true,  
+           success: function(data) {
+             if(data.errno == 0){
+               let { ...json } =  data.data
+   
+               vnc(json)
+             }
+           }
+         })
+        });
+
+  
+
+
+         function vnc(obj){
+         
+             // Build the websocket URL used to connect
+             let url;
+
+     
+             url = obj.url
+     
+             // Creating a new RFB object will start a new connection
+             rfb = new RFB(document.getElementById('screen'), url,
+                               { 
+                                 credentials: { password: obj.token },
+
+                                });
+     
+             // Add listeners to important events from the RFB module
+             rfb.addEventListener("connect",  connectedToServer);
+             rfb.addEventListener("disconnect", disconnectedFromServer);
+             rfb.addEventListener("credentialsrequired", credentialsAreRequired);
+             rfb.addEventListener("desktopname", updateDesktopName);
+          
+             // Set parameters that can be changed on an active connection
+             rfb.viewOnly = readQueryVariable('view_only', false);
+             rfb.scaleViewport = 'scale';
+
+         }
+        
+    </script>
+
+  </body>
+</html>

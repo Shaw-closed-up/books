@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>样式规范 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>样式规范</h1>
+<h2>文本</h2>
+<ul>
+<li>章节<ul>
+<li>每章开头对全章做介绍</li>
+<li>结构标题一致<ul>
+<li>小结</li>
+<li>练习</li>
+<li>扫码直达讨论区</li>
+<li>参考文献（如有）</li>
+</ul>
+</li>
+<li>引用<ul>
+<li>在每节结尾处引用</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>字符串<ul>
+<li>使用中文双引号</li>
+</ul>
+</li>
+<li>符号描述<ul>
+<li>时刻t（不是t时刻）</li>
+<li>形状使用英文标点<ul>
+<li>(10, 20) 不是 （10，20）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>人称<ul>
+<li>第一人称 → 我们</li>
+<li>第二人称 → 读者、你、大家</li>
+</ul>
+</li>
+<li>工具或部件<ul>
+<li>Gluon, MXNet, NumPy, spaCy, ResNet-18, Fashion-MNIST, matplotlib<ul>
+<li>这些都作为词，不要带重音符</li>
+</ul>
+</li>
+<li><code>backward</code>函数<ul>
+<li>不是“<code>backward()</code>函数” （不要带括号）</li>
+</ul>
+</li>
+<li><code>for</code>循环</li>
+</ul>
+</li>
+<li>术语<ul>
+<li>统一使用<ul>
+<li>函数（非方法）</li>
+<li>实例（非对象）</li>
+<li>区分：超参数和参数</li>
+<li>区分：小批量随机梯度下降和随机梯度下降</li>
+<li>权重、偏差、标签</li>
+<li>模型训练、模型预测（推断）</li>
+<li>训练数据集、验证数据集、测试数据集</li>
+</ul>
+</li>
+<li>中文优先于英文<ul>
+<li>首次出现，注明原英文术语<ul>
+<li>无需加粗</li>
+<li>无需加引号</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>中英文对照统一标准<ul>
+<li>https://github.com/mli/gluon-tutorials-zh/blob/master/README.md</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2>数学</h2>
+<ul>
+<li>数学符号样式一致<ul>
+<li>https://github.com/goodfeli/dlbook_notation/blob/master/notation_example.pdf</li>
+</ul>
+</li>
+<li>书本页宽限制<ul>
+<li>每行长度</li>
+</ul>
+</li>
+<li>引用<ul>
+<li>上式和下式</li>
+<li>以上N式，以下N式</li>
+</ul>
+</li>
+<li>公式末放英文标点<ul>
+<li>逗号：,</li>
+<li>句号：.</li>
+</ul>
+</li>
+<li>赋值符号<ul>
+<li>\leftarrow</li>
+</ul>
+</li>
+</ul>
+<h2>图片</h2>
+<ul>
+<li>软件<ul>
+<li>使用OmniGraffle制图，以100%的大小导出pdf（infinite canvas），再使用pdf2svg转成svg</li>
+</ul>
+</li>
+<li>样式<ul>
+<li>格式：<ul>
+<li>svg</li>
+<li>png<ul>
+<li>export resolution: 144</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>大小：<ul>
+<li>横向：不超过400像素</li>
+<li>纵向：不超过200像素</li>
+</ul>
+</li>
+<li>粗细：<ul>
+<li>StickArrow</li>
+<li>1pt</li>
+<li>arrow head size: 50%</li>
+</ul>
+</li>
+<li>字体：<ul>
+<li>英文：STIXGeneral, 9pt（下标和上标：6pt）</li>
+<li>中文：PingFang SC, 9pt</li>
+</ul>
+</li>
+<li>下标和上标中的数字和括号不要斜体</li>
+<li>颜色：<ul>
+<li>非填充深蓝色（与黑相近）：<ul>
+<li>5B7DAA</li>
+</ul>
+</li>
+<li>填充蓝色（与黑对比）<ul>
+<li>深：66BFFF</li>
+<li>淡：B2D9FF</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>版权<ul>
+<li>不使用网络图片</li>
+</ul>
+</li>
+<li>位置<ul>
+<li>两张图不可以较邻近<ul>
+<li>两张图拼一下</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>引用<ul>
+<li>手动引用（例如，图7.1）</li>
+</ul>
+</li>
+<li>matplotlib<ul>
+<li>大小</li>
+<li>分辨率</li>
+</ul>
+</li>
+</ul>
+<h2>代码</h2>
+<ul>
+<li>使用utils.py封装多次使用函数<ul>
+<li>首次出现函数，书里给出函数实现</li>
+</ul>
+</li>
+<li>Python规范一致<ul>
+<li>PEP8<ul>
+<li>二元操作符换行：操作符和后一元一起换行 (https://www.python.org/dev/peps/pep-0008/#should-a-line-break-before-or-after-a-binary-operator)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>将相邻赋值语句尽可能合并为同一行<ul>
+<li>如 num_epochs, lr = 5, 0.1</li>
+</ul>
+</li>
+<li>变量名一致<ul>
+<li>num_epochs<ul>
+<li>迭代周期</li>
+</ul>
+</li>
+<li>num_hiddens<ul>
+<li>隐藏单元个数</li>
+</ul>
+</li>
+<li>num_inputs<ul>
+<li>输入个数</li>
+</ul>
+</li>
+<li>num_outputs<ul>
+<li>输出个数</li>
+</ul>
+</li>
+<li>net<ul>
+<li>模型</li>
+</ul>
+</li>
+<li>lr<ul>
+<li>学习率</li>
+</ul>
+</li>
+<li>acc<ul>
+<li>准确率</li>
+</ul>
+</li>
+<li>迭代中<ul>
+<li>特征：X</li>
+<li>标签：y, y_hat 或 Y, Y_hat</li>
+<li>for X, y in data_iter</li>
+</ul>
+</li>
+<li>数据集：<ul>
+<li>特征：features或images</li>
+<li>标签：labels</li>
+<li>DataLoader实例：train_iter, test_iter, data_iter</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>注释<ul>
+<li>中文</li>
+<li>句末不加句号</li>
+</ul>
+</li>
+<li>书本页宽限制<ul>
+<li>每行不超过78字符<ul>
+<li>In [X]: 79字符不会自动换行（X = 1, ..., 9）</li>
+<li>In [XX]: 78字符不会自动换行（XX = 10, 11, ..., 99）</li>
+</ul>
+</li>
+<li>打印结果自动换行</li>
+</ul>
+</li>
+<li>imports<ul>
+<li>import alphabetically</li>
+<li>from mxnet.gluon import data as gdata, loss as gloss, nn, utils as gutils</li>
+</ul>
+</li>
+<li>打印名称<ul>
+<li>epoch（从1开始计数）, lr, loss, train acc, time</li>
+<li>5行左右</li>
+</ul>
+</li>
+<li>打印变量<ul>
+<li>代码块最后一行尽量不用print()语句，例如<code>x, y</code>而不是<code>print('x:', x, 'y:', y)</code></li>
+</ul>
+</li>
+<li>字符串<ul>
+<li>使用单引号</li>
+</ul>
+</li>
+<li>其他<ul>
+<li>nd.f(x) → x.nd</li>
+<li>random_normal → random.normal</li>
+<li>multiple imports</li>
+<li>.1 → 1.0</li>
+<li>
+<ol>
+<li>→ 1.0</li>
+</ol>
+</li>
+<li>remove namescope</li>
+</ul>
+</li>
+</ul>
+<h2>超链接</h2>
+<ul>
+<li>内链格式<ul>
+<li><a href="linear-reg.html">“线性回归”</a>一节</li>
+</ul>
+</li>
+<li>外链<ul>
+<li><a href="http:bla">层</a></li>
+<li>无需暴露URL</li>
+</ul>
+</li>
+</ul>
+<h2>二维码</h2>
+<ul>
+<li>https://www.the-qrcode-generator.com/<ul>
+<li>75pixel, SVG</li>
+</ul>
+</li>
+</ul>
+<h2>文献引用</h2>
+<ul>
+<li>每节末尾附上本节参考文献<ul>
+<li>学术性引用</li>
+<li>Google Scholar: APA格式</li>
+</ul>
+</li>
+</ul>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

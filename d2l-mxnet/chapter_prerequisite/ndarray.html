@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>数据操作 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>数据操作</h1>
+<p>在深度学习中，我们通常会频繁地对数据进行操作。作为动手学深度学习的基础，本节将介绍如何对内存中的数据进行操作。</p>
+<p>在MXNet中，<code>NDArray</code>是一个类，也是存储和变换数据的主要工具。为了简洁，本书常将<code>NDArray</code>实例直接称作<code>NDArray</code>。如果你之前用过NumPy，你会发现<code>NDArray</code>和NumPy的多维数组非常类似。然而，<code>NDArray</code>提供GPU计算和自动求梯度等更多功能，这些使<code>NDArray</code>更加适合深度学习。</p>
+<h2>创建<code>NDArray</code></h2>
+<p>我们先介绍<code>NDArray</code>的最基本功能。如果对这里用到的数学操作不是很熟悉，可以参阅附录中<a href="../chapter_appendix/math.html">“数学基础”</a>一节。</p>
+<p>首先从MXNet导入<code>ndarray</code>模块。这里的<code>nd</code>是<code>ndarray</code>的缩写形式。</p>
+<p>```{.python .input  n=1}
+from mxnet import nd</p>
+<pre><code>
+然后我们用`arange`函数创建一个行向量。
+
+```{.python .input  n=2}
+x = nd.arange(12)
+x
+</code></pre>
+
+<p>这时返回了一个<code>NDArray</code>实例，其中包含了从0开始的12个连续整数。从打印<code>x</code>时显示的属性<code>&lt;NDArray 12 @cpu(0)&gt;</code>可以看出，它是长度为12的一维数组，且被创建在CPU使用的内存上。其中“@cpu(0)”里的0没有特别的意义，并不代表特定的核。</p>
+<p>我们可以通过<code>shape</code>属性来获取<code>NDArray</code>实例的形状。</p>
+<p>```{.python .input  n=8}
+x.shape</p>
+<pre><code>
+我们也能够通过`size`属性得到`NDArray`实例中元素（element）的总数。
+
+```{.python .input  n=9}
+x.size
+</code></pre>
+
+<p>下面使用<code>reshape</code>函数把行向量<code>x</code>的形状改为(3, 4)，也就是一个3行4列的矩阵，并记作<code>X</code>。除了形状改变之外，<code>X</code>中的元素保持不变。</p>
+<p>```{.python .input  n=3}
+X = x.reshape((3, 4))
+X</p>
+<pre><code>
+注意`X`属性中的形状发生了变化。上面`x.reshape((3, 4))`也可写成`x.reshape((-1, 4))`或`x.reshape((3, -1))`。由于`x`的元素个数是已知的，这里的`-1`是能够通过元素个数和其他维度的大小推断出来的。
+
+接下来，我们创建一个各元素为0，形状为(2, 3, 4)的张量。实际上，之前创建的向量和矩阵都是特殊的张量。
+
+```{.python .input  n=4}
+nd.zeros((2, 3, 4))
+</code></pre>
+
+<p>类似地，我们可以创建各元素为1的张量。</p>
+<p>```{.python .input  n=5}
+nd.ones((3, 4))</p>
+<pre><code>
+我们也可以通过Python的列表（list）指定需要创建的`NDArray`中每个元素的值。
+
+```{.python .input  n=6}
+Y = nd.array([[2, 1, 4, 3], [1, 2, 3, 4], [4, 3, 2, 1]])
+Y
+</code></pre>
+
+<p>有些情况下，我们需要随机生成<code>NDArray</code>中每个元素的值。下面我们创建一个形状为(3, 4)的<code>NDArray</code>。它的每个元素都随机采样于均值为0、标准差为1的正态分布。</p>
+<p>```{.python .input  n=7}
+nd.random.normal(0, 1, shape=(3, 4))</p>
+<pre><code>
+## 运算
+
+`NDArray`支持大量的运算符（operator）。例如，我们可以对之前创建的两个形状为(3, 4)的`NDArray`做按元素加法。所得结果形状不变。
+
+```{.python .input  n=10}
+X + Y
+</code></pre>
+
+<p>按元素乘法如下：</p>
+<p>```{.python .input  n=11}
+X * Y</p>
+<pre><code>
+按元素除法如下：
+
+```{.python .input}
+X / Y
+</code></pre>
+
+<p>按元素做指数运算如下：</p>
+<p>```{.python .input  n=12}
+Y.exp()</p>
+<pre><code>
+除了按元素计算外，我们还可以使用`dot`函数做矩阵乘法。下面将`X`与`Y`的转置做矩阵乘法。由于`X`是3行4列的矩阵，`Y`转置为4行3列的矩阵，因此两个矩阵相乘得到3行3列的矩阵。
+
+```{.python .input  n=13}
+nd.dot(X, Y.T)
+</code></pre>
+
+<p>我们也可以将多个<code>NDArray</code>连结（concatenate）。下面分别在行上（维度0，即形状中的最左边元素）和列上（维度1，即形状中左起第二个元素）连结两个矩阵。可以看到，输出的第一个<code>NDArray</code>在维度0的长度（$6$）为两个输入矩阵在维度0的长度之和（$3+3$），而输出的第二个<code>NDArray</code>在维度1的长度（$8$）为两个输入矩阵在维度1的长度之和（$4+4$）。</p>
+<p>```{.python .input}
+nd.concat(X, Y, dim=0), nd.concat(X, Y, dim=1)</p>
+<pre><code>
+使用条件判断式可以得到元素为0或1的新的`NDArray`。以`X == Y`为例，如果`X`和`Y`在相同位置的条件判断为真（值相等），那么新的`NDArray`在相同位置的值为1；反之为0。
+
+```{.python .input}
+X == Y
+</code></pre>
+
+<p>对<code>NDArray</code>中的所有元素求和得到只有一个元素的<code>NDArray</code>。</p>
+<p>```{.python .input}
+X.sum()</p>
+<pre><code>
+我们可以通过`asscalar`函数将结果变换为Python中的标量。下面例子中`X`的$L_2$范数结果同上例一样是单元素`NDArray`，但最后结果变换成了Python中的标量。
+
+```{.python .input}
+X.norm().asscalar()
+</code></pre>
+
+<p>我们也可以把<code>Y.exp()</code>、<code>X.sum()</code>、<code>X.norm()</code>等分别改写为<code>nd.exp(Y)</code>、<code>nd.sum(X)</code>、<code>nd.norm(X)</code>等。</p>
+<h2>广播机制</h2>
+<p>前面我们看到如何对两个形状相同的<code>NDArray</code>做按元素运算。当对两个形状不同的<code>NDArray</code>按元素运算时，可能会触发广播（broadcasting）机制：先适当复制元素使这两个<code>NDArray</code>形状相同后再按元素运算。</p>
+<p>先定义两个<code>NDArray</code>。</p>
+<p>```{.python .input  n=14}
+A = nd.arange(3).reshape((3, 1))
+B = nd.arange(2).reshape((1, 2))
+A, B</p>
+<pre><code>
+由于`A`和`B`分别是3行1列和1行2列的矩阵，如果要计算`A + B`，那么`A`中第一列的3个元素被广播（复制）到了第二列，而`B`中第一行的2个元素被广播（复制）到了第二行和第三行。如此，就可以对2个3行2列的矩阵按元素相加。
+
+```{.python .input}
+A + B
+</code></pre>
+
+<h2>索引</h2>
+<p>在<code>NDArray</code>中，索引（index）代表了元素的位置。<code>NDArray</code>的索引从0开始逐一递增。例如，一个3行2列的矩阵的行索引分别为0、1和2，列索引分别为0和1。</p>
+<p>在下面的例子中，我们指定了<code>NDArray</code>的行索引截取范围<code>[1:3]</code>。依据左闭右开指定范围的惯例，它截取了矩阵<code>X</code>中行索引为1和2的两行。</p>
+<p>```{.python .input  n=19}
+X[1:3]</p>
+<pre><code>
+我们可以指定`NDArray`中需要访问的单个元素的位置，如矩阵中行和列的索引，并为该元素重新赋值。
+
+```{.python .input  n=20}
+X[1, 2] = 9
+X
+</code></pre>
+
+<p>当然，我们也可以截取一部分元素，并为它们重新赋值。在下面的例子中，我们为行索引为1的每一列元素重新赋值。</p>
+<p>```{.python .input  n=21}
+X[1:2, :] = 12
+X</p>
+<pre><code>
+## 运算的内存开销
+
+在前面的例子里我们对每个操作新开内存来存储运算结果。举个例子，即使像`Y = X + Y`这样的运算，我们也会新开内存，然后将`Y`指向新内存。为了演示这一点，我们可以使用Python自带的`id`函数：如果两个实例的ID一致，那么它们所对应的内存地址相同；反之则不同。
+
+```{.python .input  n=15}
+before = id(Y)
+Y = Y + X
+id(Y) == before
+</code></pre>
+
+<p>如果想指定结果到特定内存，我们可以使用前面介绍的索引来进行替换操作。在下面的例子中，我们先通过<code>zeros_like</code>创建和<code>Y</code>形状相同且元素为0的<code>NDArray</code>，记为<code>Z</code>。接下来，我们把<code>X + Y</code>的结果通过<code>[:]</code>写进<code>Z</code>对应的内存中。</p>
+<p>```{.python .input  n=16}
+Z = Y.zeros_like()
+before = id(Z)
+Z[:] = X + Y
+id(Z) == before</p>
+<pre><code>
+实际上，上例中我们还是为`X + Y`开了临时内存来存储计算结果，再复制到`Z`对应的内存。如果想避免这个临时内存开销，我们可以使用运算符全名函数中的`out`参数。
+
+```{.python .input  n=17}
+nd.elemwise_add(X, Y, out=Z)
+id(Z) == before
+</code></pre>
+
+<p>如果<code>X</code>的值在之后的程序中不会复用，我们也可以用 <code>X[:] = X + Y</code> 或者 <code>X += Y</code> 来减少运算的内存开销。</p>
+<p>```{.python .input  n=18}
+before = id(X)
+X += Y
+id(X) == before</p>
+<pre><code>
+## `NDArray`和NumPy相互变换
+
+我们可以通过`array`函数和`asnumpy`函数令数据在`NDArray`和NumPy格式之间相互变换。下面将NumPy实例变换成`NDArray`实例。
+
+```{.python .input  n=22}
+import numpy as np
+
+P = np.ones((2, 3))
+D = nd.array(P)
+D
+</code></pre>
+
+<p>再将<code>NDArray</code>实例变换成NumPy实例。</p>
+<p><code>{.python .input}
+D.asnumpy()</code></p>
+<h2>小结</h2>
+<ul>
+<li><code>NDArray</code>是MXNet中存储和变换数据的主要工具。</li>
+<li>可以轻松地对<code>NDArray</code>创建、运算、指定索引，并与NumPy之间相互变换。</li>
+</ul>
+<h2>练习</h2>
+<ul>
+<li>运行本节中的代码。将本节中条件判别式<code>X == Y</code>改为<code>X &lt; Y</code>或<code>X &gt; Y</code>，看看能够得到什么样的<code>NDArray</code>。</li>
+<li>将广播机制中按元素运算的两个<code>NDArray</code>替换成其他形状，结果是否和预期一样？</li>
+</ul>
+<h2>扫码直达<a href="https://discuss.gluon.ai/t/topic/745">讨论区</a></h2>
+<p><img alt="" src="../img/qr_ndarray.svg" /></p>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>如何学习本课程 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  <li><a href="./index.html"> 如何学习本课程</a></li>
+<li><a href="./intro.html"> sklearn简介</a></li>
+<li><a href="./setup.html"> sklearn安装</a></li>
+<li><a href="./modelling.html"> sklearn建模过程</a></li>
+<li><a href="./data-representation.html"> sklearn数据表示</a></li>
+<li><a href="./estimator.html"> sklearn估算器</a></li>
+<li><a href="./conventions.html"> sklearn约定</a></li>
+<li><a href="./linear.html"> sklearn线性建模之线性回归</a></li>
+<li><a href="./logistic.html"> sklearn线性建模之逻辑回归</a></li>
+<li><a href="./ridge.html"> sklearn线性建模之岭回归</a></li>
+<li><a href="./bayes.html"> sklearn线性建模之贝叶斯岭回归</a></li>
+<li><a href="./sgd.html"> sklearn随机梯度下降(SGD)</a></li>
+<li><a href="./svm.html"> sklearn支持向量机(SVM)</a></li>
+<li><a href="./knn.html"> sklearnK近邻(KNN)</a></li>
+<li><a href="./nbc.html"> sklearn朴素贝叶斯分类(NBC)</a></li>
+<li><a href="./dt.html"> sklearn决策树(DT)</a></li>
+<li><a href="./rf.html"> sklearn随机决策树(RF)</a></li>
+<li><a href="./cluster.html"> skelarn聚类(cluster)</a></li>
+<li><a href="./pca.html"> sklearn降维(PCA)</a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>如何学习本课程</h1>
+<h2>课程信息</h2>
+<ul>
+<li>课程名称：《动手学scikit-learn》</li>
+<li>课程编号：B71</li>
+<li>所需基础：<a href="/python">Python</a>,<a href="/numpy">NumPy</a>,<a href="/ml">机器学习</a></li>
+<li>学习周期：2周（以每天投入2小时左右时间进行学习估算）</li>
+<li>学习形式：在线互动<a href="/aboutus/help.html">课程使用帮助</a></li>
+<li>面向群体：对于对机器学习主题感兴趣或将该主题作为课程一部分的研究生，研究生和研究型学生，本教程将非常有用。读者可以是初学者或高级学习者。</li>
+<li>学习成果：对数据科学方向所需求的Python基础掌握，不扩展到Python Web等非AI领域为将来的Python数据科学方向（如可视化，各类机器学习包）打下语言基础</li>
+</ul>
+<h2>本课程专用微信学习交流群</h2>
+<p>如果您还有学习过程中需要有交流，困惑，请加入下方互动学习微信群</p>
+<p><img alt="" src="./images/qrcode.jpg" /></p>
+<h2>相关资料推荐</h2>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>视频</td>
+<td><a href="https://www.bilibili.com/video/BV1xW411Y7Qd">(sklearn) 优雅地学会机器学习</a></td>
+</tr>
+<tr>
+<td>书籍</td>
+<td><a href="https://item.jd.com/12429306.html">机器学习实战：基于Scikit-Learn和TensorFlow</a></td>
+</tr>
+</tbody>
+</table>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

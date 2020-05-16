@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>Scipy 插值(interpolate) - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  <li><a href="./index.html"> 如何学习本课程 </a></li>
+<li><a href="./intro.html"> SciPy 简介 </a></li>
+<li><a href="./setup.html"> SciPy 安装 </a></li>
+<li><a href="./basic.html"> SciPy 基本功能 </a></li>
+<li><a href="./cluster.html"> SciPy 簇聚 </a></li>
+<li><a href="./constant.html"> Scipy 常量 </a></li>
+<li><a href="./fftpack.html"> Scipy 快速傅立叶变换 </a></li>
+<li><a href="./integrate.html"> SciPy 积分 </a></li>
+<li><a href="./interpolate.html"> SciPy 插值 </a></li>
+<li><a href="./io.html"> SciPy 输入和输出 </a></li>
+<li><a href="./linalg.html"> SciPy 线性代数 </a></li>
+<li><a href="./ndimage.html"> SciPy 图像处理 </a></li>
+<li><a href="./optimize.html"> SciPy 优化算法 </a></li>
+<li><a href="./stats.html"> SciPy 统计函数 </a></li>
+<li><a href="./spatial.html"> SciPy 空间度量 </a></li>
+<li><a href="./odr.html"> SciPy 正交距离回归 </a></li>
+<li><a href="./special.html"> SciPy 特殊包 </a>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>Scipy 插值(interpolate)</h1>
+<p>在本章中，我们将讨论插值，及如何在SciPy中使用它。</p>
+<h2>插值是什么？</h2>
+<p>插值是在直线或曲线上的两点之间找到值的过程。 为了帮助记住它的含义，我们应该将“inter”这个词的第一部分想象为“输入”，表示要查看原来数据的“内部”。 这种插值工具不仅适用于统计学，而且在科学，商业或需要预测两个现有数据点内的值时也很有用。</p>
+<p>下面创建一些数据，看看如何使用<code>scipy.interpolate</code>包进行插值。</p>
+<pre><code class="python">%matplotlib inline
+import numpy as np
+from scipy import interpolate
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 4, 12)
+y = np.cos(x**2/3+4)
+print(x,y)
+</code></pre>
+
+<p>现在，有两个数组。 假设这两个数组作为空间点的两个维度，使用下面的程序进行绘图，并看看它们的样子。</p>
+<pre><code class="python">plt.plot(x, y,’o’)
+plt.show()
+</code></pre>
+
+<h2>一维插值</h2>
+<p><code>scipy.interpolate</code>中的<code>interp1d</code>类是一种创建基于固定数据点的函数的便捷方法，可以使用线性插值在给定数据定义的域内的任意位置评估该函数。</p>
+<p>通过使用上述数据，创建一个插值函数并绘制一个新的插值图。</p>
+<pre><code class="python">f1 = interp1d(x, y,kind = 'linear')
+f2 = interp1d(x, y, kind = 'cubic')
+</code></pre>
+
+<p>使用<code>interp1d</code>函数，创建了两个函数<code>f1</code>和<code>f2</code>。 这些函数对于给定的输入<code>x</code>返回<code>y</code>。 第三种变量类型表示插值技术的类型。 ‘线性’，’最近’，’零’，’线性’，’二次’，’立方’是一些插值技术。</p>
+<p>现在，创建更多长度的新输入以查看插值的明显区别。 对新数据使用旧数据的相同功能。</p>
+<pre><code class="python">xnew = np.linspace(0, 4,30)
+plt.plot(x, y, 'o', xnew, f1(xnew), '-', xnew, f2(xnew), '--')
+plt.legend(['data', 'linear', 'cubic','nearest'], loc = 'best')
+plt.show()
+</code></pre>
+
+<h2>样条曲线</h2>
+<p>为了通过数据点画出平滑的曲线，绘图员曾经使用薄的柔性木条，硬橡胶，金属或塑料称为机械样条。 为了使用机械花键，在设计中沿着曲线明确选择了一些销钉，然后将花键弯曲，以便它们接触到每个销钉。</p>
+<p>显然，在这种结构下，样条曲线在这些引脚上插入曲线。 它可以用来在其他图纸中重现曲线。 引脚所在的点称为结。 可以通过调整结点的位置来改变样条线所定义的曲线的形状。</p>
+<p><strong>单变量样条</strong></p>
+<p>一维平滑样条拟合一组给定的数据点。 <code>Scipy.interpolate</code>中的<code>UnivariateSpline</code>类是创建基于固定数据点类的函数的便捷方法 - <code>scipy.interpolate.UnivariateSpline(x，y，w = None，bbox = [None，None]，k = 3，s = None，ext = 0，check_finite = False)</code>。</p>
+<p>下面来看看一个例子。</p>
+<pre><code class="python">%matplotlib inline
+import matplotlib.pyplot as plt
+from scipy.interpolate import UnivariateSpline
+x = np.linspace(-3, 3, 50)
+y = np.exp(-x**2) + 0.1 * np.random.randn(50)
+plt.plot(x, y, 'ro', ms = 5)
+plt.show()
+</code></pre>
+
+<p>使用平滑参数的默认值。</p>
+<pre><code class="python">spl = UnivariateSpline(x, y)
+xs = np.linspace(-3, 3, 1000)
+plt.plot(xs, spl(xs), 'g', lw = 3)
+plt.show()
+</code></pre>
+
+<p>手动更改平滑量。</p>
+<pre><code class="python">spl.set_smoothing_factor(0.5)
+plt.plot(xs, spl(xs), 'b', lw = 3)
+plt.show()
+</code></pre>
+
+<p><code class=gatsby-kernelname data-language=python></code></p>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

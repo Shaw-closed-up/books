@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>9.8 区域卷积神经网络（R-CNN）系列 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  
+    <li>简介</li>
+    <li><a href="/d2l-pytorch/chapter01_DL-intro/deep-learning-intro.html">1. 深度学习简介</a></li>
+    <li>预备知识</li>
+    <li><a href="/d2l-pytorch/chapter02_prerequisite/2.1_install.html">2.1 环境配置</a></li>
+    <li><a href="/d2l-pytorch/chapter02_prerequisite/2.2_tensor.html">2.2 数据操作</a></li>
+    <a href="/d2l-pytorch/chapter02_prerequisite/2.3_autograd.html">2.3 自动求梯度</a></li>
+    <li>深度学习基础</li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.1_linear-regression.html">3.1 线性回归</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.2_linear-regression-scratch.html">3.2 线性回归的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.3_linear-regression-pytorch.html">3.3 线性回归的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.4_softmax-regression.html">3.4 softmax回归</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.5_fashion-mnist.html">3.5 图像分类数据集（Fashion-MNIST）</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.6_softmax-regression-scratch.html">3.6 softmax回归的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.7_softmax-regression-pytorch.html">3.7 softmax回归的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.8_mlp.html">3.8 多层感知机</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.9_mlp-scratch.html">3.9 多层感知机的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.10_mlp-pytorch.html">3.10 多层感知机的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.11_underfit-overfit.html">3.11 模型选择、欠拟合和过拟合</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.12_weight-decay.html">3.12 权重衰减</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.13_dropout.html">3.13 丢弃法</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.14_backprop.html">3.14 正向传播、反向传播和计算图</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.15_numerical-stability-and-init.html">3.15 数值稳定性和模型初始化</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.16_kaggle-house-price.html">3.16 实战Kaggle比赛：房价预测</a></li>
+    <li>深度学习计算</li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.1_model-construction.html">4.1 模型构造</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.2_parameters.html">4.2 模型参数的访问、初始化和共享</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.3_deferred-init.html">4.3 模型参数的延后初始化</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.4_custom-layer.html">4.4 自定义层</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.5_read-write.html">4.5 读取和存储</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.6_use-gpu.html">4.6 GPU计算</a></li>
+    <li>卷积神经网络</li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.1_conv-layer.html">5.1 二维卷积层</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.2_padding-and-strides.html">5.2 填充和步幅</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.3_channels.html">5.3 多输入通道和多输出通道</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.4_pooling.html">5.4 池化层</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.5_lenet.html">5.5 卷积神经网络（LeNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.6_alexnet.html">5.6 深度卷积神经网络（AlexNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.7_vgg.html">5.7 使用重复元素的网络（VGG）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.8_nin.html">5.8 网络中的网络（NiN）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.9_googlenet.html">5.9 含并行连结的网络（GoogLeNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.10_batch-norm.html">5.10 批量归一化</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.11_resnet.html">5.11 残差网络（ResNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.12_densenet.html">5.12 稠密连接网络（DenseNet）</a></li>
+    <li>循环神经网络</li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.1_lang-model.html">6.1 语言模型</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.2_rnn.html">6.2 循环神经网络</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.3_lang-model-dataset.html">6.3 语言模型数据集（周杰伦专辑歌词）</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.4_rnn-scratch.html">6.4 循环神经网络的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.5_rnn-pytorch.html">6.5 循环神经网络的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.6_bptt.html">6.6 通过时间反向传播</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.7_gru.html">6.7 门控循环单元（GRU）</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.8_lstm.html">6.8 长短期记忆（LSTM）</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.9_deep-rnn.html">6.9 深度循环神经网络</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.10_bi-rnn.html">6.10 双向循环神经网络</a></li>
+    <li>优化算法</li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.1_optimization-intro.html">7.1 优化与深度学习</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.2_gd-sgd.html">7.2 梯度下降和随机梯度下降</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.3_minibatch-sgd.html">7.3 小批量随机梯度下降</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.4_momentum.html">7.4 动量法</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.5_adagrad.html">7.5 AdaGrad算法</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.6_rmsprop.html">7.6 RMSProp算法</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.7_adadelta.html">7.7 AdaDelta算法</a></li>
+    <a href="/d2l-pytorch/chapter07_optimization/7.8_adam.html">7.8 Adam算法</a></li>
+    <li>计算性能</li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.1_hybridize.html">8.1 命令式和符号式混合编程</a></li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.2_async-computation.html">8.2 异步计算</a></li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.3_auto-parallelism.html">8.3 自动并行计算</a></li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.4_multiple-gpus.html">8.4 多GPU计算</a></li>
+    <li>计算机视觉</li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.1_image-augmentation.html">9.1 图像增广</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.2_fine-tuning.html">9.2 微调</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.3_bounding-box.html">9.3 目标检测和边界框</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.4_anchor.html">9.4 锚框</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.5_multiscale-object-detection.html">9.5 多尺度目标检测</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.6_object-detection-dataset.html">9.6 目标检测数据集（皮卡丘）</a></li>
+    <li>9.7 单发多框检测（SSD）</li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.8_rcnn.html">9.8 区域卷积神经网络（R-CNN）系列</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.9_semantic-segmentation-and-dataset.html">9.9 语义分割和数据集</a></li>
+    <li>9.10 全卷积网络（FCN）</li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.11_neural-style.html">9.11 样式迁移</a></li>
+    <li>9.12 实战Kaggle比赛：图像分类（CIFAR-10）</li>
+    <li>9.13 实战Kaggle比赛：狗的品种识别（ImageNet Dogs）<li>
+    <li>自然语言处理</li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.1_word2vec.html">10.1 词嵌入（word2vec）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.2_approx-training.html">10.2 近似训练</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.3_word2vec-pytorch.html">10.3 word2vec的实现</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.4_fasttext.html">10.4 子词嵌入（fastText）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.5_glove.html">10.5 全局向量的词嵌入（GloVe）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.6_similarity-analogy.html">10.6 求近义词和类比词</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.7_sentiment-analysis-rnn.html">10.7 文本情感分类：使用循环神经网络</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.8_sentiment-analysis-cnn.html">10.8 文本情感分类：使用卷积神经网络（textCNN）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.9_seq2seq.html">10.9 编码器—解码器（seq2seq）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.10_beam-search.html">10.10 束搜索</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.11_attention.html">10.11 注意力机制</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.12_machine-translation.html">10.12 机器翻译</a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>9.8 区域卷积神经网络（R-CNN）系列</h1>
+<p>区域卷积神经网络（region-based CNN或regions with CNN features，R-CNN）是将深度模型应用于目标检测的开创性工作之一 [1]。在本节中，我们将介绍R-CNN和它的一系列改进方法：快速的R-CNN（Fast R-CNN）[3]、更快的R-CNN（Faster R-CNN）[4] 以及掩码R-CNN（Mask R-CNN）[5]。限于篇幅，这里只介绍这些模型的设计思路。</p>
+<h2>9.8.1 R-CNN</h2>
+<p>R-CNN首先对图像选取若干提议区域（如锚框也是一种选取方法）并标注它们的类别和边界框（如偏移量）。然后，用卷积神经网络对每个提议区域做前向计算抽取特征。之后，我们用每个提议区域的特征预测类别和边界框。图9.5描述了R-CNN模型。</p>
+<div align=center>
+<img width="600" src="../img/chapter09/9.8_r-cnn.svg"/>
+</div>
+
+<div align=center>图9.5 R-CNN模型</div>
+
+<p>具体来说，R-CNN主要由以下4步构成。</p>
+<ol>
+<li>对输入图像使用选择性搜索（selective search）来选取多个高质量的提议区域 [2]。这些提议区域通常是在多个尺度下选取的，并具有不同的形状和大小。每个提议区域将被标注类别和真实边界框。</li>
+<li>选取一个预训练的卷积神经网络，并将其在输出层之前截断。将每个提议区域变形为网络需要的输入尺寸，并通过前向计算输出抽取的提议区域特征。</li>
+<li>将每个提议区域的特征连同其标注的类别作为一个样本，训练多个支持向量机对目标分类。其中每个支持向量机用来判断样本是否属于某一个类别。</li>
+<li>将每个提议区域的特征连同其标注的边界框作为一个样本，训练线性回归模型来预测真实边界框。</li>
+</ol>
+<p>R-CNN虽然通过预训练的卷积神经网络有效抽取了图像特征，但它的主要缺点是速度慢。想象一下，我们可能从一张图像中选出上千个提议区域，对该图像做目标检测将导致上千次的卷积神经网络的前向计算。这个巨大的计算量令R-CNN难以在实际应用中被广泛采用。</p>
+<h2>9.8.2 Fast R-CNN</h2>
+<p>R-CNN的主要性能瓶颈在于需要对每个提议区域独立抽取特征。由于这些区域通常有大量重叠，独立的特征抽取会导致大量的重复计算。Fast R-CNN对R-CNN的一个主要改进在于只对整个图像做卷积神经网络的前向计算。</p>
+<p>图9.6描述了Fast R-CNN模型。</p>
+<div align=center>
+<img width="350" src="../img/chapter09/9.8_fast-rcnn.svg"/>
+</div>
+
+<div align=center>图9.6 Fast R-CNN模型</div>
+
+<p>它的主要计算步骤如下。</p>
+<ol>
+<li>与R-CNN相比，Fast R-CNN用来提取特征的卷积神经网络的输入是整个图像，而不是各个提议区域。而且，这个网络通常会参与训练，即更新模型参数。设输入为一张图像，将卷积神经网络的输出的形状记为$1 \times c \times h_1 \times w_1$。</li>
+<li>假设选择性搜索生成$n$个提议区域。这些形状各异的提议区域在卷积神经网络的输出上分别标出形状各异的兴趣区域。这些兴趣区域需要抽取出形状相同的特征（假设高和宽均分别指定为$h_2$和$w_2$）以便于连结后输出。Fast R-CNN引入兴趣区域池化（Region of Interest Pooling，RoI池化）层，将卷积神经网络的输出和提议区域作为输入，输出连结后的各个提议区域抽取的特征，形状为$n \times c \times h_2 \times w_2$。</li>
+<li>通过全连接层将输出形状变换为$n \times d$，其中超参数$d$取决于模型设计。</li>
+<li>预测类别时，将全连接层的输出的形状再变换为$n \times q$并使用softmax回归（$q$为类别个数）。预测边界框时，将全连接层的输出的形状变换为$n \times 4$。也就是说，我们为每个提议区域预测类别和边界框。</li>
+</ol>
+<p>Fast R-CNN中提出的兴趣区域池化层跟我们在5.4节（池化层）中介绍过的池化层有所不同。在池化层中，我们通过设置池化窗口、填充和步幅来控制输出形状。而兴趣区域池化层对每个区域的输出形状是可以直接指定的，例如，指定每个区域输出的高和宽分别为$h_2$和$w_2$。假设某一兴趣区域窗口的高和宽分别为$h$和$w$，该窗口将被划分为形状为$h_2 \times w_2$的子窗口网格，且每个子窗口的大小大约为$(h/h_2) \times (w/w_2)$。任一子窗口的高和宽要取整，其中的最大元素作为该子窗口的输出。因此，兴趣区域池化层可从形状各异的兴趣区域中均抽取出形状相同的特征。</p>
+<p>图9.7中，我们在$4 \times 4$的输入上选取了左上角的$3\times 3$区域作为兴趣区域。对于该兴趣区域，我们通过$2\times 2$兴趣区域池化层得到一个$2\times 2$的输出。4个划分后的子窗口分别含有元素0、1、4、5（5最大），2、6（6最大），8、9（9最大），10。</p>
+<div align=center>
+<img width="300" src="../img/chapter09/9.8_roi.svg"/>
+</div>
+
+<div align=center>图9.7 2×2兴趣区域池化层</div>
+
+<p>我们使用<code>ROIPooling</code>函数来演示兴趣区域池化层的计算。假设卷积神经网络抽取的特征<code>X</code>的高和宽均为4且只有单通道。</p>
+<pre><code class="python">import torch
+import torchvision
+
+X = torch.arange(16, dtype=torch.float).view(1, 1, 4, 4)
+X
+</code></pre>
+
+<p>输出:</p>
+<pre><code>tensor([[[[ 0.,  1.,  2.,  3.],
+          [ 4.,  5.,  6.,  7.],
+          [ 8.,  9., 10., 11.],
+          [12., 13., 14., 15.]]]])
+</code></pre>
+
+<p>假设图像的高和宽均为40像素。再假设选择性搜索在图像上生成了两个提议区域：每个区域由5个元素表示，分别为区域目标类别、左上角的$x$和$y$轴坐标以及右下角的$x$和$y$轴坐标。</p>
+<pre><code class="python">rois = torch.tensor([[0, 0, 0, 20, 20], [0, 0, 10, 30, 30]], dtype=torch.float)
+</code></pre>
+
+<p>由于<code>X</code>的高和宽是图像的高和宽的$1/10$，以上两个提议区域中的坐标先按<code>spatial_scale</code>自乘0.1，然后在<code>X</code>上分别标出兴趣区域<code>X[:,:,0:3,0:3]</code>和<code>X[:,:,1:4,0:4]</code>。最后对这两个兴趣区域分别划分子窗口网格并抽取高和宽为2的特征。</p>
+<pre><code class="python">torchvision.ops.roi_pool(X, rois, output_size=(2, 2), spatial_scale=0.1)
+</code></pre>
+
+<p>输出:</p>
+<pre><code>tensor([[[[ 5.,  6.],
+          [ 9., 10.]]],
+
+        [[[ 9., 11.],
+          [13., 15.]]]])
+</code></pre>
+
+<h2>9.8.3 Faster R-CNN</h2>
+<p>Fast R-CNN通常需要在选择性搜索中生成较多的提议区域，以获得较精确的目标检测结果。Faster R-CNN提出将选择性搜索替换成区域提议网络（region proposal network），从而减少提议区域的生成数量，并保证目标检测的精度。</p>
+<div align=center>
+<img width="600" src="../img/chapter09/9.8_faster-rcnn.svg"/>
+</div>
+
+<div align=center>图9.8 Faster R-CNN模型</div>
+
+<p>图9.8描述了Faster R-CNN模型。与Fast R-CNN相比，只有生成提议区域的方法从选择性搜索变成了区域提议网络，而其他部分均保持不变。具体来说，区域提议网络的计算步骤如下。</p>
+<ol>
+<li>使用填充为1的$3\times 3$卷积层变换卷积神经网络的输出，并将输出通道数记为$c$。这样，卷积神经网络为图像抽取的特征图中的每个单元均得到一个长度为$c$的新特征。</li>
+<li>以特征图每个单元为中心，生成多个不同大小和宽高比的锚框并标注它们。</li>
+<li>用锚框中心单元长度为$c$的特征分别预测该锚框的二元类别（含目标还是背景）和边界框。</li>
+<li>使用非极大值抑制，从预测类别为目标的预测边界框中移除相似的结果。最终输出的预测边界框即兴趣区域池化层所需要的提议区域。</li>
+</ol>
+<p>值得一提的是，区域提议网络作为Faster R-CNN的一部分，是和整个模型一起训练得到的。也就是说，Faster R-CNN的目标函数既包括目标检测中的类别和边界框预测，又包括区域提议网络中锚框的二元类别和边界框预测。最终，区域提议网络能够学习到如何生成高质量的提议区域，从而在减少提议区域数量的情况下也能保证目标检测的精度。</p>
+<h2>9.8.4 Mask R-CNN</h2>
+<p>如果训练数据还标注了每个目标在图像上的像素级位置，那么Mask R-CNN能有效利用这些详尽的标注信息进一步提升目标检测的精度。</p>
+<div align=center>
+<img width="400" src="../img/chapter09/9.8_mask-rcnn.svg"/>
+</div>
+
+<div align=center>图9.9 Mask R-CNN模型</div>
+
+<p>如图9.9所示，Mask R-CNN在Faster R-CNN的基础上做了修改。Mask R-CNN将兴趣区域池化层替换成了兴趣区域对齐层，即通过双线性插值（bilinear interpolation）来保留特征图上的空间信息，从而更适于像素级预测。兴趣区域对齐层的输出包含了所有兴趣区域的形状相同的特征图。它们既用来预测兴趣区域的类别和边界框，又通过额外的全卷积网络预测目标的像素级位置。我们将在9.10节（全卷积网络）介绍如何使用全卷积网络预测图像中像素级的语义。</p>
+<h2>小结</h2>
+<ul>
+<li>R-CNN对图像选取若干提议区域，然后用卷积神经网络对每个提议区域做前向计算抽取特征，再用这些特征预测提议区域的类别和边界框。</li>
+<li>Fast R-CNN对R-CNN的一个主要改进在于只对整个图像做卷积神经网络的前向计算。它引入了兴趣区域池化层，从而令兴趣区域能够抽取出形状相同的特征。</li>
+<li>Faster R-CNN将Fast R-CNN中的选择性搜索替换成区域提议网络，从而减少提议区域的生成数量，并保证目标检测的精度。</li>
+<li>Mask R-CNN在Faster R-CNN基础上引入一个全卷积网络，从而借助目标的像素级位置进一步提升目标检测的精度。</li>
+</ul>
+<h2>参考文献</h2>
+<p>[1] Girshick, R., Donahue, J., Darrell, T., &amp; Malik, J. (2014). Rich feature hierarchies for accurate object detection and semantic segmentation. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 580-587).</p>
+<p>[2] Uijlings, J. R., Van De Sande, K. E., Gevers, T., &amp; Smeulders, A. W. (2013). Selective search for object recognition. International journal of computer vision, 104(2), 154-171.</p>
+<p>[3] Girshick, R. (2015). Fast r-cnn. arXiv preprint arXiv:1504.08083.</p>
+<p>[4] Ren, S., He, K., Girshick, R., &amp; Sun, J. (2015). Faster r-cnn: Towards real-time object detection with region proposal networks. In Advances in neural information processing systems (pp. 91-99).</p>
+<p>[5] He, K., Gkioxari, G., Dollár, P., &amp; Girshick, R. (2017, October). Mask r-cnn. In Computer Vision (ICCV), 2017 IEEE International Conference on (pp. 2980-2988). IEEE.</p>
+<hr />
+<blockquote>
+<p>注：除代码外本节与原书基本相同，<a href="http://zh.d2l.ai/chapter_computer-vision/rcnn.html">原书传送门</a></p>
+</blockquote>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>sklearn 线性建模之贝叶斯岭回归 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  <li><a href="./index.html"> 如何学习本课程</a></li>
+<li><a href="./intro.html"> sklearn简介</a></li>
+<li><a href="./setup.html"> sklearn安装</a></li>
+<li><a href="./modelling.html"> sklearn建模过程</a></li>
+<li><a href="./data-representation.html"> sklearn数据表示</a></li>
+<li><a href="./estimator.html"> sklearn估算器</a></li>
+<li><a href="./conventions.html"> sklearn约定</a></li>
+<li><a href="./linear.html"> sklearn线性建模之线性回归</a></li>
+<li><a href="./logistic.html"> sklearn线性建模之逻辑回归</a></li>
+<li><a href="./ridge.html"> sklearn线性建模之岭回归</a></li>
+<li><a href="./bayes.html"> sklearn线性建模之贝叶斯岭回归</a></li>
+<li><a href="./sgd.html"> sklearn随机梯度下降(SGD)</a></li>
+<li><a href="./svm.html"> sklearn支持向量机(SVM)</a></li>
+<li><a href="./knn.html"> sklearnK近邻(KNN)</a></li>
+<li><a href="./nbc.html"> sklearn朴素贝叶斯分类(NBC)</a></li>
+<li><a href="./dt.html"> sklearn决策树(DT)</a></li>
+<li><a href="./rf.html"> sklearn随机决策树(RF)</a></li>
+<li><a href="./cluster.html"> skelarn聚类(cluster)</a></li>
+<li><a href="./pca.html"> sklearn降维(PCA)</a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>sklearn 线性建模之贝叶斯岭回归</h1>
+<p>贝叶斯回归允许自然机制通过使用概率分布而不是点估计来制定线性回归来生存数据不足或分布不良的数据。假定输出或响应“ y”是从概率分布中得出的，而不是估计为单个值。</p>
+<p>在数学上，为了获得完全概率模型，假定响应y是围绕X的高斯分布$X_{w}$如下</p>
+<p>$$
+p\left(y\arrowvert X,w,\alpha\right)=N\left(y\arrowvert X_{w},\alpha\right)
+$$</p>
+<p>贝叶斯回归最有用的一种类型是贝叶斯岭回归，它估计了回归问题的概率模型。在这里，系数w的先验由球面高斯给出，如下所示-</p>
+<p>$$
+p\left(w\arrowvert \lambda\right)=N\left(w\arrowvert 0,\lambda^{-1}I_{p}\right)
+$$</p>
+<h3>实施实例</h3>
+<p>以下Python脚本提供了使用sklearn <strong>BayesianRidge</strong>模块拟合Bayesian Ridge回归模型的简单示例。</p>
+<pre><code class="python">from sklearn import linear_model
+X = [[0, 0], [1, 1], [2, 2], [3, 3]]
+Y = [0, 1, 2, 3]
+BayReg = linear_model.BayesianRidge()
+BayReg.fit(X, Y)
+</code></pre>
+
+<p>从上面的输出中，我们可以检查计算中使用的模型参数。</p>
+<p>现在，一旦拟合，模型可以预测新值，如下所示：</p>
+<pre><code class="python">BayReg.predict([[1,1]])
+</code></pre>
+
+<p>类似地，我们可以如下访问模型的系数w-</p>
+<pre><code class="python">BayReg.coef_
+</code></pre>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

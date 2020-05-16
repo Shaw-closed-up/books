@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>特征工程 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  <li><a href="./index.html"> 如何学习本课程 </a></li>
+<li><a href="./intro.html"> 机器学习 简介 </a></li>
+<li><a href="./feature-engineering.html"> 机器学习 特征工程 </a></li>
+<li><a href="./feature-extraction.html"> 机器学习 特征提取 </a></li>
+<li><a href="./feature-preprocessing.html"> 机器学习 特征预处理 </a></li>
+<li><a href="./feature_selection.html"> 机器学习 特征选择 </a></li>
+<li><a href="./feature_selection.html"> 机器学习 特征选择 </a></li>
+<li><a href="./metrics.html"> 机器学习 模型评估 </a></li>
+<li><a href="./dataset-split.html"> 机器学习 数据集划分 </a></li>
+<li><a href="./dataset-split.html"> 机器学习 数据集划分 </a></li>
+<li><a href="./knn.html"> 机器学习算法 K近邻(KNN) </a></li>
+<li><a href="./nb.html"> 机器学习算法 朴素贝叶斯 </a></li>
+<li><a href="./dt.html"> 机器学习算法 决策树 </a></li>
+<li><a href="./rf.html"> 机器学习算法 集成学习-随机森林 </a></li>
+<li><a href="./lr.html"> 机器学习算法 线性回归 </a></li>
+<li><a href="./logstic.html"> 机器学习算法 逻辑回归 </a></li>
+<li><a href="./ridge.html"> 机器学习算法 岭回归 </a></li>
+<li><a href="./k-means.html"> 机器学习算法 聚类-KMeans </a></li>
+<li><a href="./fitting.html"> 机器学习模型 欠拟合与过拟合 </a></li>
+<li><a href="./save-load.html"> 机器学习模型 保存与加载 </a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>特征工程</h1>
+<h2>学习目标</h2>
+<ul>
+<li>目标</li>
+<li>了解特征工程在机器学习当中的重要性</li>
+<li>知道特征工程的分类</li>
+<li>知道数据集的分为训练集和测试集</li>
+<li>会使用sklearn的数据集</li>
+</ul>
+<h2>为什么需要特征工程(Feature Engineering)</h2>
+<blockquote>
+<p>机器学习领域的大神Andrew Ng(吴恩达)老师说“Coming up with features is difficult, time-consuming, requires expert knowledge. “Applied machine learning” is basically feature engineering. ”</p>
+<p>注：业界广泛流传：数据和特征决定了机器学习的上限，而模型和算法只是逼近这个上限而已。</p>
+</blockquote>
+<h2>什么是特征工程</h2>
+<p>特征工程是使用<strong>专业背景知识和技巧处理数据</strong>，<strong>使得特征能在机器学习算法上发挥更好的作用的过程</strong>。</p>
+<ul>
+<li>意义：会直接影响机器学习的效果</li>
+</ul>
+<h2>特征工程的位置与数据处理的比较</h2>
+<p><img alt="特征工程过程" src="./images/特征工程过程.png" /></p>
+<ul>
+<li>pandas:一个数据读取非常方便以及基本的处理格式的工具</li>
+<li>sklearn:对于特征的处理提供了强大的接口</li>
+</ul>
+<p><strong>特征工程包含内容</strong></p>
+<ul>
+<li>特征抽取</li>
+<li>特征预处理</li>
+<li>特征降维</li>
+</ul>
+<h2>机器学习数据集</h2>
+<h3>可用数据集</h3>
+<p><img alt="img" src="./images/可用数据集.png" /></p>
+<p>Kaggle网址：https://www.kaggle.com/datasets</p>
+<p>UCI数据集网址： http://archive.ics.uci.edu/ml/</p>
+<p>scikit-learn网址：<a href="http://scikit-learn.org/stable/datasets/index.html">http://scikit-learn.org/stable/datasets/index.html#datasets</a></p>
+<h4>Scikit-learn工具介绍</h4>
+<p><img alt="scikitlearn" src="./images/scikitlearn.png" /></p>
+<ul>
+<li>Python语言的机器学习工具</li>
+<li>Scikit-learn包括许多知名的机器学习算法的实现</li>
+<li>Scikit-learn文档完善，容易上手，丰富的API</li>
+</ul>
+<h4>安装</h4>
+<pre><code>!pip3 install Scikit-learn --user
+</code></pre>
+
+<p>安装好之后可以通过以下命令查看是否安装成功</p>
+<pre><code class="python">import sklearn
+</code></pre>
+
+<ul>
+<li>注：安装scikit-learn需要Numpy, Scipy等库</li>
+</ul>
+<h4>Scikit-learn包含的内容</h4>
+<p><img alt="scikitlearn接口" src="./images/scikitlearn接口.png" /></p>
+<ul>
+<li>分类、聚类、回归</li>
+<li>特征工程</li>
+<li>模型选择、调优</li>
+</ul>
+<h3>sklearn数据集</h3>
+<h4>scikit-learn数据集API介绍</h4>
+<ul>
+<li>sklearn.datasets</li>
+<li>加载获取流行数据集</li>
+<li>datasets.load_*()<ul>
+<li>获取小规模数据集，数据包含在datasets里</li>
+</ul>
+</li>
+<li>datasets.fetch_*(data_home=None)<ul>
+<li>获取大规模数据集，需要从网络上下载，函数的第一个参数是data_home，表示数据集下载的目录,默认是 ~/scikit_learn_data/</li>
+</ul>
+</li>
+</ul>
+<h4>sklearn小数据集</h4>
+<ul>
+<li><code>sklearn.datasets.load_iris()</code></li>
+</ul>
+<p>加载并返回鸢尾花数据集</p>
+<p><img alt="img" src="./images/鸢尾花数据集.png" /></p>
+<ul>
+<li>sklearn.datasets.load_boston()</li>
+</ul>
+<p>加载并返回波士顿房价数据集</p>
+<p><img alt="img" src="./images/波士顿房价数据集.png" /></p>
+<h4>sklearn大数据集</h4>
+<ul>
+<li><code>sklearn.datasets.fetch_20newsgroups(data_home=None,subset=‘train’)</code></li>
+<li>subset：'train'或者'test'，'all'，可选，选择要加载的数据集。</li>
+<li>训练集的“训练”，测试集的“测试”，两者的“全部”</li>
+</ul>
+<h4>sklearn数据集的使用</h4>
+<ul>
+<li>以鸢尾花数据集为例：</li>
+</ul>
+<p><img alt="img" src="./images/鸢尾花数据集使用.png" /></p>
+<p><strong>sklearn数据集返回值介绍</strong></p>
+<ul>
+<li><code>load</code>和<code>fetch</code></li>
+</ul>
+<p>返回的数据类型datasets.base.Bunch(字典格式)</p>
+<ul>
+<li>data：特征数据数组，是 [n_samples * n_features] 的二维 numpy.ndarray 数组</li>
+<li>target：标签数组，是 n_samples 的一维 numpy.ndarray 数组</li>
+<li>DESCR：数据描述</li>
+<li>feature_names：特征名,新闻数据，手写数字、回归数据集没有</li>
+<li>target_names：标签名</li>
+</ul>
+<pre><code class="python">from sklearn.datasets import load_iris
+# 获取鸢尾花数据集
+iris = load_iris()
+print(&quot;鸢尾花数据集的返回值：\n&quot;, iris)
+# 返回值是一个继承自字典的Bench
+print(&quot;鸢尾花的特征值:\n&quot;, iris[&quot;data&quot;])
+print(&quot;鸢尾花的目标值：\n&quot;, iris.target)
+print(&quot;鸢尾花特征的名字：\n&quot;, iris.feature_names)
+print(&quot;鸢尾花目标值的名字：\n&quot;, iris.target_names)
+print(&quot;鸢尾花的描述：\n&quot;, iris.DESCR)
+</code></pre>
+
+<p><strong>思考：拿到的数据是否全部都用来训练一个模型？</strong></p>
+<h3>数据集的划分</h3>
+<p>机器学习一般的数据集会划分为两个部分：</p>
+<ul>
+<li>训练数据：用于训练，<strong>构建模型</strong></li>
+<li>测试数据：在模型检验时使用，用于<strong>评估模型是否有效</strong></li>
+</ul>
+<p>划分比例：</p>
+<ul>
+<li>训练集：70% 80% 75%</li>
+<li>测试集：30% 20% 30%</li>
+</ul>
+<p><strong>数据集划分api</strong></p>
+<ul>
+<li><code>sklearn.model_selection.train_test_split(arrays, *options)</code></li>
+<li>x 数据集的特征值</li>
+<li>y 数据集的标签值</li>
+<li>test_size 测试集的大小，一般为float</li>
+<li>random_state 随机数种子,不同的种子会造成不同的随机采样结果。相同的种子采样结果相同。</li>
+<li>return 测试集特征训练集特征值值，训练标签，测试标签(默认随机取)</li>
+</ul>
+<pre><code class="python">from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+
+
+def datasets_demo():
+    &quot;&quot;&quot;
+    对鸢尾花数据集的演示
+    :return: None
+    &quot;&quot;&quot;
+    # 1、获取鸢尾花数据集
+    iris = load_iris()
+    print(&quot;鸢尾花数据集的返回值：\n&quot;, iris)
+    # 返回值是一个继承自字典的Bench
+    print(&quot;鸢尾花的特征值:\n&quot;, iris[&quot;data&quot;])
+    print(&quot;鸢尾花的目标值：\n&quot;, iris.target)
+    print(&quot;鸢尾花特征的名字：\n&quot;, iris.feature_names)
+    print(&quot;鸢尾花目标值的名字：\n&quot;, iris.target_names)
+    print(&quot;鸢尾花的描述：\n&quot;, iris.DESCR)
+
+    # 2、对鸢尾花数据集进行分割
+    # 训练集的特征值x_train 测试集的特征值x_test 训练集的目标值y_train 测试集的目标值y_test
+    x_train, x_test, y_train, y_test = train_test_split(iris.data, iris.target, random_state=22)
+    print(&quot;x_train:\n&quot;, x_train.shape)
+    # 随机数种子
+    x_train1, x_test1, y_train1, y_test1 = train_test_split(iris.data, iris.target, random_state=6)
+    x_train2, x_test2, y_train2, y_test2 = train_test_split(iris.data, iris.target, random_state=6)
+    print(&quot;如果随机数种子不一致：\n&quot;, x_train == x_train1)
+    print(&quot;如果随机数种子一致：\n&quot;, x_train1 == x_train2)
+
+    return None
+
+datasets_demo()
+</code></pre>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

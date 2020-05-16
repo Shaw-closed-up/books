@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+    <link href="/static/xterm/xterm.css" rel="stylesheet" type="text/css"/>
+
+    <link href="/static/css/docs.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css"/>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" id="font-awesome-css" href="https://cdn.freeaihub.com/asset/css/font-awesome.min.4.2.0.css" type="text/css" media="all">
+    <link rel="stylesheet" id="google-code-prettify-css" href="https://cdn.freeaihub.com/asset/css/prettify-2.1.css?ver=2.1
+" type="text/css" media="all">
+
+    <title>Nginx 示例2:实现反向代理 - FreeAIHub</title>
+  
+    <style>
+
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+        flex: 1;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: calc(100vh - 96px);
+      }
+      .xterm-wrapper{
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      .entry-content {
+          word-break: break-word;
+          height: calc(100vh - 60px);
+          overflow-y: scroll;
+          padding: 30px;
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light">
+
+        <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar text-center">
+      <a class="navbar-brand mr-0 mr-md-2" aria-label="引导程序" href="/">
+        <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+      </a>
+      <ul class="navbar-nav ml-md-auto">
+        <li class="nav-item">
+          <a href="/" class="nav-link pl-2 pr-1 mx-1 py-3 my-n2">首页</a>
+        </li>
+        <li class="nav-item">
+          <a href="/" class="nav-link pl-2 pr-1 mx-1 py-3 my-n2">课程页面</a>
+        </li>
+      </ul>
+    </header>
+
+
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-3 col-xl-2 bd-sidebar">    
+            <form class="bd-search d-flex align-items-center justify-content-end">
+              <button class="btn bd-search-docs-toggle d-md-none p-0 ml-3 collapsed" type="button" data-toggle="collapse" data-target="#bd-docs-nav" aria-controls="bd-docs-nav" aria-expanded="false" aria-label="切换文档导航">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" role="img" focusable="false"><title>Menu</title><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg>
+              </button>
+            </form>
+            <div class="bd-links collapse" id="bd-docs-nav" aria-label="主导航">
+              <div class="bd-toc-item active">
+                <a class="bd-toc-link" href="#">如何学习本课程</a>
+                <ul class="nav bd-sidenav">
+                  <li class="active bd-sidenav-active"><a href="./intro.html"> 简介 </a></li>
+                  <li><a href="./case1.html"> Nginx 示例1:修改默认服务目录及首页 </a></li>
+<li><a href="./case2.html"> Nginx 示例2:实现反向代理 </a></li>
+<li><a href="./case3.html"> Nginx 示例3:传递请求标头proxy_set_header </a></li>
+<li><a href="./case4.html"> Nginx 示例4:压缩和解压gzip  </a></li>
+<li><a href="./case5.html"> Nginx 示例5:自定义错误页404 </a></li>
+<li><a href="./case6.html"> Nginx 示例6:重写URI请求(rewrite) </a></li>
+<li><a href="./case7.html"> Nginx 示例7:设置FastCGI代理 </a></li>
+<li><a href="./case8.html"> Nginx 示例8:重写HTTP响应(sub_filter) </a></li>
+<li><a href="./case9.html"> Nginx 示例9:负载均衡(load balance) </a></li>
+<li><a href="./conf.html"> Nginx 配置文件 </a></li>
+<li><a href="./index.html"> Nginx 简介 </a></li>
+<li><a href="./intro.html"> Nginx 简介 </a></li>
+<li><a href="./log.html"> nginx 日志配置 </a></li>
+<li><a href="./service.html"> Nginx 服务 </a></li>
+<li><a href="./setup.html"> nginx 环境安装配置  </a></li>
+                </ul>
+
+              </div>
+
+
+          </div>
+          </div>
+          <div class="entry-content col-md-9 col-xl-5 py-md-3 pl-md-5 bd-content">
+              
+          <h1>Nginx 示例2:实现反向代理</h1>
+<h2>关于代理</h2>
+<p>说到代理，首先我们要明确一个概念，所谓代理就是一个代表、一个渠道；</p>
+<p>此时就涉及到两个角色，一个是被代理角色，一个是目标角色，被代理角色通过这个代理访问目标角色完成一些任务的过程称为代理操作过程；如同生活中的专卖店~客人到adidas专卖店买了一双鞋，这个专卖店就是代理，被代理角色就是adidas厂家，目标角色就是用户。</p>
+<h2>正向代理</h2>
+<p>说反向代理之前，我们先看看正向代理，正向代理也是大家最常接触的到的代理模式，我们会从两个方面来说关于正向代理的处理模式，分别从软件方面和生活方面来解释一下什么叫正向代理。</p>
+<p>在如今的网络环境下，我们如果由于技术需要要去访问国外的某些网站，此时你会发现位于国外的某网站我们通过浏览器是没有办法访问的，此时大家可能都会用一个操作FQ进行访问，FQ的方式主要是找到一个可以访问国外网站的代理服务器，我们将请求发送给代理服务器，代理服务器去访问国外的网站，然后将访问到的数据传递给我们！</p>
+<p>上述这样的代理模式称为正向代理，正向代理最大的特点是客户端非常明确要访问的服务器地址；服务器只清楚请求来自哪个代理服务器，而不清楚来自哪个具体的客户端；正向代理模式屏蔽或者隐藏了真实客户端信息。来看个示意图（我把客户端和正向代理框在一块，同属于一个环境，后面我有介绍）：</p>
+<p><img alt="img" src="./images/frontforwad-proxy.png" /></p>
+<p>客户端必须设置正向代理服务器，当然前提是要知道正向代理服务器的IP地址，还有代理程序的端口。如图。</p>
+<p>总结来说：正向代理，"它代理的是客户端，代客户端发出请求"，是一个位于客户端和原始服务器(origin server)之间的服务器，为了从原始服务器取得内容，客户端向代理发送一个请求并指定目标(原始服务器)，然后代理向原始服务器转交请求并将获得的内容返回给客户端。客户端必须要进行一些特别的设置才能使用正向代理。</p>
+<p><strong>正向代理的用途：</strong>
+（1）访问原来无法访问的资源，如Google
+（2） 可以做缓存，加速访问资源
+（3）对客户端访问授权，上网进行认证
+（4）代理可以记录用户访问记录（上网行为管理），对外隐藏用户信息</p>
+<h2>反向代理</h2>
+<p>明白了什么是正向代理，我们继续看关于反向代理的处理方式，举例如我大天朝的某宝网站，每天同时连接到网站的访问人数已经爆表，单个服务器远远不能满足人民日益增长的购买欲望了，此时就出现了一个大家耳熟能详的名词：分布式部署；也就是通过部署多台服务器来解决访问人数限制的问题；某宝网站中大部分功能也是直接使用Nginx进行反向代理实现的，并且通过封装Nginx和其他的组件之后起了个高大上的名字：Tengine，有兴趣的童鞋可以访问Tengine的官网查看具体的信息：http://tengine.taobao.org/。那么反向代理具体是通过什么样的方式实现的分布式的集群操作呢，我们先看一个示意图（我把服务器和反向代理框在一块，同属于一个环境，后面我有介绍）：</p>
+<p><img alt="img" src="./images/backforwad-proxy.png" /></p>
+<p>通过上述的图解大家就可以看清楚了，多个客户端给服务器发送的请求，Nginx服务器接收到之后，按照一定的规则分发给了后端的业务处理服务器进行处理了。此时~请求的来源也就是客户端是明确的，但是请求具体由哪台服务器处理的并不明确了，Nginx扮演的就是一个反向代理角色。</p>
+<p>客户端是无感知代理的存在的，反向代理对外都是透明的，访问者并不知道自己访问的是一个代理。因为客户端不需要任何配置就可以访问。</p>
+<p>反向代理，"它代理的是服务端，代服务端接收请求"，主要用于服务器集群分布式部署的情况下，反向代理隐藏了服务器的信息。</p>
+<p>反向代理的作用：
+（1）保证内网的安全，通常将反向代理作为公网访问地址，Web服务器是内网
+（2）负载均衡，通过反向代理服务器来优化网站的负载</p>
+<h3>项目场景</h3>
+<p>通常情况下，我们在实际项目操作时，正向代理和反向代理很有可能会存在在一个应用场景中，正向代理代理客户端的请求去访问目标服务器，目标服务器是一个反向单利服务器，反向代理了多台真实的业务处理服务器。具体的拓扑图如下：</p>
+<p><img alt="img" src="./images/frontforwad-proxy2.png" /></p>
+<h2>二者区别</h2>
+<p>截了一张图来说明正向代理和反向代理二者之间的区别，如图。</p>
+<p><img alt="img" src="./images/proxy.png" /></p>
+<p>在正向代理中，Proxy和Client同属于一个LAN（图中方框内），隐藏了客户端信息；</p>
+<p>在反向代理中，Proxy和Server同属于一个LAN（图中方框内），隐藏了服务端信息；</p>
+<p>实际上，Proxy在两种代理中做的事情都是替服务器代为收发请求和响应，不过从结构上看正好左右互换了一下，所以把后出现的那种代理方式称为反向代理了。</p>
+<h2>示例</h2>
+<pre><code class="bash">vim /etc/nginx/sites-enabled/default 
+</code></pre>
+
+<p>在server段下添加一个新的location如下后保存退出</p>
+<pre><code>location /pythonproxy {
+         proxy_pass http://localhost:8000;
+}
+</code></pre>
+<pre><code class="bash">#重载nginx
+nginx -s reload
+</code></pre>
+
+<pre><code class="bash">cd ~ &amp;&amp; mkdir -p pythonproxy
+#制作首页
+echo 'This is Python3 Web Server' &gt; ~/pythonproxy/index.html
+#启动Python Web服务器
+python3 -m http.server
+</code></pre>
+
+<p>访问网址{url}/pythonproxy</p>
+            
+          </div>
+
+          <div class="d-none d-xl-block col-xl-5 bd-toc xterm-wrapper">
+             <!-- 导航 -->
+            <ul class="nav nav-tabs" id="myTab">
+              <li class="nav-item">
+                <a class="nav-link"  href="#home">Terminal</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="#profile">VNC</a>
+              </li>
+            </ul>
+            <!-- 带显示效果的内容 -->
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="home" >
+                <div id="term-content">
+                  <div id="terminal"></div>
+                </div>
+                 
+              </div>
+			
+            <div class="tab-pane fade position-relative" id="profile">	
+
+              <div id="top_bar">
+                  <div id="status">Loading</div>
+                  <!-- <div id="sendCtrlAltDelButton">Send CtrlAltDel</div> -->
+              </div>
+              <div id="screen">
+                  <!-- This is where the remote screen will appear -->
+              </div>
+			      </div>
+           
+        </div>
+          </div>
+        </div> <!-- / .row -->
+      </div>
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <link rel="stylesheet" id="yarppRelatedCss-css" href="https://cdn.freeaihub.com/asset/css/related.css
+?ver=4.9.14" type="text/css" media="all">
+    <script type='text/javascript' src='https://cdn.freeaihub.com/asset/js/prettify.js?ver=2.1'></script>
+    <script type='text/javascript' src='https://cdn.freeaihub.com/asset/js/power.js?ver=2.1'></script>
+    <script type='text/javascript' src='https://cdn.freeaihub.com/asset/js/wp-embed.min.js?ver=4.9.14'></script>
+    <!-- Theme JS -->
+
+    <script src="/static/js/popper.min.js"></script>
+
+    <script src="/static/xterm/xterm.js"></script>
+    <script src="/static/xterm/xterm-addon-fit.js"></script>
+    <script src="/static/xterm/xterm-addon-attach.js"></script>
+    <!-- Promise polyfill for IE11 -->
+    <script src="/vendor/promise.js"></script>
+        
+    <!-- ES2015/ES6 modules polyfill -->
+    <script nomodule src="/vendor/browser-es-module-loader/dist/browser-es-module-loader.js"></script>
+ 
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+     <script>
+        var terminal; // 终端
+        var sockId;  // 终端 id
+        var socket; // websocket 服务
+
+        const isWindows = ['Windows', 'Win16', 'Win32', 'WinCE'].indexOf(navigator.platform) >= 0;
+        terminal = new Terminal({
+            windowsMode: isWindows,
+            convertEol: true,
+            fontFamily: `'Fira Mono', monospace`,
+            fontSize: 16,
+            fontWeight: 400,
+            rendererType: "canvas" // canvas 或者 dom
+        });
+        const fitAddon = new FitAddon.FitAddon();
+        terminal.loadAddon(fitAddon);
+
+        terminal.open(document.getElementById('terminal'));
+        terminal.element.style.padding = '20px';
+        fitAddon.fit();
+
+        terminal.onData(function(data) {
+            socket.send(JSON.stringify({'data': data}));
+            fitAddon.fit();
+        });
+
+        $.ajax({
+          type: 'get',
+          url: 'https://api.freeaihub.com/api/env/get/webssh',
+          mode: "no-cors",
+          dataType: "json",
+          xhrFields: {
+              withCredentials: true
+          },
+          crossDomain: true,  
+          success: async function(data) {
+            if(data.errno == 0){
+              let { ...json } =  data.data
+              let formdata = new FormData();
+              formdata.append("hostname", json.hostname);
+              formdata.append("username", json.username);
+              formdata.append("port", json.port);
+              formdata.append("password", json.password);
+              formdata.append("term", json.term);
+              let response = await fetch(
+                json.host,
+                  {
+                      method: 'POST',
+                      body: formdata
+                  }
+              )
+
+          
+
+              sockId = await response.json();
+            
+              let socketHost = json.ssh_host +=`/ws?id=${sockId.id}`;
+              console.log(socketHost)
+              socket = new WebSocket(socketHost);
+
+              socket.onopen = () => {
+                terminal.loadAddon(new AttachAddon.AttachAddon(socket));
+                terminal._initialized = true;
+              }
+
+              socket.onmessage= (term) => {
+                if(!terminal._initialized){
+                    return
+                }
+                terminal._initialized = false;
+                socket.send(JSON.stringify({ resize: [term.cols, term.rows] }));
+              }
+
+            }
+
+          }
+        })
+
+     </script> 
+    <script>
+      function randomWord(randomFlag, min, max){
+        let str = "",
+            range = min,
+            arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+    
+        // 随机产生
+        if(randomFlag){
+            range = Math.round(Math.random() * (max-min)) + min;
+        }
+        for(let i=0; i<range; i++){
+            let pos = Math.round(Math.random() * (arr.length-1));
+            str += arr[pos];
+        }
+        return str;
+      }
+
+
+    let uuidCookie = randomWord(false, 16)  
+
+
+    if(Cookies.get('uuid') == null) {
+        Cookies.set('uuid', uuidCookie, { path: '/', domain: '.freeaihub.com'})
+    }
+    </script>
+
+     <!-- actual script modules -->
+    <script type="module" crossorigin="anonymous">
+         // RFB holds the API to connect and communicate with a VNC server
+         import RFB from '/core/rfb.js';
+ 
+         let rfb;
+         let desktopName;
+ 
+         // When this function is called we have
+         // successfully connected to a server
+         function connectedToServer(e) {
+            //  status("Connected to " + desktopName);
+         }
+ 
+         // This function is called when we are disconnected
+         function disconnectedFromServer(e) {
+             if (e.detail.clean) {
+                 status("Disconnected");
+             } else {
+                 status("Something went wrong, connection is closed");
+             }
+         }
+ 
+         // When this function is called, the server requires
+         // credentials to authenticate
+         function credentialsAreRequired(e) {
+             const password = prompt("Password Required:");
+             rfb.sendCredentials({ password: password });
+         }
+ 
+         // When this function is called we have received
+         // a desktop name from the server
+         function updateDesktopName(e) {
+             desktopName = e.detail.name;
+         }
+ 
+         // Since most operating systems will catch Ctrl+Alt+Del
+         // before they get a chance to be intercepted by the browser,
+         // we provide a way to emulate this key sequence.
+         function sendCtrlAltDel() {
+             rfb.sendCtrlAltDel();
+             return false;
+         }
+ 
+         // Show a status text in the top bar
+         function status(text) {
+             document.getElementById('status').textContent = text;
+         }
+ 
+         // This function extracts the value of one variable from the
+         // query string. If the variable isn't defined in the URL
+         // it returns the default value instead.
+         function readQueryVariable(name, defaultValue) {
+             // A URL with a query parameter can look like this:
+             // https://www.example.com?myqueryparam=myvalue
+             //
+             // Note that we use location.href instead of location.search
+             // because Firefox < 53 has a bug w.r.t location.search
+             const re = new RegExp('.*[?&]' + name + '=([^&#]*)'),
+                   match = document.location.href.match(re);
+ 
+             if (match) {
+                 // We have to decode the URL since want the cleartext value
+                 return decodeURIComponent(match[1]);
+             }
+ 
+             return defaultValue;
+         }
+ 
+        //  document.getElementById('sendCtrlAltDelButton')
+        //      .onclick = sendCtrlAltDel;
+         
+        $('#myTab a:first').tab('show');//初始化显示哪个tab 
+      
+        $('#myTab a').click(function (e) { 
+          e.preventDefault();//阻止a链接的跳转行为 
+          $(this).tab('show');//显示当前选中的链接及关联的content 
+        })  
+
+        $('#myTab a[href="#profile"]').on('click', function (e) {
+          $.ajax({
+           type: 'get',
+           url: 'https://api.freeaihub.com/api/env/get/vnc',
+           mode: "no-cors",
+           dataType: "json",
+           xhrFields: {
+               withCredentials: true
+           },
+           crossDomain: true,  
+           success: function(data) {
+             if(data.errno == 0){
+               let { ...json } =  data.data
+   
+               vnc(json)
+             }
+           }
+         })
+        });
+
+  
+
+
+         function vnc(obj){
+         
+             // Build the websocket URL used to connect
+             let url;
+
+     
+             url = obj.url
+     
+             // Creating a new RFB object will start a new connection
+             rfb = new RFB(document.getElementById('screen'), url,
+                               { 
+                                 credentials: { password: obj.token },
+
+                                });
+     
+             // Add listeners to important events from the RFB module
+             rfb.addEventListener("connect",  connectedToServer);
+             rfb.addEventListener("disconnect", disconnectedFromServer);
+             rfb.addEventListener("credentialsrequired", credentialsAreRequired);
+             rfb.addEventListener("desktopname", updateDesktopName);
+          
+             // Set parameters that can be changed on an active connection
+             rfb.viewOnly = readQueryVariable('view_only', false);
+             rfb.scaleViewport = 'scale';
+
+         }
+        
+    </script>
+
+  </body>
+</html>

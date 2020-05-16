@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>3.5 图像分类数据集（Fashion-MNIST） - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  
+    <li>简介</li>
+    <li><a href="/d2l-pytorch/chapter01_DL-intro/deep-learning-intro.html">1. 深度学习简介</a></li>
+    <li>预备知识</li>
+    <li><a href="/d2l-pytorch/chapter02_prerequisite/2.1_install.html">2.1 环境配置</a></li>
+    <li><a href="/d2l-pytorch/chapter02_prerequisite/2.2_tensor.html">2.2 数据操作</a></li>
+    <a href="/d2l-pytorch/chapter02_prerequisite/2.3_autograd.html">2.3 自动求梯度</a></li>
+    <li>深度学习基础</li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.1_linear-regression.html">3.1 线性回归</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.2_linear-regression-scratch.html">3.2 线性回归的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.3_linear-regression-pytorch.html">3.3 线性回归的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.4_softmax-regression.html">3.4 softmax回归</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.5_fashion-mnist.html">3.5 图像分类数据集（Fashion-MNIST）</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.6_softmax-regression-scratch.html">3.6 softmax回归的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.7_softmax-regression-pytorch.html">3.7 softmax回归的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.8_mlp.html">3.8 多层感知机</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.9_mlp-scratch.html">3.9 多层感知机的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.10_mlp-pytorch.html">3.10 多层感知机的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.11_underfit-overfit.html">3.11 模型选择、欠拟合和过拟合</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.12_weight-decay.html">3.12 权重衰减</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.13_dropout.html">3.13 丢弃法</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.14_backprop.html">3.14 正向传播、反向传播和计算图</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.15_numerical-stability-and-init.html">3.15 数值稳定性和模型初始化</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.16_kaggle-house-price.html">3.16 实战Kaggle比赛：房价预测</a></li>
+    <li>深度学习计算</li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.1_model-construction.html">4.1 模型构造</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.2_parameters.html">4.2 模型参数的访问、初始化和共享</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.3_deferred-init.html">4.3 模型参数的延后初始化</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.4_custom-layer.html">4.4 自定义层</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.5_read-write.html">4.5 读取和存储</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.6_use-gpu.html">4.6 GPU计算</a></li>
+    <li>卷积神经网络</li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.1_conv-layer.html">5.1 二维卷积层</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.2_padding-and-strides.html">5.2 填充和步幅</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.3_channels.html">5.3 多输入通道和多输出通道</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.4_pooling.html">5.4 池化层</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.5_lenet.html">5.5 卷积神经网络（LeNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.6_alexnet.html">5.6 深度卷积神经网络（AlexNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.7_vgg.html">5.7 使用重复元素的网络（VGG）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.8_nin.html">5.8 网络中的网络（NiN）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.9_googlenet.html">5.9 含并行连结的网络（GoogLeNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.10_batch-norm.html">5.10 批量归一化</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.11_resnet.html">5.11 残差网络（ResNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.12_densenet.html">5.12 稠密连接网络（DenseNet）</a></li>
+    <li>循环神经网络</li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.1_lang-model.html">6.1 语言模型</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.2_rnn.html">6.2 循环神经网络</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.3_lang-model-dataset.html">6.3 语言模型数据集（周杰伦专辑歌词）</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.4_rnn-scratch.html">6.4 循环神经网络的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.5_rnn-pytorch.html">6.5 循环神经网络的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.6_bptt.html">6.6 通过时间反向传播</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.7_gru.html">6.7 门控循环单元（GRU）</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.8_lstm.html">6.8 长短期记忆（LSTM）</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.9_deep-rnn.html">6.9 深度循环神经网络</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.10_bi-rnn.html">6.10 双向循环神经网络</a></li>
+    <li>优化算法</li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.1_optimization-intro.html">7.1 优化与深度学习</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.2_gd-sgd.html">7.2 梯度下降和随机梯度下降</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.3_minibatch-sgd.html">7.3 小批量随机梯度下降</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.4_momentum.html">7.4 动量法</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.5_adagrad.html">7.5 AdaGrad算法</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.6_rmsprop.html">7.6 RMSProp算法</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.7_adadelta.html">7.7 AdaDelta算法</a></li>
+    <a href="/d2l-pytorch/chapter07_optimization/7.8_adam.html">7.8 Adam算法</a></li>
+    <li>计算性能</li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.1_hybridize.html">8.1 命令式和符号式混合编程</a></li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.2_async-computation.html">8.2 异步计算</a></li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.3_auto-parallelism.html">8.3 自动并行计算</a></li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.4_multiple-gpus.html">8.4 多GPU计算</a></li>
+    <li>计算机视觉</li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.1_image-augmentation.html">9.1 图像增广</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.2_fine-tuning.html">9.2 微调</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.3_bounding-box.html">9.3 目标检测和边界框</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.4_anchor.html">9.4 锚框</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.5_multiscale-object-detection.html">9.5 多尺度目标检测</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.6_object-detection-dataset.html">9.6 目标检测数据集（皮卡丘）</a></li>
+    <li>9.7 单发多框检测（SSD）</li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.8_rcnn.html">9.8 区域卷积神经网络（R-CNN）系列</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.9_semantic-segmentation-and-dataset.html">9.9 语义分割和数据集</a></li>
+    <li>9.10 全卷积网络（FCN）</li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.11_neural-style.html">9.11 样式迁移</a></li>
+    <li>9.12 实战Kaggle比赛：图像分类（CIFAR-10）</li>
+    <li>9.13 实战Kaggle比赛：狗的品种识别（ImageNet Dogs）<li>
+    <li>自然语言处理</li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.1_word2vec.html">10.1 词嵌入（word2vec）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.2_approx-training.html">10.2 近似训练</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.3_word2vec-pytorch.html">10.3 word2vec的实现</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.4_fasttext.html">10.4 子词嵌入（fastText）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.5_glove.html">10.5 全局向量的词嵌入（GloVe）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.6_similarity-analogy.html">10.6 求近义词和类比词</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.7_sentiment-analysis-rnn.html">10.7 文本情感分类：使用循环神经网络</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.8_sentiment-analysis-cnn.html">10.8 文本情感分类：使用卷积神经网络（textCNN）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.9_seq2seq.html">10.9 编码器—解码器（seq2seq）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.10_beam-search.html">10.10 束搜索</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.11_attention.html">10.11 注意力机制</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.12_machine-translation.html">10.12 机器翻译</a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>3.5 图像分类数据集（Fashion-MNIST）</h1>
+<p>在介绍softmax回归的实现前我们先引入一个多类图像分类数据集。它将在后面的章节中被多次使用，以方便我们观察比较算法之间在模型精度和计算效率上的区别。图像分类数据集中最常用的是手写数字识别数据集MNIST[1]。但大部分模型在MNIST上的分类精度都超过了95%。为了更直观地观察算法之间的差异，我们将使用一个图像内容更加复杂的数据集Fashion-MNIST[2]（这个数据集也比较小，只有几十M，没有GPU的电脑也能吃得消）。</p>
+<p>本节我们将使用torchvision包，它是服务于PyTorch深度学习框架的，主要用来构建计算机视觉模型。torchvision主要由以下几部分构成：
+1. <code>torchvision.datasets</code>: 一些加载数据的函数及常用的数据集接口；
+2. <code>torchvision.models</code>: 包含常用的模型结构（含预训练模型），例如AlexNet、VGG、ResNet等；
+3. <code>torchvision.transforms</code>: 常用的图片变换，例如裁剪、旋转等；
+4. <code>torchvision.utils</code>: 其他的一些有用的方法。</p>
+<h2>3.5.1 获取数据集</h2>
+<p>首先导入本节需要的包或模块。</p>
+<pre><code class="python">import torch
+import torchvision
+import torchvision.transforms as transforms
+import matplotlib.pyplot as plt
+import time
+import sys
+sys.path.append(&quot;..&quot;) # 为了导入上层目录的d2lzh_pytorch
+import d2lzh_pytorch as d2l
+</code></pre>
+
+<p>下面，我们通过torchvision的<code>torchvision.datasets</code>来下载这个数据集。第一次调用时会自动从网上获取数据。我们通过参数<code>train</code>来指定获取训练数据集或测试数据集（testing data set）。测试数据集也叫测试集（testing set），只用来评价模型的表现，并不用来训练模型。</p>
+<p>另外我们还指定了参数<code>transform = transforms.ToTensor()</code>使所有数据转换为<code>Tensor</code>，如果不进行转换则返回的是PIL图片。<code>transforms.ToTensor()</code>将尺寸为 (H x W x C) 且数据位于[0, 255]的PIL图片或者数据类型为<code>np.uint8</code>的NumPy数组转换为尺寸为(C x H x W)且数据类型为<code>torch.float32</code>且位于[0.0, 1.0]的<code>Tensor</code>。</p>
+<blockquote>
+<p>注意： 由于像素值为0到255的整数，所以刚好是uint8所能表示的范围，包括<code>transforms.ToTensor()</code>在内的一些关于图片的函数就默认输入的是uint8型，若不是，可能不会报错但可能得不到想要的结果。所以，<strong>如果用像素值(0-255整数)表示图片数据，那么一律将其类型设置成uint8，避免不必要的bug。</strong> 本人就被这点坑过，详见<a href="https://tangshusen.me/2018/12/05/kaggle-doodle-reco/">我的这个博客2.2.4节</a>。</p>
+</blockquote>
+<pre><code class="python">mnist_train = torchvision.datasets.FashionMNIST(root='~/Datasets/FashionMNIST', train=True, download=True, transform=transforms.ToTensor())
+mnist_test = torchvision.datasets.FashionMNIST(root='~/Datasets/FashionMNIST', train=False, download=True, transform=transforms.ToTensor())
+</code></pre>
+
+<p>上面的<code>mnist_train</code>和<code>mnist_test</code>都是<a href="https://pytorch.org/docs/stable/data.html"><code>torch.utils.data.Dataset</code></a>的子类，所以我们可以用<code>len()</code>来获取该数据集的大小，还可以用下标来获取具体的一个样本。训练集中和测试集中的每个类别的图像数分别为6,000和1,000。因为有10个类别，所以训练集和测试集的样本数分别为60,000和10,000。</p>
+<pre><code class="python">print(type(mnist_train))
+print(len(mnist_train), len(mnist_test))
+</code></pre>
+
+<p>输出：</p>
+<pre><code>&lt;class 'torchvision.datasets.mnist.FashionMNIST'&gt;
+60000 10000
+</code></pre>
+
+<p>我们可以通过下标来访问任意一个样本:</p>
+<pre><code class="python">feature, label = mnist_train[0]
+print(feature.shape, label)  # Channel x Height x Width
+</code></pre>
+
+<p>输出：</p>
+<pre><code>torch.Size([1, 28, 28]) tensor(9)
+</code></pre>
+
+<p>变量<code>feature</code>对应高和宽均为28像素的图像。由于我们使用了<code>transforms.ToTensor()</code>，所以每个像素的数值为[0.0, 1.0]的32位浮点数。需要注意的是，<code>feature</code>的尺寸是 (C x H x W) 的，而不是 (H x W x C)。第一维是通道数，因为数据集中是灰度图像，所以通道数为1。后面两维分别是图像的高和宽。</p>
+<p>Fashion-MNIST中一共包括了10个类别，分别为t-shirt（T恤）、trouser（裤子）、pullover（套衫）、dress（连衣裙）、coat（外套）、sandal（凉鞋）、shirt（衬衫）、sneaker（运动鞋）、bag（包）和ankle boot（短靴）。以下函数可以将数值标签转成相应的文本标签。</p>
+<pre><code class="python"># 本函数已保存在d2lzh包中方便以后使用
+def get_fashion_mnist_labels(labels):
+    text_labels = ['t-shirt', 'trouser', 'pullover', 'dress', 'coat',
+                   'sandal', 'shirt', 'sneaker', 'bag', 'ankle boot']
+    return [text_labels[int(i)] for i in labels]
+</code></pre>
+
+<p>下面定义一个可以在一行里画出多张图像和对应标签的函数。</p>
+<pre><code class="python"># 本函数已保存在d2lzh包中方便以后使用
+def show_fashion_mnist(images, labels):
+    d2l.use_svg_display()
+    # 这里的_表示我们忽略（不使用）的变量
+    _, figs = plt.subplots(1, len(images), figsize=(12, 12))
+    for f, img, lbl in zip(figs, images, labels):
+        f.imshow(img.view((28, 28)).numpy())
+        f.set_title(lbl)
+        f.axes.get_xaxis().set_visible(False)
+        f.axes.get_yaxis().set_visible(False)
+    plt.show()
+</code></pre>
+
+<p>现在，我们看一下训练数据集中前10个样本的图像内容和文本标签。</p>
+<pre><code class="python">X, y = [], []
+for i in range(10):
+    X.append(mnist_train[i][0])
+    y.append(mnist_train[i][1])
+show_fashion_mnist(X, get_fashion_mnist_labels(y))
+</code></pre>
+
+<div align=center>
+<img width="800" src="../img/chapter03/3.5_output1.png"/>
+</div>
+
+<h2>3.5.2 读取小批量</h2>
+<p>我们将在训练数据集上训练模型，并将训练好的模型在测试数据集上评价模型的表现。前面说过，<code>mnist_train</code>是<code>torch.utils.data.Dataset</code>的子类，所以我们可以将其传入<code>torch.utils.data.DataLoader</code>来创建一个读取小批量数据样本的DataLoader实例。</p>
+<p>在实践中，数据读取经常是训练的性能瓶颈，特别当模型较简单或者计算硬件性能较高时。PyTorch的<code>DataLoader</code>中一个很方便的功能是允许使用多进程来加速数据读取。这里我们通过参数<code>num_workers</code>来设置4个进程读取数据。</p>
+<pre><code class="python">batch_size = 256
+if sys.platform.startswith('win'):
+    num_workers = 0  # 0表示不用额外的进程来加速读取数据
+else:
+    num_workers = 4
+train_iter = torch.utils.data.DataLoader(mnist_train, batch_size=batch_size, shuffle=True, num_workers=num_workers)
+test_iter = torch.utils.data.DataLoader(mnist_test, batch_size=batch_size, shuffle=False, num_workers=num_workers)
+</code></pre>
+
+<p>我们将获取并读取Fashion-MNIST数据集的逻辑封装在<code>d2lzh_pytorch.load_data_fashion_mnist</code>函数中供后面章节调用。该函数将返回<code>train_iter</code>和<code>test_iter</code>两个变量。随着本书内容的不断深入，我们会进一步改进该函数。它的完整实现将在5.6节中描述。</p>
+<p>最后我们查看读取一遍训练数据需要的时间。</p>
+<pre><code class="python">start = time.time()
+for X, y in train_iter:
+    continue
+print('%.2f sec' % (time.time() - start))
+</code></pre>
+
+<p>输出：</p>
+<pre><code>1.57 sec
+</code></pre>
+
+<h2>小结</h2>
+<ul>
+<li>Fashion-MNIST是一个10类服饰分类数据集，之后章节里将使用它来检验不同算法的表现。</li>
+<li>我们将高和宽分别为$h$和$w$像素的图像的形状记为$h \times w$或<code>(h，w)</code>。</li>
+</ul>
+<h2>参考文献</h2>
+<p>[1] LeCun, Y., Cortes, C., &amp; Burges, C. http://yann.lecun.com/exdb/mnist/</p>
+<p>[2] Xiao, H., Rasul, K., &amp; Vollgraf, R. (2017). Fashion-mnist: a novel image dataset for benchmarking machine learning algorithms. arXiv preprint arXiv:1708.07747.</p>
+<hr />
+<blockquote>
+<p>注：本节除了代码之外与原书基本相同，<a href="https://zh.d2l.ai/chapter_deep-learning-basics/fashion-mnist.html">原书传送门</a></p>
+</blockquote>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

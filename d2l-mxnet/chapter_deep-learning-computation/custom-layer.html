@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>自定义层 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>自定义层</h1>
+<p>深度学习的一个魅力在于神经网络中各式各样的层，例如全连接层和后面章节中将要介绍的卷积层、池化层与循环层。虽然Gluon提供了大量常用的层，但有时候我们依然希望自定义层。本节将介绍如何使用<code>NDArray</code>来自定义一个Gluon的层，从而可以被重复调用。</p>
+<h2>不含模型参数的自定义层</h2>
+<p>我们先介绍如何定义一个不含模型参数的自定义层。事实上，这和<a href="model-construction.html">“模型构造”</a>一节中介绍的使用<code>Block</code>类构造模型类似。下面的<code>CenteredLayer</code>类通过继承<code>Block</code>类自定义了一个将输入减掉均值后输出的层，并将层的计算定义在了<code>forward</code>函数里。这个层里不含模型参数。</p>
+<p>```{.python .input  n=1}
+from mxnet import gluon, nd
+from mxnet.gluon import nn</p>
+<p>class CenteredLayer(nn.Block):
+    def <strong>init</strong>(self, <strong>kwargs):
+        super(CenteredLayer, self).<strong>init</strong>(</strong>kwargs)</p>
+<pre><code>def forward(self, x):
+    return x - x.mean()
+</code></pre>
+<pre><code>
+我们可以实例化这个层，然后做前向计算。
+
+```{.python .input  n=2}
+layer = CenteredLayer()
+layer(nd.array([1, 2, 3, 4, 5]))
+</code></pre>
+
+<p>我们也可以用它来构造更复杂的模型。</p>
+<p>```{.python .input  n=3}
+net = nn.Sequential()
+net.add(nn.Dense(128),
+        CenteredLayer())</p>
+<pre><code>
+下面打印自定义层各个输出的均值。因为均值是浮点数，所以它的值是一个很接近0的数。
+
+```{.python .input  n=4}
+net.initialize()
+y = net(nd.random.uniform(shape=(4, 8)))
+y.mean().asscalar()
+</code></pre>
+
+<h2>含模型参数的自定义层</h2>
+<p>我们还可以自定义含模型参数的自定义层。其中的模型参数可以通过训练学出。</p>
+<p><a href="parameters.html">“模型参数的访问、初始化和共享”</a>一节分别介绍了<code>Parameter</code>类和<code>ParameterDict</code>类。在自定义含模型参数的层时，我们可以利用<code>Block</code>类自带的<code>ParameterDict</code>类型的成员变量<code>params</code>。它是一个由字符串类型的参数名字映射到Parameter类型的模型参数的字典。我们可以通过<code>get</code>函数从<code>ParameterDict</code>创建<code>Parameter</code>实例。</p>
+<p>```{.python .input  n=7}
+params = gluon.ParameterDict()
+params.get('param2', shape=(2, 3))
+params</p>
+<pre><code>
+现在我们尝试实现一个含权重参数和偏差参数的全连接层。它使用ReLU函数作为激活函数。其中`in_units`和`units`分别代表输入个数和输出个数。
+
+```{.python .input  n=19}
+class MyDense(nn.Block):
+    # units为该层的输出个数，in_units为该层的输入个数
+    def __init__(self, units, in_units, **kwargs):
+        super(MyDense, self).__init__(**kwargs)
+        self.weight = self.params.get('weight', shape=(in_units, units))
+        self.bias = self.params.get('bias', shape=(units,))
+
+    def forward(self, x):
+        linear = nd.dot(x, self.weight.data()) + self.bias.data()
+        return nd.relu(linear)
+</code></pre>
+
+<p>下面，我们实例化<code>MyDense</code>类并访问它的模型参数。</p>
+<p>```{.python .input}
+dense = MyDense(units=3, in_units=5)
+dense.params</p>
+<pre><code>
+我们可以直接使用自定义层做前向计算。
+
+```{.python .input  n=20}
+dense.initialize()
+dense(nd.random.uniform(shape=(2, 5)))
+</code></pre>
+
+<p>我们也可以使用自定义层构造模型。它和Gluon的其他层在使用上很类似。</p>
+<p><code>{.python .input  n=19}
+net = nn.Sequential()
+net.add(MyDense(8, in_units=64),
+        MyDense(1, in_units=8))
+net.initialize()
+net(nd.random.uniform(shape=(2, 64)))</code></p>
+<h2>小结</h2>
+<ul>
+<li>可以通过<code>Block</code>类自定义神经网络中的层，从而可以被重复调用。</li>
+</ul>
+<h2>练习</h2>
+<ul>
+<li>自定义一个层，使用它做一次前向计算。</li>
+</ul>
+<h2>扫码直达<a href="https://discuss.gluon.ai/t/topic/1256">讨论区</a></h2>
+<p><img alt="" src="../img/qr_custom-layer.svg" /></p>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

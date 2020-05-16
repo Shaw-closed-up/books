@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>sklearn 使用PCA减少维度 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  <li><a href="./index.html"> 如何学习本课程</a></li>
+<li><a href="./intro.html"> sklearn简介</a></li>
+<li><a href="./setup.html"> sklearn安装</a></li>
+<li><a href="./modelling.html"> sklearn建模过程</a></li>
+<li><a href="./data-representation.html"> sklearn数据表示</a></li>
+<li><a href="./estimator.html"> sklearn估算器</a></li>
+<li><a href="./conventions.html"> sklearn约定</a></li>
+<li><a href="./linear.html"> sklearn线性建模之线性回归</a></li>
+<li><a href="./logistic.html"> sklearn线性建模之逻辑回归</a></li>
+<li><a href="./ridge.html"> sklearn线性建模之岭回归</a></li>
+<li><a href="./bayes.html"> sklearn线性建模之贝叶斯岭回归</a></li>
+<li><a href="./sgd.html"> sklearn随机梯度下降(SGD)</a></li>
+<li><a href="./svm.html"> sklearn支持向量机(SVM)</a></li>
+<li><a href="./knn.html"> sklearnK近邻(KNN)</a></li>
+<li><a href="./nbc.html"> sklearn朴素贝叶斯分类(NBC)</a></li>
+<li><a href="./dt.html"> sklearn决策树(DT)</a></li>
+<li><a href="./rf.html"> sklearn随机决策树(RF)</a></li>
+<li><a href="./cluster.html"> skelarn聚类(cluster)</a></li>
+<li><a href="./pca.html"> sklearn降维(PCA)</a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>sklearn 使用PCA减少维度</h1>
+<p>降维是一种无监督的机器学习方法，用于减少选择主要特征的每个数据样本的特征变量的数量。主成分分析（PCA）是降维的流行算法之一。</p>
+<h2>精确的PCA</h2>
+<p><strong>主成分分析</strong>（PCA）用于线性降维，使用数据的<strong>奇异值分解</strong>（SVD）将其投影到较低维度的空间中。在使用PCA进行分解时，在应用SVD之前，输入数据将居中但未按比例缩放。</p>
+<p>Scikit-learn ML库提供了<strong>sklearn.decomposition.PCA</strong>模块，该模块被实现为可在其fit（）方法中学习n个组件的转换器对象。也可以将其用于新数据，以将其投影到这些组件上。</p>
+<h3>实例</h3>
+<p>以下示例将使用sklearn.decomposition.PCA模块从Pima Indians Diabetes数据集中找到最佳的5个主要成分。</p>
+<pre><code class="python">from pandas import read_csv
+from sklearn.decomposition import PCA
+path = r'/share/datasets/pima-indians-diabetes.csv'
+#names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', ‘class']
+dataframe = read_csv(path)
+array = dataframe.values
+X = array[:,0:8]
+Y = array[:,8]
+pca = PCA(n_components = 5)
+#print('')
+fit = pca.fit(X)
+print((&quot;Explained Variance: %s&quot;) % (fit.explained_variance_ratio_))
+print(fit.components_)
+</code></pre>
+
+<h2>增量式PCA</h2>
+<p><strong>增量主成分分析</strong>（IPCA）用于解决主成分分析（PCA）的最大局限，即PCA仅支持批处理，这意味着要处理的所有输入数据都应适合内存。</p>
+<p>Scikit-learn ML库提供了<strong>sklearn.decomposition.IPCA</strong>模块，该模块可以通过对依次提取的数据块使用<strong>partial_fit</strong>方法或启用内存映射文件<strong>np.memmap</strong>来实现核外PCA。，而不将整个文件加载到内存中。</p>
+<p>与PCA相同，使用IPCA进行分解时，在应用SVD之前，输入数据居中但未按每个功能缩放。</p>
+<h3>实例</h3>
+<p>以下示例将在Sklearn数字数据集上使用<strong>sklearn.decomposition.IPCA</strong>模块。</p>
+<p>执行以下代码将比较耗时，请耐心等待</p>
+<pre><code class="python">from sklearn.datasets import load_digits
+from sklearn.decomposition import IncrementalPCA
+X, _ = load_digits(return_X_y = True)
+transformer = IncrementalPCA(n_components = 10, batch_size = 100)
+transformer.partial_fit(X[:100, :])
+X_transformed = transformer.fit_transform(X)
+X_transformed.shape
+</code></pre>
+
+<p>在这里，我们可以部分拟合较小的数据批处理（就像我们对每批100个数据所做的那样），也可以让<strong>fit（）</strong>函数将数据分成若干批。</p>
+<h2>内核PCA</h2>
+<p>内核主成分分析（PCA的扩展）使用内核实现了非线性降维。它同时支持<strong>transform和inverse_transform</strong>。</p>
+<p>Scikit学习ML库提供了<strong>sklearn.decomposition.KernelPCA</strong>模块。</p>
+<h3>实例</h3>
+<p>以下示例将在Sklearn数字数据集上使用<strong>sklearn.decomposition.KernelPCA</strong>模块。我们正在使用sigmoid内核。</p>
+<p>执行以下代码将比较耗时，请耐心等待</p>
+<pre><code class="python">from sklearn.datasets import load_digits
+from sklearn.decomposition import KernelPCA
+X, _ = load_digits(return_X_y = True)
+transformer = KernelPCA(n_components = 10, kernel = 'sigmoid')
+X_transformed = transformer.fit_transform(X)
+X_transformed.shape
+</code></pre>
+
+<h2>使用随机SVD的PCA</h2>
+<p>使用随机SVD的主成分分析（PCA）用于通过删除与较低奇异值关联的成分的奇异矢量来将数据投影到较低维空间，从而保留大部分方差。在这里，带有可选参数<strong>svd_solver ='randomized'</strong>的<strong>sklearn.decomposition.PCA</strong>模块将非常有用。</p>
+<h3>实例</h3>
+<p>以下示例将使用带有可选参数svd_solver ='randomized'的<strong>sklearn.decomposition.PCA</strong>模块从Pima Indians Diabetes数据集中找到最佳的7个主要成分。</p>
+<pre><code class="python">from pandas import read_csv
+from sklearn.decomposition import PCA
+path = r'/share/datasets/pima-indians-diabetes.csv'
+#names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
+dataframe = read_csv(path)
+array = dataframe.values
+X = array[:,0:8]
+Y = array[:,8]
+pca = PCA(n_components = 7,svd_solver = 'randomized')
+fit = pca.fit(X)
+print((&quot;Explained Variance: %s&quot;) % (fit.explained_variance_ratio_))
+print(fit.components_)
+</code></pre>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

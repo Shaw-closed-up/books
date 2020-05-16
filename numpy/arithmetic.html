@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>NumPy 算术函数 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  <li><a href="./index.html"> 如何学习本课程</a></li>
+<li><a href="./intro.html"> NumPy简介</a></li>
+<li><a href="./setup.html"> NumPy安装</a></li>
+<li><a href="./datatype.html"> NumPy数据类型</a></li>
+<li><a href="./ndarray.html"> NumPyNDArray</a></li>
+<li><a href="./ndarray-creation.html"> NumPy创建NDArray</a></li>
+<li><a href="./ndarray-property.html"> NumPyNDArray属性</a></li>
+<li><a href="./ndarray-operation.html"> NumPy操作NDArray</a></li>
+<li><a href="./slice-index.html"> NumPy切片和索引</a></li>
+<li><a href="./advance-index.html"> NumPy高级索引</a></li>
+<li><a href="./broadcast.html"> NumPy广播</a></li>
+<li><a href="./bit-operation.html"> NumPy位运算</a></li>
+<li><a href="./math.html"> NumPy数学函数</a></li>
+<li><a href="./arithmetic.html"> NumPy算术函数</a></li>
+<li><a href="./statistics.html"> NumPy统计函数</a></li>
+<li><a href="./sort.html"> NumPy排序</a></li>
+<li><a href="./statistics.html"> NumPy统计函数</a></li>
+<li><a href="./linalg.html"> NumPy线性代数</a></li>
+<li><a href="./matrix.html"> NumPy矩阵</a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>NumPy 算术函数</h1>
+<p>NumPy 算术函数包含简单的加减乘除: <strong>add()</strong>，<strong>subtract()</strong>，<strong>multiply()</strong> 和 <strong>divide()</strong>。</p>
+<p>需要注意的是数组必须具有相同的形状或符合数组广播规则。</p>
+<h4>练习</h4>
+<pre><code class="python">import numpy as np   
+a = np.arange(9, dtype = np.float_).reshape(3,3)   
+
+print('第一个数组：') 
+print(a) 
+print('\n') 
+
+print('第二个数组：') 
+b = np.array([10,10,10])   
+print(b) 
+print('\n') 
+
+print('两个数组相加：')
+print(np.add(a,b)) 
+print('\n') 
+
+print('两个数组相减：') 
+print(np.subtract(a,b)) 
+print('\n')
+
+print('两个数组相乘：') 
+print(np.multiply(a,b))
+print('\n') 
+
+print('两个数组相除：') 
+print(np.divide(a,b))
+</code></pre>
+
+<p>此外 Numpy 也包含了其他重要的算术函数。</p>
+<h3>numpy.reciprocal()</h3>
+<p>numpy.reciprocal() 函数返回参数逐元素的倒数。如 <strong>1/4</strong> 倒数为 <strong>4/1</strong>。</p>
+<h4>练习</h4>
+<pre><code class="python">import numpy as np   
+a = np.array([0.25,  1.33,  1,  100])   
+print('我们的数组是：') 
+print(a) 
+print('\n') 
+
+print('调用 reciprocal 函数：') 
+print(np.reciprocal(a))
+</code></pre>
+
+<h3>numpy.power()</h3>
+<p>numpy.power() 函数将第一个输入数组中的元素作为底数，计算它与第二个输入数组中相应元素的幂。</p>
+<h4>练习</h4>
+<pre><code class="python">import numpy as np   
+a = np.array([10,100,1000])   
+print('我们的数组是；') 
+print(a) 
+print('\n')  
+
+print('调用 power 函数：') 
+print(np.power(a,2)) 
+print('\n') 
+
+print('第二个数组：') 
+b = np.array([1,2,3])   
+print(b) 
+print('\n') 
+
+print('再次调用 power 函数：') 
+print(np.power(a,b))
+</code></pre>
+
+<h3>numpy.mod()</h3>
+<p>numpy.mod() 计算输入数组中相应元素的相除后的余数。 函数 numpy.remainder() 也产生相同的结果。</p>
+<h4>练习</h4>
+<pre><code class="python">import numpy as np  
+a = np.array([10,20,30])  
+b = np.array([3,5,7])   
+print('第一个数组：') 
+print(a) 
+print('\n') 
+
+print('第二个数组：') 
+print(b) 
+print('\n') 
+
+print('调用 mod() 函数：') 
+print(np.mod(a,b)) 
+print('\n') 
+
+print('调用 remainder() 函数：') 
+print(np.remainder(a,b))
+</code></pre>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>Julia 构造函数 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  <li><a href="./index.html"> 如何学习本课程 </a></li>
+<li><a href="./intro.html"> Julia简介 </a></li>
+<li><a href="./setup.html"> Julia环境搭建及运行 </a></li>
+<li><a href="./start.html"> Julia开始 </a></li>
+<li><a href="./repl.html"> Julia交互 </a></li>
+<li><a href="./variable.html"> Julia变量 </a></li>
+<li><a href="./int-float.html"> Julia整数和浮点数 </a></li>
+<li><a href="./math.html"> Julia数学运算和基本函数 </a></li>
+<li><a href="./complex-fraction.html"> Julia复数和分数 </a></li>
+<li><a href="./string.html"> Julia数据类型 字符串 </a></li>
+<li><a href="./scope.html"> Julia变量的作用域 </a></li>
+<li><a href="./function.html"> Julia函数 </a></li>
+<li><a href="./method.html"> Julia方法 </a></li>
+<li><a href="./conditional.html"> Julia控制流 </a></li>
+<li><a href="./type.html"> Julia类型 </a></li>
+<li><a href="./construction-function.html"> Julia构造函数 </a></li>
+<li><a href="./type-convert.html"> Julia类型转换和类型提升 </a></li>
+<li><a href="./module.html"> Julia模块 </a></li>
+<li><a href="./datetime.html"> Julia日期和时间 </a></li>
+<li><a href="./meta.html"> Julia元编程 </a></li>
+<li><a href="./md-array.html"> Julia多维数组 </a>     </li>
+<li><a href="./la.html"> Julia线性代数 </a></li>
+<li><a href="./net-stream.html"> Julia网络和流 </a></li>
+<li><a href="./parallel-computation.html"> Julia并行计算 </a></li>
+<li><a href="./nullable.html"> Julia可空类型 </a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>Julia 构造函数</h1>
+<h2>构造函数</h2>
+<p>构造函数是构造新对象，即新<a href="https://www.w3cschool.cn/julia/type-learning.html">复合类型</a>实例的函数。构造类型对象：</p>
+<pre><code class="julia">type Foo
+  bar
+  baz
+end
+
+foo = Foo(1,2)
+
+foo.bar
+
+foo.baz
+</code></pre>
+
+<p><a href="http://en.wikipedia.org/wiki/Recursion_(computer_science)#Recursive_data_structures_.28structural_recursion.29">递归数据结构</a> ，尤其是自引用的数据结构，常需要先构造为非完整状态，再按步骤将其完善。我们有时也可能希望用更少或不同类型的参数更方便的构造对象。Julia 的构造函数可以让包括这些在内的各种需求得到满足。</p>
+<p>[1] :关于命名：尽管“构造函数”通常被用来描述创建新对象的函数，它也经常被滥用于特定的构造方法。通常情况下，可以很容易地从上下文推断出到底是“构造函数”还是“构造方法”。</p>
+<h2>外部构造方法</h2>
+<p>构造函数与 Julia 中的其它函数一样，它的行为取决于它全部方法的行为的组合。因此，你可以通过定义新方法来给构造函数增加新性能。下例给 <code>Foo</code> 添加了新构造方法，仅输入一个参数，将该参数值赋给 <code>bar</code> 和 <code>baz</code> 域：</p>
+<pre><code class="julia">Foo(x) = Foo(x,x)
+
+Foo(1)
+</code></pre>
+
+<p>添加 <code>Foo</code> 的零参构造方法，给 <code>bar</code> 和 <code>baz</code> 域赋默认值：</p>
+<pre><code class="julia">Foo() = Foo(0)
+
+Foo()
+</code></pre>
+
+<p>这种追加的构造方法被称为 <em>外部</em> 构造方法。它仅能通过提供默认值的方式，调用其它构造方法来构造实例。</p>
+<h2>内部构造方法</h2>
+<p><em>内部</em> 构造方法与外部构造方法类似，但有两个区别：</p>
+<ol>
+<li>它在类型声明块内部被声明，而不是像普通方法一样在外部被声明</li>
+<li>它调用本地已存在的 <code>new</code> 函数，来构造声明块的类型的对象</li>
+</ol>
+<p>例如，要声明一个保存实数对的类型，且第一个数不大于第二个数：</p>
+<pre><code class="julia">type OrderedPair
+  x::Real
+  y::Real
+
+  OrderedPair(x,y) = x &gt; y ? error(&quot;out of order&quot;) : new(x,y)
+end
+</code></pre>
+
+<p>仅当 <code>x &lt;= y</code> 时，才会构造 <code>OrderedPair</code> 对象：</p>
+<pre><code class="julia">OrderedPair(1,2)
+OrderedPair(1,2)
+
+OrderedPair(2,1)
+</code></pre>
+
+<p>所有的外部构造方法，最终都会调用内部构造方法。</p>
+<p>当然，如果类型被声明为 <code>immutable</code> ，它的构造函数的结构就不能变了。这对判断一个类型是否应该是 immutable 时很重要。</p>
+<p>如果定义了内部构造方法，Julia 将不再提供默认的构造方法。默认的构造方法等价于一个自定义内部构造方法，它将对象的所有域作为参数（如果对应域有类型，应为具体类型），传递给 <code>new</code> ，最后返回结果对象：</p>
+<pre><code class="julia">type Foo
+  bar
+  baz
+
+  Foo(bar,baz) = new(bar,baz)
+end
+</code></pre>
+
+<p>这个声明与前面未指明内部构造方法的 <code>Foo</code> 是等价的。下面两者也是等价的，一个使用默认构造方法，一个写明了构造方法：</p>
+<pre><code class="julia">type T1
+  x::Int64
+end
+
+type T2
+  x::Int64
+  T2(x) = new(x)
+end
+
+T1(1)
+
+T2(1)
+
+T1(1.0)
+
+T2(1.0)
+</code></pre>
+
+<p>内部构造方法能不写就不写。提供默认值之类的事儿，应该写成外部构造方法，由它们调用内部构造方法。</p>
+<h2>部分初始化</h2>
+<p>考虑如下递归类型声明：</p>
+<pre><code class="julia">type SelfReferential
+  obj::SelfReferential
+end
+</code></pre>
+
+<p>如果 <code>a</code> 是 <code>SelfReferential</code> 的实例，则可以如下构造第二个实例：</p>
+<pre><code class="julia">b = SelfReferential(a)
+</code></pre>
+
+<p>但是，当没有任何实例来为 <code>obj</code> 域提供有效值时，如何构造第一个实例呢？唯一的解决方法是构造 <code>obj</code> 域未赋值的 <code>SelfReferential</code> 部分初始化实例，使用这个实例作为另一个实例（如它本身）中 <code>obj</code> 域的有效值。</p>
+<p>构造部分初始化对象时，Julia 允许调用 <code>new</code> 函数来处理比该类型域个数少的参数，返回部分域未初始化的对象。这时，内部构造函数可以使用这个不完整的对象，并在返回之前完成它的初始化。下例中，我们定义 <code>SelfReferential</code> 类型时，使用零参内部构造方法，返回一个 <code>obj</code> 域指向它本身的实例：</p>
+<pre><code class="julia">type SelfReferential
+  obj::SelfReferential
+
+  SelfReferential() = (x = new(); x.obj = x)
+end
+</code></pre>
+
+<p>此构造方法可以运行并构造自引对象：</p>
+<pre><code class="julia">x = SelfReferential();
+
+is(x, x)
+
+is(x, x.obj)
+
+is(x, x.obj.obj)
+</code></pre>
+
+<p>内部构造方法最好返回完全初始化的对象，但也可以返回部分初始化对象：</p>
+<pre><code class="julia">type Incomplete
+         xx
+         Incomplete() = new()
+       end
+
+z = Incomplete();
+</code></pre>
+
+<p>尽管可以构造未初始化域的对象，但读取未初始化的引用会报错：</p>
+<pre><code class="julia">z.xx
+</code></pre>
+
+<p>这避免了持续检查 <code>null</code> 值。但是，所有对象的域都是引用。Julia 认为一些类型是“普通数据”，即他们的数据都是独立的，都不引用其他的对象。普通数据类型是由位类型或者其他普通数据类型的不可变数据结构所构成的（例如 <code>Int</code> ）。普通数据类型的初始内容是未定义的： ::</p>
+<pre><code class="julia">type HasPlain
+         n::Int
+         HasPlain() = new()
+       end
+
+HasPlain()
+HasPlain(438103441441)
+</code></pre>
+
+<p>普通数据类型所构成的数组具有相同的行为。</p>
+<p>可以在内部构造方法中，将不完整的对象传递给其它函数，来委托完成全部初始化：</p>
+<pre><code class="julia">type Lazy
+  xx
+
+  Lazy(v) = complete_me(new(), v)
+end
+</code></pre>
+
+<p>如果 <code>complete_me</code> 或其它被调用的函数试图在初始化 <code>Lazy</code> 对象的 <code>xx</code> 域之前读取它，将会立即报错。</p>
+<h2>参数化构造方法</h2>
+<p>参数化构造方法的例子：</p>
+<pre><code class="julia">type Point{T&lt;:Real}
+         x::T
+         y::T
+       end
+
+## implicit T ##
+
+Point(1,2)
+
+Point(1.0,2.5)
+
+Point(1,2.5)
+
+## explicit T ##
+
+Point{Int64}(1,2)
+
+Point{Int64}(1.0,2.5)
+
+Point{Float64}(1.0,2.5)
+
+Point{Float64}(1,2)
+</code></pre>
+
+<p>上面的参数化构造方法等价于下面的声明：</p>
+<pre><code class="julia">type Point{T&lt;:Real}
+  x::T
+  y::T
+
+  Point(x,y) = new(x,y)
+end
+
+Point{T&lt;:Real}(x::T, y::T) = Point{T}(x,y)
+</code></pre>
+
+<p>内部构造方法只定义 <code>Point{T}</code> 的方法，而非 <code>Point</code> 的构造函数的方法。 <code>Point</code> 不是具体类型，不能有内部构造方法。外部构造方法定义了 <code>Point</code> 的构造方法。</p>
+<p>可以将整数值 <code>1</code> “提升”为浮点数 <code>1.0</code> ，来完成构造：</p>
+<pre><code class="julia">Point(x::Int64, y::Float64) = Point(convert(Float64,x),y);
+</code></pre>
+
+<p>这样下例就可以正常运行：</p>
+<pre><code class="julia">Point(1,2.5)
+
+typeof(ans)
+</code></pre>
+
+<p>但下例仍会报错：</p>
+<pre><code class="julia">Point(1.5,2)
+</code></pre>
+
+<p>其实只需定义下列外部构造方法：</p>
+<pre><code class="julia">Point(x::Real, y::Real) = Point(promote(x,y)...);
+</code></pre>
+
+<p><code>promote</code> 函数将它的所有参数转换为相同类型。现在，所有的实数参数都可以正常运行：</p>
+<pre><code class="julia">Point(1.5,2)
+
+Point(1,1//2)
+
+Point(1.0,1//2)
+</code></pre>
+
+<h2>案例：分数</h2>
+<p>下面是 <a href="https://github.com/JuliaLang/julia/blob/master/base/rational.jl">rational.jl</a> 文件的开头部分，它实现了 Julia 的分数：</p>
+<pre><code class="julia">immutable Rational{T&lt;:Integer} &lt;: Real
+    num::T
+    den::T
+
+    function Rational(num::T, den::T)
+        if num == 0 &amp;&amp; den == 0
+            error(&quot;invalid rational: 0//0&quot;)
+        end
+        g = gcd(den, num)
+        num = div(num, g)
+        den = div(den, g)
+        new(num, den)
+    end
+end
+Rational{T&lt;:Integer}(n::T, d::T) = Rational{T}(n,d)
+Rational(n::Integer, d::Integer) = Rational(promote(n,d)...)
+Rational(n::Integer) = Rational(n,one(n))
+
+//(n::Integer, d::Integer) = Rational(n,d)
+//(x::Rational, y::Integer) = x.num // (x.den*y)
+//(x::Integer, y::Rational) = (x*y.den) // y.num
+//(x::Complex, y::Real) = complex(real(x)//y, imag(x)//y)
+//(x::Real, y::Complex) = x*y'//real(y*y')
+
+function //(x::Complex, y::Complex)
+    xy = x*y'
+    yy = real(y*y')
+    complex(real(xy)//yy, imag(xy)//yy)
+end
+</code></pre>
+
+<p>复数分数的例子：</p>
+<pre><code class="julia">(1 + 2im)//(1 - 2im)
+
+typeof(ans)
+
+ans &lt;: Complex{Rational}
+</code></pre>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=julia></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

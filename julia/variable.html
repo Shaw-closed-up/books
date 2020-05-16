@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>Julia 变量 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  <li><a href="./index.html"> 如何学习本课程 </a></li>
+<li><a href="./intro.html"> Julia简介 </a></li>
+<li><a href="./setup.html"> Julia环境搭建及运行 </a></li>
+<li><a href="./start.html"> Julia开始 </a></li>
+<li><a href="./repl.html"> Julia交互 </a></li>
+<li><a href="./variable.html"> Julia变量 </a></li>
+<li><a href="./int-float.html"> Julia整数和浮点数 </a></li>
+<li><a href="./math.html"> Julia数学运算和基本函数 </a></li>
+<li><a href="./complex-fraction.html"> Julia复数和分数 </a></li>
+<li><a href="./string.html"> Julia数据类型 字符串 </a></li>
+<li><a href="./scope.html"> Julia变量的作用域 </a></li>
+<li><a href="./function.html"> Julia函数 </a></li>
+<li><a href="./method.html"> Julia方法 </a></li>
+<li><a href="./conditional.html"> Julia控制流 </a></li>
+<li><a href="./type.html"> Julia类型 </a></li>
+<li><a href="./construction-function.html"> Julia构造函数 </a></li>
+<li><a href="./type-convert.html"> Julia类型转换和类型提升 </a></li>
+<li><a href="./module.html"> Julia模块 </a></li>
+<li><a href="./datetime.html"> Julia日期和时间 </a></li>
+<li><a href="./meta.html"> Julia元编程 </a></li>
+<li><a href="./md-array.html"> Julia多维数组 </a>     </li>
+<li><a href="./la.html"> Julia线性代数 </a></li>
+<li><a href="./net-stream.html"> Julia网络和流 </a></li>
+<li><a href="./parallel-computation.html"> Julia并行计算 </a></li>
+<li><a href="./nullable.html"> Julia可空类型 </a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>Julia 变量</h1>
+<h2>变量</h2>
+<p>在 Julia 中的一个变量是一个与一个值关联（或绑定）的名称。它的作用表现在当你想存储一个值（例如，你在进行一些数学运算后得到了一些值，你需要在之后使用到这些值）时。例如：</p>
+<pre><code class="julia"># 给变量 x 赋值为 10
+x = 10
+println(x)
+
+# 用 x 的值做一些数学运算
+println(x + 1)
+
+# 重新给 x 赋值
+x = 1 + 1
+println(x)
+
+# 您可以为变量赋给种类型的值，例如文本字符串等
+x = &quot;Hello World!&quot;
+println(x)
+</code></pre>
+
+<p>Julia 提供了极其灵活的变量命名系统。变量名区分大小写。</p>
+<pre><code class="julia">x = 1.0
+
+y = -3
+
+Z = &quot;My string&quot;
+
+customary_phrase = &quot;Hello world!&quot;
+
+UniversalDeclarationOfHumanRightsStart = &quot;人人生而自由，在尊严和权力上一律平等。&quot;
+
+println(x,y,Z,customary_phrase,UniversalDeclarationOfHumanRightsStart)
+</code></pre>
+
+<p>也可以使用 Unicode 字符（UTF-8 编码）来命名：</p>
+<pre><code class="julia">δ = 0.00001
+
+안녕하세요 = &quot;Hello&quot;
+
+println(δ)
+println(안녕하세요)
+</code></pre>
+
+<p>在 Julia REPL 和其他几个 Julia 编辑环境中，您可以通过输入反斜杠符号名称后再输入标签来键入很多 Unicode 数学符号。例如，变量名 <code>δ</code> 可以通过键入 <code>\delta</code> 键入，甚至可以通过输入 <code>\alpha</code> - <em>tab</em> - <code>\hat</code> - <em>tab</em> - <code>\_2</code> - <em>tab</em> 输入 <code>α̂₂</code> 。</p>
+<p>Julia 甚至允许重新定义内置的常数</p>
+<pre><code class="julia">println(pi)
+pi = 3
+println(sqrt(100))
+println(pi)
+</code></pre>
+
+<p>很显然, 不鼓励这样的做法。</p>
+<h2>可用的变量名</h2>
+<p>变量名必须以字母（a-z 或 A-Z），下划线，或一个 Unicode 编码指针中指向比 00A0 更大的指针子集开始；特别是 <a href="http://www.fileformat.info/info/unicode/category/index.htm">Unicode 字符 </a>Lu/Ll/Lt/Lm/Lo/Nl（字母），Sc/So （货币和其他符号），和其他一些可以看做字符的一些输入（例如 Sm 数学符号的子集）是允许的。首位之后的字符也包括 ！和数字（0-9 和其他字符 Nd/No ），以及其他 Unicode 编码指针：变音符号和其他修改标记（字母 Mn/Mc/Me/Sk），一些标点连接器（字母 PC），素数，和其他的一些字符。</p>
+<p>运算符类似 <code>+</code> 也是有效的标识符，但需要特别解析。在某些情况下，运算符可以像变量一样使用；例如 <code>(+)</code> 是指增加功能，和 <code>(+) = f</code> 将重新定义这个运算。大多数的 Unicode 中缀操作符（在 Sm 中），如 <code>⊕</code> ，会被解析为中缀操作符，同时可以自定义方法（例如，你可以使用 <code>⊗ = kron</code> 定义 <code>⊕</code> 成为一个中缀 Kronecker 积）。</p>
+<p>内置的关键字不能当变量名：</p>
+<pre><code class="julia">else = false #syntax: unexpected &quot;else&quot;
+try = &quot;No&quot; #syntax: unexpected &quot;=&quot;
+</code></pre>
+
+<h2>命名规范</h2>
+<p>尽管 Julia 对命名本身只有很少的限制, 但尽量遵循一定的命名规范吧：</p>
+<ul>
+<li>变量名使用小写字母</li>
+<li>单词间使用下划线 (<code>'_'</code>) 分隔，但不鼓励</li>
+<li>类型名首字母大写, 单词间使用驼峰式分隔.</li>
+<li>函数名和宏名使用小写字母, 不使用下划线分隔单词.</li>
+<li>修改参数的函数结尾使用 <code>!</code> . 这样的函数被称为 mutating functions 或 in-place functions</li>
+</ul>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=julia></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

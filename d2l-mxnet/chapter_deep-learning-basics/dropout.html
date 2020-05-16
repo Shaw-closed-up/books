@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>丢弃法 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>丢弃法</h1>
+<p>除了前一节介绍的权重衰减以外，深度学习模型常常使用丢弃法（dropout）[1] 来应对过拟合问题。丢弃法有一些不同的变体。本节中提到的丢弃法特指倒置丢弃法（inverted dropout）。</p>
+<h2>方法</h2>
+<p>回忆一下，<a href="mlp.html">“多层感知机”</a>一节的图3.3描述了一个单隐藏层的多层感知机。其中输入个数为4，隐藏单元个数为5，且隐藏单元$h_i$（$i=1, \ldots, 5$）的计算表达式为</p>
+<p>$$h_i = \phi\left(x_1 w_{1i} + x_2 w_{2i} + x_3 w_{3i} + x_4 w_{4i} + b_i\right),$$</p>
+<p>这里$\phi$是激活函数，$x_1, \ldots, x_4$是输入，隐藏单元$i$的权重参数为$w_{1i}, \ldots, w_{4i}$，偏差参数为$b_i$。当对该隐藏层使用丢弃法时，该层的隐藏单元将有一定概率被丢弃掉。设丢弃概率为$p$，
+那么有$p$的概率$h_i$会被清零，有$1-p$的概率$h_i$会除以$1-p$做拉伸。丢弃概率是丢弃法的超参数。具体来说，设随机变量$\xi_i$为0和1的概率分别为$p$和$1-p$。使用丢弃法时我们计算新的隐藏单元$h_i'$</p>
+<p>$$h_i' = \frac{\xi_i}{1-p} h_i.$$</p>
+<p>由于$E(\xi_i) = 1-p$，因此</p>
+<p>$$E(h_i') = \frac{E(\xi_i)}{1-p}h_i = h_i.$$</p>
+<p>即丢弃法不改变其输入的期望值。让我们对图3.3中的隐藏层使用丢弃法，一种可能的结果如图3.5所示，其中$h_2$和$h_5$被清零。这时输出值的计算不再依赖$h_2$和$h_5$，在反向传播时，与这两个隐藏单元相关的权重的梯度均为0。由于在训练中隐藏层神经元的丢弃是随机的，即$h_1, \ldots, h_5$都有可能被清零，输出层的计算无法过度依赖$h_1, \ldots, h_5$中的任一个，从而在训练模型时起到正则化的作用，并可以用来应对过拟合。在测试模型时，我们为了得到更加确定性的结果，一般不使用丢弃法。</p>
+<p><img alt="隐藏层使用了丢弃法的多层感知机" src="../img/dropout.svg" /></p>
+<h2>从零开始实现</h2>
+<p>根据丢弃法的定义，我们可以很容易地实现它。下面的<code>dropout</code>函数将以<code>drop_prob</code>的概率丢弃<code>NDArray</code>输入<code>X</code>中的元素。</p>
+<p>```{.python .input}
+import d2lzh as d2l
+from mxnet import autograd, gluon, init, nd
+from mxnet.gluon import loss as gloss, nn</p>
+<p>def dropout(X, drop_prob):
+    assert 0 &lt;= drop_prob &lt;= 1
+    keep_prob = 1 - drop_prob
+    # 这种情况下把全部元素都丢弃
+    if keep_prob == 0:
+        return X.zeros_like()
+    mask = nd.random.uniform(0, 1, X.shape) &lt; keep_prob
+    return mask * X / keep_prob</p>
+<pre><code>
+我们运行几个例子来测试一下`dropout`函数。其中丢弃概率分别为0、0.5和1。
+
+```{.python .input}
+X = nd.arange(16).reshape((2, 8))
+dropout(X, 0)
+</code></pre>
+
+<p>```{.python .input}
+dropout(X, 0.5)</p>
+<pre><code>
+```{.python .input}
+dropout(X, 1)
+</code></pre>
+
+<h3>定义模型参数</h3>
+<p>实验中，我们依然使用<a href="softmax-regression-scratch.html">“softmax回归的从零开始实现”</a>一节中介绍的Fashion-MNIST数据集。我们将定义一个包含两个隐藏层的多层感知机，其中两个隐藏层的输出个数都是256。</p>
+<p>```{.python .input}
+num_inputs, num_outputs, num_hiddens1, num_hiddens2 = 784, 10, 256, 256</p>
+<p>W1 = nd.random.normal(scale=0.01, shape=(num_inputs, num_hiddens1))
+b1 = nd.zeros(num_hiddens1)
+W2 = nd.random.normal(scale=0.01, shape=(num_hiddens1, num_hiddens2))
+b2 = nd.zeros(num_hiddens2)
+W3 = nd.random.normal(scale=0.01, shape=(num_hiddens2, num_outputs))
+b3 = nd.zeros(num_outputs)</p>
+<p>params = [W1, b1, W2, b2, W3, b3]
+for param in params:
+    param.attach_grad()</p>
+<pre><code>
+### 定义模型
+
+下面定义的模型将全连接层和激活函数ReLU串起来，并对每个激活函数的输出使用丢弃法。我们可以分别设置各个层的丢弃概率。通常的建议是把靠近输入层的丢弃概率设得小一点。在这个实验中，我们把第一个隐藏层的丢弃概率设为0.2，把第二个隐藏层的丢弃概率设为0.5。我们可以通过[“自动求梯度”](../chapter_prerequisite/autograd.html)一节中介绍的`is_training`函数来判断运行模式为训练还是测试，并只需在训练模式下使用丢弃法。
+
+```{.python .input}
+drop_prob1, drop_prob2 = 0.2, 0.5
+
+def net(X):
+    X = X.reshape((-1, num_inputs))
+    H1 = (nd.dot(X, W1) + b1).relu()
+    if autograd.is_training():  # 只在训练模型时使用丢弃法
+        H1 = dropout(H1, drop_prob1)  # 在第一层全连接后添加丢弃层
+    H2 = (nd.dot(H1, W2) + b2).relu()
+    if autograd.is_training():
+        H2 = dropout(H2, drop_prob2)  # 在第二层全连接后添加丢弃层
+    return nd.dot(H2, W3) + b3
+</code></pre>
+
+<h3>训练和测试模型</h3>
+<p>这部分与之前多层感知机的训练和测试类似。</p>
+<p>```{.python .input}
+num_epochs, lr, batch_size = 5, 0.5, 256
+loss = gloss.SoftmaxCrossEntropyLoss()
+train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
+d2l.train_ch3(net, train_iter, test_iter, loss, num_epochs, batch_size,
+              params, lr)</p>
+<pre><code>
+## 简洁实现
+
+在Gluon中，我们只需要在全连接层后添加`Dropout`层并指定丢弃概率。在训练模型时，`Dropout`层将以指定的丢弃概率随机丢弃上一层的输出元素；在测试模型时，`Dropout`层并不发挥作用。
+
+```{.python .input}
+net = nn.Sequential()
+net.add(nn.Dense(256, activation=&quot;relu&quot;),
+        nn.Dropout(drop_prob1),  # 在第一个全连接层后添加丢弃层
+        nn.Dense(256, activation=&quot;relu&quot;),
+        nn.Dropout(drop_prob2),  # 在第二个全连接层后添加丢弃层
+        nn.Dense(10))
+net.initialize(init.Normal(sigma=0.01))
+</code></pre>
+
+<p>下面训练并测试模型。</p>
+<p><code>{.python .input}
+trainer = gluon.Trainer(net.collect_params(), 'sgd', {'learning_rate': lr})
+d2l.train_ch3(net, train_iter, test_iter, loss, num_epochs, batch_size, None,
+              None, trainer)</code></p>
+<h2>小结</h2>
+<ul>
+<li>我们可以通过使用丢弃法应对过拟合。</li>
+<li>丢弃法只在训练模型时使用。</li>
+</ul>
+<h2>练习</h2>
+<ul>
+<li>如果把本节中的两个丢弃概率超参数对调，会有什么结果？</li>
+<li>增大迭代周期数，比较使用丢弃法与不使用丢弃法的结果。</li>
+<li>如果将模型改得更加复杂，如增加隐藏层单元，使用丢弃法应对过拟合的效果是否更加明显？</li>
+<li>以本节中的模型为例，比较使用丢弃法与权重衰减的效果。如果同时使用丢弃法和权重衰减，效果会如何？</li>
+</ul>
+<h2>参考文献</h2>
+<p>[1] Srivastava, N., Hinton, G., Krizhevsky, A., Sutskever, I., &amp; Salakhutdinov, R. (2014). Dropout: a simple way to prevent neural networks from overfitting. JMLR</p>
+<h2>扫码直达<a href="https://discuss.gluon.ai/t/topic/1278">讨论区</a></h2>
+<p><img alt="" src="../img/qr_dropout.svg" /></p>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

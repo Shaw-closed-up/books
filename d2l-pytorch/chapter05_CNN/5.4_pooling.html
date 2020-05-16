@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>5.4 池化层 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  
+    <li>简介</li>
+    <li><a href="/d2l-pytorch/chapter01_DL-intro/deep-learning-intro.html">1. 深度学习简介</a></li>
+    <li>预备知识</li>
+    <li><a href="/d2l-pytorch/chapter02_prerequisite/2.1_install.html">2.1 环境配置</a></li>
+    <li><a href="/d2l-pytorch/chapter02_prerequisite/2.2_tensor.html">2.2 数据操作</a></li>
+    <a href="/d2l-pytorch/chapter02_prerequisite/2.3_autograd.html">2.3 自动求梯度</a></li>
+    <li>深度学习基础</li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.1_linear-regression.html">3.1 线性回归</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.2_linear-regression-scratch.html">3.2 线性回归的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.3_linear-regression-pytorch.html">3.3 线性回归的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.4_softmax-regression.html">3.4 softmax回归</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.5_fashion-mnist.html">3.5 图像分类数据集（Fashion-MNIST）</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.6_softmax-regression-scratch.html">3.6 softmax回归的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.7_softmax-regression-pytorch.html">3.7 softmax回归的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.8_mlp.html">3.8 多层感知机</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.9_mlp-scratch.html">3.9 多层感知机的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.10_mlp-pytorch.html">3.10 多层感知机的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.11_underfit-overfit.html">3.11 模型选择、欠拟合和过拟合</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.12_weight-decay.html">3.12 权重衰减</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.13_dropout.html">3.13 丢弃法</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.14_backprop.html">3.14 正向传播、反向传播和计算图</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.15_numerical-stability-and-init.html">3.15 数值稳定性和模型初始化</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.16_kaggle-house-price.html">3.16 实战Kaggle比赛：房价预测</a></li>
+    <li>深度学习计算</li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.1_model-construction.html">4.1 模型构造</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.2_parameters.html">4.2 模型参数的访问、初始化和共享</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.3_deferred-init.html">4.3 模型参数的延后初始化</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.4_custom-layer.html">4.4 自定义层</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.5_read-write.html">4.5 读取和存储</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.6_use-gpu.html">4.6 GPU计算</a></li>
+    <li>卷积神经网络</li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.1_conv-layer.html">5.1 二维卷积层</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.2_padding-and-strides.html">5.2 填充和步幅</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.3_channels.html">5.3 多输入通道和多输出通道</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.4_pooling.html">5.4 池化层</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.5_lenet.html">5.5 卷积神经网络（LeNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.6_alexnet.html">5.6 深度卷积神经网络（AlexNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.7_vgg.html">5.7 使用重复元素的网络（VGG）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.8_nin.html">5.8 网络中的网络（NiN）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.9_googlenet.html">5.9 含并行连结的网络（GoogLeNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.10_batch-norm.html">5.10 批量归一化</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.11_resnet.html">5.11 残差网络（ResNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.12_densenet.html">5.12 稠密连接网络（DenseNet）</a></li>
+    <li>循环神经网络</li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.1_lang-model.html">6.1 语言模型</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.2_rnn.html">6.2 循环神经网络</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.3_lang-model-dataset.html">6.3 语言模型数据集（周杰伦专辑歌词）</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.4_rnn-scratch.html">6.4 循环神经网络的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.5_rnn-pytorch.html">6.5 循环神经网络的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.6_bptt.html">6.6 通过时间反向传播</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.7_gru.html">6.7 门控循环单元（GRU）</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.8_lstm.html">6.8 长短期记忆（LSTM）</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.9_deep-rnn.html">6.9 深度循环神经网络</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.10_bi-rnn.html">6.10 双向循环神经网络</a></li>
+    <li>优化算法</li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.1_optimization-intro.html">7.1 优化与深度学习</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.2_gd-sgd.html">7.2 梯度下降和随机梯度下降</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.3_minibatch-sgd.html">7.3 小批量随机梯度下降</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.4_momentum.html">7.4 动量法</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.5_adagrad.html">7.5 AdaGrad算法</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.6_rmsprop.html">7.6 RMSProp算法</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.7_adadelta.html">7.7 AdaDelta算法</a></li>
+    <a href="/d2l-pytorch/chapter07_optimization/7.8_adam.html">7.8 Adam算法</a></li>
+    <li>计算性能</li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.1_hybridize.html">8.1 命令式和符号式混合编程</a></li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.2_async-computation.html">8.2 异步计算</a></li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.3_auto-parallelism.html">8.3 自动并行计算</a></li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.4_multiple-gpus.html">8.4 多GPU计算</a></li>
+    <li>计算机视觉</li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.1_image-augmentation.html">9.1 图像增广</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.2_fine-tuning.html">9.2 微调</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.3_bounding-box.html">9.3 目标检测和边界框</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.4_anchor.html">9.4 锚框</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.5_multiscale-object-detection.html">9.5 多尺度目标检测</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.6_object-detection-dataset.html">9.6 目标检测数据集（皮卡丘）</a></li>
+    <li>9.7 单发多框检测（SSD）</li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.8_rcnn.html">9.8 区域卷积神经网络（R-CNN）系列</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.9_semantic-segmentation-and-dataset.html">9.9 语义分割和数据集</a></li>
+    <li>9.10 全卷积网络（FCN）</li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.11_neural-style.html">9.11 样式迁移</a></li>
+    <li>9.12 实战Kaggle比赛：图像分类（CIFAR-10）</li>
+    <li>9.13 实战Kaggle比赛：狗的品种识别（ImageNet Dogs）<li>
+    <li>自然语言处理</li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.1_word2vec.html">10.1 词嵌入（word2vec）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.2_approx-training.html">10.2 近似训练</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.3_word2vec-pytorch.html">10.3 word2vec的实现</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.4_fasttext.html">10.4 子词嵌入（fastText）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.5_glove.html">10.5 全局向量的词嵌入（GloVe）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.6_similarity-analogy.html">10.6 求近义词和类比词</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.7_sentiment-analysis-rnn.html">10.7 文本情感分类：使用循环神经网络</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.8_sentiment-analysis-cnn.html">10.8 文本情感分类：使用卷积神经网络（textCNN）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.9_seq2seq.html">10.9 编码器—解码器（seq2seq）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.10_beam-search.html">10.10 束搜索</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.11_attention.html">10.11 注意力机制</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.12_machine-translation.html">10.12 机器翻译</a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>5.4 池化层</h1>
+<p>回忆一下，在5.1节（二维卷积层）里介绍的图像物体边缘检测应用中，我们构造卷积核从而精确地找到了像素变化的位置。设任意二维数组<code>X</code>的<code>i</code>行<code>j</code>列的元素为<code>X[i, j]</code>。如果我们构造的卷积核输出<code>Y[i, j]=1</code>，那么说明输入中<code>X[i, j]</code>和<code>X[i, j+1]</code>数值不一样。这可能意味着物体边缘通过这两个元素之间。但实际图像里，我们感兴趣的物体不会总出现在固定位置：即使我们连续拍摄同一个物体也极有可能出现像素位置上的偏移。这会导致同一个边缘对应的输出可能出现在卷积输出<code>Y</code>中的不同位置，进而对后面的模式识别造成不便。</p>
+<p>在本节中我们介绍池化（pooling）层，它的提出是<strong>为了缓解卷积层对位置的过度敏感性</strong>。</p>
+<h2>5.4.1 二维最大池化层和平均池化层</h2>
+<p>同卷积层一样，池化层每次对输入数据的一个固定形状窗口（又称池化窗口）中的元素计算输出。不同于卷积层里计算输入和核的互相关性，池化层直接计算池化窗口内元素的最大值或者平均值。该运算也分别叫做最大池化或平均池化。在二维最大池化中，池化窗口从输入数组的最左上方开始，按从左往右、从上往下的顺序，依次在输入数组上滑动。当池化窗口滑动到某一位置时，窗口中的输入子数组的最大值即输出数组中相应位置的元素。</p>
+<div align=center>
+<img width="300" src="../img/chapter05/5.4_pooling.svg"/>
+</div>
+
+<div align=center>图5.6 池化窗口形状为 2 x 2 的最大池化</div>
+
+<p>图5.6展示了池化窗口形状为$2\times 2$的最大池化，阴影部分为第一个输出元素及其计算所使用的输入元素。输出数组的高和宽分别为2，其中的4个元素由取最大值运算$\text{max}$得出：</p>
+<p>$$
+\max(0,1,3,4)=4,\
+\max(1,2,4,5)=5,\
+\max(3,4,6,7)=7,\
+\max(4,5,7,8)=8.\
+$$</p>
+<p>二维平均池化的工作原理与二维最大池化类似，但将最大运算符替换成平均运算符。池化窗口形状为$p \times q$的池化层称为$p \times q$池化层，其中的池化运算叫作$p \times q$池化。</p>
+<p>让我们再次回到本节开始提到的物体边缘检测的例子。现在我们将卷积层的输出作为$2\times 2$最大池化的输入。设该卷积层输入是<code>X</code>、池化层输出为<code>Y</code>。无论是<code>X[i, j]</code>和<code>X[i, j+1]</code>值不同，还是<code>X[i, j+1]</code>和<code>X[i, j+2]</code>不同，池化层输出均有<code>Y[i, j]=1</code>。也就是说，使用$2\times 2$最大池化层时，只要卷积层识别的模式在高和宽上移动不超过一个元素，我们依然可以将它检测出来。</p>
+<p>下面把池化层的前向计算实现在<code>pool2d</code>函数里。它跟5.1节（二维卷积层）里<code>corr2d</code>函数非常类似，唯一的区别在计算输出<code>Y</code>上。</p>
+<pre><code class="python">import torch
+from torch import nn
+
+def pool2d(X, pool_size, mode='max'):
+    X = X.float()
+    p_h, p_w = pool_size
+    Y = torch.zeros(X.shape[0] - p_h + 1, X.shape[1] - p_w + 1)
+    for i in range(Y.shape[0]):
+        for j in range(Y.shape[1]):
+            if mode == 'max':
+                Y[i, j] = X[i: i + p_h, j: j + p_w].max()
+            elif mode == 'avg':
+                Y[i, j] = X[i: i + p_h, j: j + p_w].mean()       
+    return Y
+</code></pre>
+
+<p>我们可以构造图5.6中的输入数组<code>X</code>来验证二维最大池化层的输出。</p>
+<pre><code class="python">X = torch.tensor([[0, 1, 2], [3, 4, 5], [6, 7, 8]])
+pool2d(X, (2, 2))
+</code></pre>
+
+<p>输出：</p>
+<pre><code>tensor([[4., 5.],
+        [7., 8.]])
+</code></pre>
+
+<p>同时我们实验一下平均池化层。</p>
+<pre><code class="python">pool2d(X, (2, 2), 'avg')
+</code></pre>
+
+<p>输出：</p>
+<pre><code>tensor([[2., 3.],
+        [5., 6.]])
+</code></pre>
+
+<h2>5.4.2 填充和步幅</h2>
+<p>同卷积层一样，池化层也可以在输入的高和宽两侧的填充并调整窗口的移动步幅来改变输出形状。池化层填充和步幅与卷积层填充和步幅的工作机制一样。我们将通过<code>nn</code>模块里的二维最大池化层<code>MaxPool2d</code>来演示池化层填充和步幅的工作机制。我们先构造一个形状为(1, 1, 4, 4)的输入数据，前两个维度分别是批量和通道。</p>
+<pre><code class="python">X = torch.arange(16, dtype=torch.float).view((1, 1, 4, 4))
+X
+</code></pre>
+
+<p>输出：</p>
+<pre><code>tensor([[[[ 0.,  1.,  2.,  3.],
+          [ 4.,  5.,  6.,  7.],
+          [ 8.,  9., 10., 11.],
+          [12., 13., 14., 15.]]]])
+</code></pre>
+
+<p>默认情况下，<code>MaxPool2d</code>实例里步幅和池化窗口形状相同。下面使用形状为(3, 3)的池化窗口，默认获得形状为(3, 3)的步幅。</p>
+<pre><code class="python">pool2d = nn.MaxPool2d(3)
+pool2d(X) 
+</code></pre>
+
+<p>输出：</p>
+<pre><code>tensor([[[[10.]]]])
+</code></pre>
+
+<p>我们可以手动指定步幅和填充。</p>
+<pre><code class="python">pool2d = nn.MaxPool2d(3, padding=1, stride=2)
+pool2d(X)
+</code></pre>
+
+<p>输出：</p>
+<pre><code>tensor([[[[ 5.,  7.],
+          [13., 15.]]]])
+</code></pre>
+
+<p>当然，我们也可以指定非正方形的池化窗口，并分别指定高和宽上的填充和步幅。</p>
+<pre><code class="python">pool2d = nn.MaxPool2d((2, 4), padding=(1, 2), stride=(2, 3))
+pool2d(X)
+</code></pre>
+
+<p>输出：</p>
+<pre><code>tensor([[[[ 1.,  3.],
+          [ 9., 11.],
+          [13., 15.]]]])
+</code></pre>
+
+<h2>5.4.3 多通道</h2>
+<p>在处理多通道输入数据时，<strong>池化层对每个输入通道分别池化，而不是像卷积层那样将各通道的输入按通道相加</strong>。这意味着池化层的输出通道数与输入通道数相等。下面将数组<code>X</code>和<code>X+1</code>在通道维上连结来构造通道数为2的输入。</p>
+<pre><code class="python">X = torch.cat((X, X + 1), dim=1)
+X
+</code></pre>
+
+<p>输出：</p>
+<pre><code>tensor([[[[ 0.,  1.,  2.,  3.],
+          [ 4.,  5.,  6.,  7.],
+          [ 8.,  9., 10., 11.],
+          [12., 13., 14., 15.]],
+
+         [[ 1.,  2.,  3.,  4.],
+          [ 5.,  6.,  7.,  8.],
+          [ 9., 10., 11., 12.],
+          [13., 14., 15., 16.]]]])
+</code></pre>
+
+<p>池化后，我们发现输出通道数仍然是2。</p>
+<pre><code class="python">pool2d = nn.MaxPool2d(3, padding=1, stride=2)
+pool2d(X)
+</code></pre>
+
+<p>输出：</p>
+<pre><code>tensor([[[[ 5.,  7.],
+          [13., 15.]],
+
+         [[ 6.,  8.],
+          [14., 16.]]]])
+</code></pre>
+
+<h2>小结</h2>
+<ul>
+<li>最大池化和平均池化分别取池化窗口中输入元素的最大值和平均值作为输出。</li>
+<li>池化层的一个主要作用是缓解卷积层对位置的过度敏感性。</li>
+<li>可以指定池化层的填充和步幅。</li>
+<li>池化层的输出通道数跟输入通道数相同。</li>
+</ul>
+<hr />
+<blockquote>
+<p>注：除代码外本节与原书此节基本相同，<a href="https://zh.d2l.ai/chapter_convolutional-neural-networks/pooling.html">原书传送门</a></p>
+</blockquote>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

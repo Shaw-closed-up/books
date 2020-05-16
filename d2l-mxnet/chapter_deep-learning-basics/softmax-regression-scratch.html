@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>softmax回归的从零开始实现 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>softmax回归的从零开始实现</h1>
+<p>这一节我们来动手实现softmax回归。首先导入本节实现所需的包或模块。</p>
+<p>```{.python .input  n=1}
+%matplotlib inline
+import d2lzh as d2l
+from mxnet import autograd, nd</p>
+<pre><code>
+## 读取数据集
+
+我们将使用Fashion-MNIST数据集，并设置批量大小为256。
+
+```{.python .input  n=2}
+batch_size = 256
+train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
+</code></pre>
+
+<h2>初始化模型参数</h2>
+<p>跟线性回归中的例子一样，我们将使用向量表示每个样本。已知每个样本输入是高和宽均为28像素的图像。模型的输入向量的长度是$28 \times 28 = 784$：该向量的每个元素对应图像中每个像素。由于图像有10个类别，单层神经网络输出层的输出个数为10，因此softmax回归的权重和偏差参数分别为$784 \times 10$和$1 \times 10$的矩阵。</p>
+<p>```{.python .input  n=3}
+num_inputs = 784
+num_outputs = 10</p>
+<p>W = nd.random.normal(scale=0.01, shape=(num_inputs, num_outputs))
+b = nd.zeros(num_outputs)</p>
+<pre><code>
+同之前一样，我们要为模型参数附上梯度。
+
+```{.python .input  n=4}
+W.attach_grad()
+b.attach_grad()
+</code></pre>
+
+<h2>实现softmax运算</h2>
+<p>在介绍如何定义softmax回归之前，我们先描述一下对如何对多维<code>NDArray</code>按维度操作。在下面的例子中，给定一个<code>NDArray</code>矩阵<code>X</code>。我们可以只对其中同一列（<code>axis=0</code>）或同一行（<code>axis=1</code>）的元素求和，并在结果中保留行和列这两个维度（<code>keepdims=True</code>）。</p>
+<p>```{.python .input  n=5}
+X = nd.array([[1, 2, 3], [4, 5, 6]])
+X.sum(axis=0, keepdims=True), X.sum(axis=1, keepdims=True)</p>
+<pre><code>
+下面我们就可以定义前面小节里介绍的softmax运算了。在下面的函数中，矩阵`X`的行数是样本数，列数是输出个数。为了表达样本预测各个输出的概率，softmax运算会先通过`exp`函数对每个元素做指数运算，再对`exp`矩阵同行元素求和，最后令矩阵每行各元素与该行元素之和相除。这样一来，最终得到的矩阵每行元素和为1且非负。因此，该矩阵每行都是合法的概率分布。softmax运算的输出矩阵中的任意一行元素代表了一个样本在各个输出类别上的预测概率。
+
+```{.python .input  n=6}
+def softmax(X):
+    X_exp = X.exp()
+    partition = X_exp.sum(axis=1, keepdims=True)
+    return X_exp / partition  # 这里应用了广播机制
+</code></pre>
+
+<p>可以看到，对于随机输入，我们将每个元素变成了非负数，且每一行和为1。</p>
+<p>```{.python .input  n=7}
+X = nd.random.normal(shape=(2, 5))
+X_prob = softmax(X)
+X_prob, X_prob.sum(axis=1)</p>
+<pre><code>
+## 定义模型
+
+有了softmax运算，我们可以定义上节描述的softmax回归模型了。这里通过`reshape`函数将每张原始图像改成长度为`num_inputs`的向量。
+
+```{.python .input  n=8}
+def net(X):
+    return softmax(nd.dot(X.reshape((-1, num_inputs)), W) + b)
+</code></pre>
+
+<h2>定义损失函数</h2>
+<p>上一节中，我们介绍了softmax回归使用的交叉熵损失函数。为了得到标签的预测概率，我们可以使用<code>pick</code>函数。在下面的例子中，变量<code>y_hat</code>是2个样本在3个类别的预测概率，变量<code>y</code>是这2个样本的标签类别。通过使用<code>pick</code>函数，我们得到了2个样本的标签的预测概率。与<a href="softmax-regression.html">“softmax回归”</a>一节数学表述中标签类别离散值从1开始逐一递增不同，在代码中，标签类别的离散值是从0开始逐一递增的。</p>
+<p>```{.python .input  n=9}
+y_hat = nd.array([[0.1, 0.3, 0.6], [0.3, 0.2, 0.5]])
+y = nd.array([0, 2], dtype='int32')
+nd.pick(y_hat, y)</p>
+<pre><code>
+下面实现了[“softmax回归”](softmax-regression.html)一节中介绍的交叉熵损失函数。
+
+```{.python .input  n=10}
+def cross_entropy(y_hat, y):
+    return -nd.pick(y_hat, y).log()
+</code></pre>
+
+<h2>计算分类准确率</h2>
+<p>给定一个类别的预测概率分布<code>y_hat</code>，我们把预测概率最大的类别作为输出类别。如果它与真实类别<code>y</code>一致，说明这次预测是正确的。分类准确率即正确预测数量与总预测数量之比。</p>
+<p>为了演示准确率的计算，下面定义准确率<code>accuracy</code>函数。其中<code>y_hat.argmax(axis=1)</code>返回矩阵<code>y_hat</code>每行中最大元素的索引，且返回结果与变量<code>y</code>形状相同。我们在<a href="../chapter_prerequisite/ndarray.html">“数据操作”</a>一节介绍过，相等条件判别式<code>(y_hat.argmax(axis=1) == y)</code>是一个值为0（相等为假）或1（相等为真）的<code>NDArray</code>。由于标签类型为整数，我们先将变量<code>y</code>变换为浮点数再进行相等条件判断。</p>
+<p>```{.python .input  n=11}
+def accuracy(y_hat, y):
+    return (y_hat.argmax(axis=1) == y.astype('float32')).mean().asscalar()</p>
+<pre><code>
+让我们继续使用在演示`pick`函数时定义的变量`y_hat`和`y`，并将它们分别作为预测概率分布和标签。可以看到，第一个样本预测类别为2（该行最大元素0.6在本行的索引为2），与真实标签0不一致；第二个样本预测类别为2（该行最大元素0.5在本行的索引为2），与真实标签2一致。因此，这两个样本上的分类准确率为0.5。
+
+```{.python .input  n=12}
+accuracy(y_hat, y)
+</code></pre>
+
+<p>类似地，我们可以评价模型<code>net</code>在数据集<code>data_iter</code>上的准确率。</p>
+<p>```{.python .input  n=13}</p>
+<h1>本函数已保存在d2lzh包中方便以后使用。该函数将被逐步改进：它的完整实现将在“图像增广”一节中</h1>
+<h1>描述</h1>
+<p>def evaluate_accuracy(data_iter, net):
+    acc_sum, n = 0.0, 0
+    for X, y in data_iter:
+        y = y.astype('float32')
+        acc_sum += (net(X).argmax(axis=1) == y).sum().asscalar()
+        n += y.size
+    return acc_sum / n</p>
+<pre><code>
+因为我们随机初始化了模型`net`，所以这个随机模型的准确率应该接近于类别个数10的倒数0.1。
+
+```{.python .input  n=14}
+evaluate_accuracy(test_iter, net)
+</code></pre>
+
+<h2>训练模型</h2>
+<p>训练softmax回归的实现与<a href="linear-regression-scratch.html">“线性回归的从零开始实现”</a>一节介绍的线性回归中的实现非常相似。我们同样使用小批量随机梯度下降来优化模型的损失函数。在训练模型时，迭代周期数<code>num_epochs</code>和学习率<code>lr</code>都是可以调的超参数。改变它们的值可能会得到分类更准确的模型。</p>
+<p>```{.python .input  n=21}
+num_epochs, lr = 5, 0.1</p>
+<h1>本函数已保存在d2lzh包中方便以后使用</h1>
+<p>def train_ch3(net, train_iter, test_iter, loss, num_epochs, batch_size,
+              params=None, lr=None, trainer=None):
+    for epoch in range(num_epochs):
+        train_l_sum, train_acc_sum, n = 0.0, 0.0, 0
+        for X, y in train_iter:
+            with autograd.record():
+                y_hat = net(X)
+                l = loss(y_hat, y).sum()
+            l.backward()
+            if trainer is None:
+                d2l.sgd(params, lr, batch_size)
+            else:
+                trainer.step(batch_size)  # “softmax回归的简洁实现”一节将用到
+            y = y.astype('float32')
+            train_l_sum += l.asscalar()
+            train_acc_sum += (y_hat.argmax(axis=1) == y).sum().asscalar()
+            n += y.size
+        test_acc = evaluate_accuracy(test_iter, net)
+        print('epoch %d, loss %.4f, train acc %.3f, test acc %.3f'
+              % (epoch + 1, train_l_sum / n, train_acc_sum / n, test_acc))</p>
+<p>train_ch3(net, train_iter, test_iter, cross_entropy, num_epochs, batch_size,
+          [W, b], lr)</p>
+<pre><code>
+## 预测
+
+训练完成后，现在就可以演示如何对图像进行分类了。给定一系列图像（第三行图像输出），我们比较一下它们的真实标签（第一行文本输出）和模型预测结果（第二行文本输出）。
+
+```{.python .input}
+for X, y in test_iter:
+    break
+
+true_labels = d2l.get_fashion_mnist_labels(y.asnumpy())
+pred_labels = d2l.get_fashion_mnist_labels(net(X).argmax(axis=1).asnumpy())
+titles = [true + '\n' + pred for true, pred in zip(true_labels, pred_labels)]
+
+d2l.show_fashion_mnist(X[0:9], titles[0:9])
+</code></pre>
+
+<h2>小结</h2>
+<ul>
+<li>可以使用softmax回归做多类别分类。与训练线性回归相比，你会发现训练softmax回归的步骤和它非常相似：获取并读取数据、定义模型和损失函数并使用优化算法训练模型。事实上，绝大多数深度学习模型的训练都有着类似的步骤。</li>
+</ul>
+<h2>练习</h2>
+<ul>
+<li>在本节中，我们直接按照softmax运算的数学定义来实现softmax函数。这可能会造成什么问题？（提示：试一试计算$\exp(50)$的大小。）</li>
+<li>本节中的<code>cross_entropy</code>函数是按照<a href="softmax-regression.html">“softmax回归”</a>一节中的交叉熵损失函数的数学定义实现的。这样的实现方式可能有什么问题？（提示：思考一下对数函数的定义域。）</li>
+<li>你能想到哪些办法来解决上面的两个问题？</li>
+</ul>
+<h2>扫码直达<a href="https://discuss.gluon.ai/t/topic/741">讨论区</a></h2>
+<p><img alt="" src="../img/qr_softmax-regression-scratch.svg" /></p>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

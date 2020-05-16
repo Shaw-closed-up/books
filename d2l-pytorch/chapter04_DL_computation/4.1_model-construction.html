@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>4.1 模型构造 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  
+    <li>简介</li>
+    <li><a href="/d2l-pytorch/chapter01_DL-intro/deep-learning-intro.html">1. 深度学习简介</a></li>
+    <li>预备知识</li>
+    <li><a href="/d2l-pytorch/chapter02_prerequisite/2.1_install.html">2.1 环境配置</a></li>
+    <li><a href="/d2l-pytorch/chapter02_prerequisite/2.2_tensor.html">2.2 数据操作</a></li>
+    <a href="/d2l-pytorch/chapter02_prerequisite/2.3_autograd.html">2.3 自动求梯度</a></li>
+    <li>深度学习基础</li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.1_linear-regression.html">3.1 线性回归</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.2_linear-regression-scratch.html">3.2 线性回归的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.3_linear-regression-pytorch.html">3.3 线性回归的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.4_softmax-regression.html">3.4 softmax回归</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.5_fashion-mnist.html">3.5 图像分类数据集（Fashion-MNIST）</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.6_softmax-regression-scratch.html">3.6 softmax回归的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.7_softmax-regression-pytorch.html">3.7 softmax回归的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.8_mlp.html">3.8 多层感知机</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.9_mlp-scratch.html">3.9 多层感知机的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.10_mlp-pytorch.html">3.10 多层感知机的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.11_underfit-overfit.html">3.11 模型选择、欠拟合和过拟合</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.12_weight-decay.html">3.12 权重衰减</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.13_dropout.html">3.13 丢弃法</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.14_backprop.html">3.14 正向传播、反向传播和计算图</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.15_numerical-stability-and-init.html">3.15 数值稳定性和模型初始化</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.16_kaggle-house-price.html">3.16 实战Kaggle比赛：房价预测</a></li>
+    <li>深度学习计算</li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.1_model-construction.html">4.1 模型构造</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.2_parameters.html">4.2 模型参数的访问、初始化和共享</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.3_deferred-init.html">4.3 模型参数的延后初始化</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.4_custom-layer.html">4.4 自定义层</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.5_read-write.html">4.5 读取和存储</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.6_use-gpu.html">4.6 GPU计算</a></li>
+    <li>卷积神经网络</li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.1_conv-layer.html">5.1 二维卷积层</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.2_padding-and-strides.html">5.2 填充和步幅</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.3_channels.html">5.3 多输入通道和多输出通道</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.4_pooling.html">5.4 池化层</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.5_lenet.html">5.5 卷积神经网络（LeNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.6_alexnet.html">5.6 深度卷积神经网络（AlexNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.7_vgg.html">5.7 使用重复元素的网络（VGG）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.8_nin.html">5.8 网络中的网络（NiN）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.9_googlenet.html">5.9 含并行连结的网络（GoogLeNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.10_batch-norm.html">5.10 批量归一化</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.11_resnet.html">5.11 残差网络（ResNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.12_densenet.html">5.12 稠密连接网络（DenseNet）</a></li>
+    <li>循环神经网络</li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.1_lang-model.html">6.1 语言模型</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.2_rnn.html">6.2 循环神经网络</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.3_lang-model-dataset.html">6.3 语言模型数据集（周杰伦专辑歌词）</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.4_rnn-scratch.html">6.4 循环神经网络的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.5_rnn-pytorch.html">6.5 循环神经网络的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.6_bptt.html">6.6 通过时间反向传播</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.7_gru.html">6.7 门控循环单元（GRU）</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.8_lstm.html">6.8 长短期记忆（LSTM）</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.9_deep-rnn.html">6.9 深度循环神经网络</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.10_bi-rnn.html">6.10 双向循环神经网络</a></li>
+    <li>优化算法</li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.1_optimization-intro.html">7.1 优化与深度学习</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.2_gd-sgd.html">7.2 梯度下降和随机梯度下降</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.3_minibatch-sgd.html">7.3 小批量随机梯度下降</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.4_momentum.html">7.4 动量法</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.5_adagrad.html">7.5 AdaGrad算法</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.6_rmsprop.html">7.6 RMSProp算法</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.7_adadelta.html">7.7 AdaDelta算法</a></li>
+    <a href="/d2l-pytorch/chapter07_optimization/7.8_adam.html">7.8 Adam算法</a></li>
+    <li>计算性能</li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.1_hybridize.html">8.1 命令式和符号式混合编程</a></li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.2_async-computation.html">8.2 异步计算</a></li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.3_auto-parallelism.html">8.3 自动并行计算</a></li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.4_multiple-gpus.html">8.4 多GPU计算</a></li>
+    <li>计算机视觉</li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.1_image-augmentation.html">9.1 图像增广</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.2_fine-tuning.html">9.2 微调</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.3_bounding-box.html">9.3 目标检测和边界框</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.4_anchor.html">9.4 锚框</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.5_multiscale-object-detection.html">9.5 多尺度目标检测</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.6_object-detection-dataset.html">9.6 目标检测数据集（皮卡丘）</a></li>
+    <li>9.7 单发多框检测（SSD）</li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.8_rcnn.html">9.8 区域卷积神经网络（R-CNN）系列</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.9_semantic-segmentation-and-dataset.html">9.9 语义分割和数据集</a></li>
+    <li>9.10 全卷积网络（FCN）</li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.11_neural-style.html">9.11 样式迁移</a></li>
+    <li>9.12 实战Kaggle比赛：图像分类（CIFAR-10）</li>
+    <li>9.13 实战Kaggle比赛：狗的品种识别（ImageNet Dogs）<li>
+    <li>自然语言处理</li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.1_word2vec.html">10.1 词嵌入（word2vec）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.2_approx-training.html">10.2 近似训练</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.3_word2vec-pytorch.html">10.3 word2vec的实现</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.4_fasttext.html">10.4 子词嵌入（fastText）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.5_glove.html">10.5 全局向量的词嵌入（GloVe）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.6_similarity-analogy.html">10.6 求近义词和类比词</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.7_sentiment-analysis-rnn.html">10.7 文本情感分类：使用循环神经网络</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.8_sentiment-analysis-cnn.html">10.8 文本情感分类：使用卷积神经网络（textCNN）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.9_seq2seq.html">10.9 编码器—解码器（seq2seq）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.10_beam-search.html">10.10 束搜索</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.11_attention.html">10.11 注意力机制</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.12_machine-translation.html">10.12 机器翻译</a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>4.1 模型构造</h1>
+<p>让我们回顾一下在3.10节（多层感知机的简洁实现）中含单隐藏层的多层感知机的实现方法。我们首先构造<code>Sequential</code>实例，然后依次添加两个全连接层。其中第一层的输出大小为256，即隐藏层单元个数是256；第二层的输出大小为10，即输出层单元个数是10。我们在上一章的其他节中也使用了<code>Sequential</code>类构造模型。这里我们介绍另外一种基于<code>Module</code>类的模型构造方法：它让模型构造更加灵活。</p>
+<blockquote>
+<p>注：其实前面我们陆陆续续已经使用了这些方法了，本节系统介绍一下。</p>
+</blockquote>
+<h2>4.1.1 继承<code>Module</code>类来构造模型</h2>
+<p><code>Module</code>类是<code>nn</code>模块里提供的一个模型构造类，是所有神经网络模块的基类，我们可以继承它来定义我们想要的模型。下面继承<code>Module</code>类构造本节开头提到的多层感知机。这里定义的<code>MLP</code>类重载了<code>Module</code>类的<code>__init__</code>函数和<code>forward</code>函数。它们分别用于创建模型参数和定义前向计算。前向计算也即正向传播。</p>
+<pre><code class="python">import torch
+from torch import nn
+
+class MLP(nn.Module):
+    # 声明带有模型参数的层，这里声明了两个全连接层
+    def __init__(self, **kwargs):
+        # 调用MLP父类Module的构造函数来进行必要的初始化。这样在构造实例时还可以指定其他函数
+        # 参数，如“模型参数的访问、初始化和共享”一节将介绍的模型参数params
+        super(MLP, self).__init__(**kwargs)
+        self.hidden = nn.Linear(784, 256) # 隐藏层
+        self.act = nn.ReLU()
+        self.output = nn.Linear(256, 10)  # 输出层
+
+
+    # 定义模型的前向计算，即如何根据输入x计算返回所需要的模型输出
+    def forward(self, x):
+        a = self.act(self.hidden(x))
+        return self.output(a)
+</code></pre>
+
+<p>以上的<code>MLP</code>类中无须定义反向传播函数。系统将通过自动求梯度而自动生成反向传播所需的<code>backward</code>函数。</p>
+<p>我们可以实例化<code>MLP</code>类得到模型变量<code>net</code>。下面的代码初始化<code>net</code>并传入输入数据<code>X</code>做一次前向计算。其中，<code>net(X)</code>会调用<code>MLP</code>继承自<code>Module</code>类的<code>__call__</code>函数，这个函数将调用<code>MLP</code>类定义的<code>forward</code>函数来完成前向计算。</p>
+<pre><code class="python">X = torch.rand(2, 784)
+net = MLP()
+print(net)
+net(X)
+</code></pre>
+
+<p>输出：</p>
+<pre><code>MLP(
+  (hidden): Linear(in_features=784, out_features=256, bias=True)
+  (act): ReLU()
+  (output): Linear(in_features=256, out_features=10, bias=True)
+)
+tensor([[-0.1798, -0.2253,  0.0206, -0.1067, -0.0889,  0.1818, -0.1474,  0.1845,
+         -0.1870,  0.1970],
+        [-0.1843, -0.1562, -0.0090,  0.0351, -0.1538,  0.0992, -0.0883,  0.0911,
+         -0.2293,  0.2360]], grad_fn=&lt;ThAddmmBackward&gt;)
+</code></pre>
+
+<p>注意，这里并没有将<code>Module</code>类命名为<code>Layer</code>（层）或者<code>Model</code>（模型）之类的名字，这是因为该类是一个可供自由组建的部件。它的子类既可以是一个层（如PyTorch提供的<code>Linear</code>类），又可以是一个模型（如这里定义的<code>MLP</code>类），或者是模型的一个部分。我们下面通过两个例子来展示它的灵活性。</p>
+<h2>4.1.2 <code>Module</code>的子类</h2>
+<p>我们刚刚提到，<code>Module</code>类是一个通用的部件。事实上，PyTorch还实现了继承自<code>Module</code>的可以方便构建模型的类: 如<code>Sequential</code>、<code>ModuleList</code>和<code>ModuleDict</code>等等。</p>
+<h3>4.1.2.1 <code>Sequential</code>类</h3>
+<p>当模型的前向计算为简单串联各个层的计算时，<code>Sequential</code>类可以通过更加简单的方式定义模型。这正是<code>Sequential</code>类的目的：它可以接收一个子模块的有序字典（OrderedDict）或者一系列子模块作为参数来逐一添加<code>Module</code>的实例，而模型的前向计算就是将这些实例按添加的顺序逐一计算。</p>
+<p>下面我们实现一个与<code>Sequential</code>类有相同功能的<code>MySequential</code>类。这或许可以帮助读者更加清晰地理解<code>Sequential</code>类的工作机制。</p>
+<pre><code class="python">class MySequential(nn.Module):
+    from collections import OrderedDict
+    def __init__(self, *args):
+        super(MySequential, self).__init__()
+        if len(args) == 1 and isinstance(args[0], OrderedDict): # 如果传入的是一个OrderedDict
+            for key, module in args[0].items():
+                self.add_module(key, module)  # add_module方法会将module添加进self._modules(一个OrderedDict)
+        else:  # 传入的是一些Module
+            for idx, module in enumerate(args):
+                self.add_module(str(idx), module)
+    def forward(self, input):
+        # self._modules返回一个 OrderedDict，保证会按照成员添加时的顺序遍历成员
+        for module in self._modules.values():
+            input = module(input)
+        return input
+</code></pre>
+
+<p>我们用<code>MySequential</code>类来实现前面描述的<code>MLP</code>类，并使用随机初始化的模型做一次前向计算。</p>
+<pre><code class="python">net = MySequential(
+        nn.Linear(784, 256),
+        nn.ReLU(),
+        nn.Linear(256, 10), 
+        )
+print(net)
+net(X)
+</code></pre>
+
+<p>输出：</p>
+<pre><code>MySequential(
+  (0): Linear(in_features=784, out_features=256, bias=True)
+  (1): ReLU()
+  (2): Linear(in_features=256, out_features=10, bias=True)
+)
+tensor([[-0.0100, -0.2516,  0.0392, -0.1684, -0.0937,  0.2191, -0.1448,  0.0930,
+          0.1228, -0.2540],
+        [-0.1086, -0.1858,  0.0203, -0.2051, -0.1404,  0.2738, -0.0607,  0.0622,
+          0.0817, -0.2574]], grad_fn=&lt;ThAddmmBackward&gt;)
+</code></pre>
+
+<p>可以观察到这里<code>MySequential</code>类的使用跟3.10节（多层感知机的简洁实现）中<code>Sequential</code>类的使用没什么区别。</p>
+<h3>4.1.2.2 <code>ModuleList</code>类</h3>
+<p><code>ModuleList</code>接收一个子模块的列表作为输入，然后也可以类似List那样进行append和extend操作:</p>
+<pre><code class="python">net = nn.ModuleList([nn.Linear(784, 256), nn.ReLU()])
+net.append(nn.Linear(256, 10)) # # 类似List的append操作
+print(net[-1])  # 类似List的索引访问
+print(net)
+# net(torch.zeros(1, 784)) # 会报NotImplementedError
+</code></pre>
+
+<p>输出：</p>
+<pre><code>Linear(in_features=256, out_features=10, bias=True)
+ModuleList(
+  (0): Linear(in_features=784, out_features=256, bias=True)
+  (1): ReLU()
+  (2): Linear(in_features=256, out_features=10, bias=True)
+)
+</code></pre>
+
+<p>既然<code>Sequential</code>和<code>ModuleList</code>都可以进行列表化构造网络，那二者区别是什么呢。<code>ModuleList</code>仅仅是一个储存各种模块的列表，这些模块之间没有联系也没有顺序（所以不用保证相邻层的输入输出维度匹配），而且没有实现<code>forward</code>功能需要自己实现，所以上面执行<code>net(torch.zeros(1, 784))</code>会报<code>NotImplementedError</code>；而<code>Sequential</code>内的模块需要按照顺序排列，要保证相邻层的输入输出大小相匹配，内部<code>forward</code>功能已经实现。</p>
+<p><code>ModuleList</code>的出现只是让网络定义前向传播时更加灵活，见下面官网的例子。</p>
+<pre><code class="python">class MyModule(nn.Module):
+    def __init__(self):
+        super(MyModule, self).__init__()
+        self.linears = nn.ModuleList([nn.Linear(10, 10) for i in range(10)])
+
+    def forward(self, x):
+        # ModuleList can act as an iterable, or be indexed using ints
+        for i, l in enumerate(self.linears):
+            x = self.linears[i // 2](x) + l(x)
+        return x
+</code></pre>
+
+<p>另外，<code>ModuleList</code>不同于一般的Python的<code>list</code>，加入到<code>ModuleList</code>里面的所有模块的参数会被自动添加到整个网络中，下面看一个例子对比一下。</p>
+<pre><code class="python">class Module_ModuleList(nn.Module):
+    def __init__(self):
+        super(Module_ModuleList, self).__init__()
+        self.linears = nn.ModuleList([nn.Linear(10, 10)])
+
+class Module_List(nn.Module):
+    def __init__(self):
+        super(Module_List, self).__init__()
+        self.linears = [nn.Linear(10, 10)]
+
+net1 = Module_ModuleList()
+net2 = Module_List()
+
+print(&quot;net1:&quot;)
+for p in net1.parameters():
+    print(p.size())
+
+print(&quot;net2:&quot;)
+for p in net2.parameters():
+    print(p)
+</code></pre>
+
+<p>输出：</p>
+<pre><code>net1:
+torch.Size([10, 10])
+torch.Size([10])
+net2:
+</code></pre>
+
+<h3>4.1.2.3 <code>ModuleDict</code>类</h3>
+<p><code>ModuleDict</code>接收一个子模块的字典作为输入, 然后也可以类似字典那样进行添加访问操作:</p>
+<pre><code class="python">net = nn.ModuleDict({
+    'linear': nn.Linear(784, 256),
+    'act': nn.ReLU(),
+})
+net['output'] = nn.Linear(256, 10) # 添加
+print(net['linear']) # 访问
+print(net.output)
+print(net)
+# net(torch.zeros(1, 784)) # 会报NotImplementedError
+</code></pre>
+
+<p>输出：</p>
+<pre><code>Linear(in_features=784, out_features=256, bias=True)
+Linear(in_features=256, out_features=10, bias=True)
+ModuleDict(
+  (act): ReLU()
+  (linear): Linear(in_features=784, out_features=256, bias=True)
+  (output): Linear(in_features=256, out_features=10, bias=True)
+)
+</code></pre>
+
+<p>和<code>ModuleList</code>一样，<code>ModuleDict</code>实例仅仅是存放了一些模块的字典，并没有定义<code>forward</code>函数需要自己定义。同样，<code>ModuleDict</code>也与Python的<code>Dict</code>有所不同，<code>ModuleDict</code>里的所有模块的参数会被自动添加到整个网络中。</p>
+<h2>4.1.3 构造复杂的模型</h2>
+<p>虽然上面介绍的这些类可以使模型构造更加简单，且不需要定义<code>forward</code>函数，但直接继承<code>Module</code>类可以极大地拓展模型构造的灵活性。下面我们构造一个稍微复杂点的网络<code>FancyMLP</code>。在这个网络中，我们通过<code>get_constant</code>函数创建训练中不被迭代的参数，即常数参数。在前向计算中，除了使用创建的常数参数外，我们还使用<code>Tensor</code>的函数和Python的控制流，并多次调用相同的层。</p>
+<pre><code class="python">class FancyMLP(nn.Module):
+    def __init__(self, **kwargs):
+        super(FancyMLP, self).__init__(**kwargs)
+
+        self.rand_weight = torch.rand((20, 20), requires_grad=False) # 不可训练参数（常数参数）
+        self.linear = nn.Linear(20, 20)
+
+    def forward(self, x):
+        x = self.linear(x)
+        # 使用创建的常数参数，以及nn.functional中的relu函数和mm函数
+        x = nn.functional.relu(torch.mm(x, self.rand_weight.data) + 1)
+
+        # 复用全连接层。等价于两个全连接层共享参数
+        x = self.linear(x)
+        # 控制流，这里我们需要调用item函数来返回标量进行比较
+        while x.norm().item() &gt; 1:
+            x /= 2
+        if x.norm().item() &lt; 0.8:
+            x *= 10
+        return x.sum()
+</code></pre>
+
+<p>在这个<code>FancyMLP</code>模型中，我们使用了常数权重<code>rand_weight</code>（注意它不是可训练模型参数）、做了矩阵乘法操作（<code>torch.mm</code>）并重复使用了相同的<code>Linear</code>层。下面我们来测试该模型的前向计算。</p>
+<pre><code class="python">X = torch.rand(2, 20)
+net = FancyMLP()
+print(net)
+net(X)
+</code></pre>
+
+<p>输出：</p>
+<pre><code>FancyMLP(
+  (linear): Linear(in_features=20, out_features=20, bias=True)
+)
+tensor(0.8432, grad_fn=&lt;SumBackward0&gt;)
+</code></pre>
+
+<p>因为<code>FancyMLP</code>和<code>Sequential</code>类都是<code>Module</code>类的子类，所以我们可以嵌套调用它们。</p>
+<pre><code class="python">class NestMLP(nn.Module):
+    def __init__(self, **kwargs):
+        super(NestMLP, self).__init__(**kwargs)
+        self.net = nn.Sequential(nn.Linear(40, 30), nn.ReLU()) 
+
+    def forward(self, x):
+        return self.net(x)
+
+net = nn.Sequential(NestMLP(), nn.Linear(30, 20), FancyMLP())
+
+X = torch.rand(2, 40)
+print(net)
+net(X)
+</code></pre>
+
+<p>输出：</p>
+<pre><code>Sequential(
+  (0): NestMLP(
+    (net): Sequential(
+      (0): Linear(in_features=40, out_features=30, bias=True)
+      (1): ReLU()
+    )
+  )
+  (1): Linear(in_features=30, out_features=20, bias=True)
+  (2): FancyMLP(
+    (linear): Linear(in_features=20, out_features=20, bias=True)
+  )
+)
+tensor(14.4908, grad_fn=&lt;SumBackward0&gt;)
+</code></pre>
+
+<h2>小结</h2>
+<ul>
+<li>可以通过继承<code>Module</code>类来构造模型。</li>
+<li><code>Sequential</code>、<code>ModuleList</code>、<code>ModuleDict</code>类都继承自<code>Module</code>类。</li>
+<li>与<code>Sequential</code>不同，<code>ModuleList</code>和<code>ModuleDict</code>并没有定义一个完整的网络，它们只是将不同的模块存放在一起，需要自己定义<code>forward</code>函数。</li>
+<li>虽然<code>Sequential</code>等类可以使模型构造更加简单，但直接继承<code>Module</code>类可以极大地拓展模型构造的灵活性。</li>
+</ul>
+<hr />
+<blockquote>
+<p>注：本节与原书此节有一些不同，<a href="https://zh.d2l.ai/chapter_deep-learning-computation/model-construction.html">原书传送门</a></p>
+</blockquote>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

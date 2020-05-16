@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+    <link href="/static/xterm/xterm.css" rel="stylesheet" type="text/css"/>
+
+    <!-- Theme CSS -->
+    <link href="/static/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css"/>
+
+    <style>
+     .hljs{display:block;overflow-x:auto;padding:.5em;background:#1e1e1e;color:#dcdcdc}.hljs-keyword,.hljs-literal,.hljs-name,.hljs-symbol{color:#569cd6}.hljs-link{color:#569cd6;text-decoration:underline}.hljs-built_in,.hljs-type{color:#4ec9b0}.hljs-class,.hljs-number{color:#b8d7a3}.hljs-meta-string,.hljs-string{color:#d69d85}.hljs-regexp,.hljs-template-tag{color:#9a5334}.hljs-formula,.hljs-function,.hljs-params,.hljs-subst,.hljs-title{color:#dcdcdc}.hljs-comment,.hljs-quote{color:#57a64a;font-style:italic}.hljs-doctag{color:#608b4e}.hljs-meta,.hljs-meta-keyword,.hljs-tag{color:#9b9b9b}.hljs-template-variable,.hljs-variable{color:#bd63c5}.hljs-attr,.hljs-attribute,.hljs-builtin-name{color:#9cdcfe}.hljs-section{color:gold}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}.hljs-bullet,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id,.hljs-selector-pseudo,.hljs-selector-tag{color:#d7ba7d}.hljs-addition{background-color:#144212;display:inline-block;width:100%}.hljs-deletion{background-color:#600;display:inline-block;width:100%}
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
+
+    <!-- and it's easy to individually load additional languages -->
+
+    <title>Docker 镜像加速 - FreeAIHub</title>
+  
+    <style>
+
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+        flex: 1;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: calc(88vh);
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 69px;">
+
+    <!-- NAVBAR
+    ================================================== -->
+        <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="menu-content col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-3">
+                <ul class="nav side-left">
+                  <li><a href=./index.html>如何学习本课程</a></li>
+<li><a href=./intro.html>Docker 简介</a></li>
+<li><a href=./setup.html>Docker 环境安装及配置</a></li>
+<li><a href=./helloworld.html>Docker 跑通第一个Docker容器</a></li>
+<li><a href=./arch.html>Docker 架构</a></li>
+<li><a href=./conception.html>Docker 核心概念</a></li>
+<li><a href=./container-daemon.html>Docker 容器以后台方式运行</a></li>
+<li><a href=./container.html>Docker 容器操作(container)</a></li>
+<li><a href=./image.html>Docker 镜像操作(image)</a></li>
+<li><a href=./dockerfile.html>Docker 构建镜像(dockerfile)</a></li>
+<li><a href=./repository-mirror.html>Docker 镜像加速</a></li>
+<li><a href=./repository.html>Docker 仓库操作(Repository)</a></li>
+<li><a href=./case-webapp.html>Docker Web应用实例</a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-content col-12 col-lg-5 col-xl-5 offset-lg-2 offset-xl-2">
+
+          <h1>Docker 镜像加速</h1>
+<p>国内从 DockerHub 拉取镜像有时会遇到困难，此时可以配置镜像加速器。</p>
+<p>Docker 官方和国内很多云服务商都提供了国内加速器服务，例如：</p>
+<ul>
+<li>网易：<strong>https://hub-mirror.c.163.com/</strong></li>
+<li>阿里云：<strong>https://&lt;你的ID&gt;.mirror.aliyuncs.com</strong></li>
+<li>七牛云加速器：<strong>https://reg-mirror.qiniu.com</strong></li>
+</ul>
+<p>当配置某一个加速器地址之后，若发现拉取不到镜像，请切换到另一个加速器地址。</p>
+<p>国内各大云服务商均提供了 Docker 镜像加速服务，建议根据运行 Docker 的云平台选择对应的镜像加速服务。</p>
+<h3>获取阿里云镜像加速地址</h3>
+<p>阿里云镜像获取地址：https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors，登陆后，左侧菜单选中镜像加速器就可以看到你的专属地址了：</p>
+<p><img alt="img" src="./images/repository-mirror-aliyun.png" /></p>
+<p>之前还有 Docker 官方加速器 <strong>https://registry.docker-cn.com</strong> ，现在好像已经不能使用了，我们可以多添加几个国内的镜像，如果有不能使用的，会切换到可以使用个的镜像来拉取。</p>
+<h3>Ubuntu16.04+、Debian8+、CentOS7</h3>
+<p>对于使用 systemd 的系统，请在<code>/etc/docker/daemon.json</code>中写入如下内容（如果文件不存在请新建该文件）：</p>
+<pre><code>{&quot;registry-mirrors&quot;:[&quot;https://reg-mirror.qiniu.com/&quot;]}
+</code></pre>
+
+<p>之后重新启动服务：</p>
+<pre><code>sudo systemctl daemon-reload
+sudo systemctl restart docker
+</code></pre>
+
+<h3>Windows 10</h3>
+<p>对于使用 Windows 10 的系统，在系统右下角托盘 Docker 图标内右键菜单选择 Settings，打开配置窗口后左侧导航菜单选择 Daemon。在 Registrymirrors 一栏中填写加速器地址 <strong>https://registry.docker-cn.com</strong> ，之后点击 Apply 保存后 Docker 就会重启并应用配置的镜像地址了。</p>
+<p><img alt="img" src="./images/repository-mirror-win10.png" /></p>
+<h3>Mac OS X</h3>
+<p>对于使用 Mac OS X 的用户，在任务栏点击 Docker for mac 应用图标-&gt; Perferences...-&gt; Daemon-&gt; Registrymirrors。在列表中填写加速器地址 <strong>https://reg-mirror.qiniu.com</strong> 。修改完成之后，点击 Apply&amp;Restart 按钮，Docker 就会重启并应用配置的镜像地址了。</p>
+<p><img alt="img" src="./images/repository-mirror-mac.png" /></p>
+<h3>检查加速器是否生效</h3>
+<p>检查加速器是否生效配置加速器之后，如果拉取镜像仍然十分缓慢，请手动检查加速器配置是否生效，在命令行执行 <strong>docker info</strong>，如果从结果中看到了如下内容，说明配置成功。</p>
+<pre><code class="bash">docker info | grep Registry
+</code></pre>
+          </div>
+          <backend type="v"></backend>
+
+          <div class="col-12 col-lg-5 col-xl-5 d-none d-lg-block px-lg-0 xterm-wrapper">
+             <!-- 导航 -->
+            <ul class="nav nav-tabs" id="myTab">
+              <li class="nav-item">
+                <a class="nav-link"  href="#home">Terminal</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="#profile">VNC</a>
+              </li>
+            </ul>
+      
+ 
+            <!-- 带显示效果的内容 -->
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="home" >
+                <div id="term-content">
+                  <div id="terminal"></div>
+                </div>
+                 
+              </div>
+			
+            <div class="tab-pane fade" id="profile">	
+
+              <div id="top_bar">
+                  <div id="status">Loading</div>
+                  <!-- <div id="sendCtrlAltDelButton">Send CtrlAltDel</div> -->
+              </div>
+              <div id="screen">
+                  <!-- This is where the remote screen will appear -->
+              </div>
+			      </div>
+           
+        </div>
+          </div>
+        </div> <!-- / .row -->
+      </div>
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <!-- <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script> -->
+
+    <script src="/static/js/popper.min.js"></script>
+
+    <script src="/static/xterm/xterm.js"></script>
+    <script src="/static/xterm/xterm-addon-fit.js"></script>
+    <script src="/static/xterm/xterm-addon-attach.js"></script>
+    <!-- Promise polyfill for IE11 -->
+    <script src="/vendor/promise.js"></script>
+        
+    <!-- ES2015/ES6 modules polyfill -->
+    <script nomodule src="/vendor/browser-es-module-loader/dist/browser-es-module-loader.js"></script>
+ 
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+     <script>
+        var terminal; // 终端
+        var sockId;  // 终端 id
+        var socket; // websocket 服务
+
+        const isWindows = ['Windows', 'Win16', 'Win32', 'WinCE'].indexOf(navigator.platform) >= 0;
+        terminal = new Terminal({
+            windowsMode: isWindows,
+            convertEol: true,
+            fontFamily: `'Fira Mono', monospace`,
+            fontSize: 16,
+            fontWeight: 400,
+            rendererType: "canvas" // canvas 或者 dom
+        });
+        const fitAddon = new FitAddon.FitAddon();
+        terminal.loadAddon(fitAddon);
+
+        terminal.open(document.getElementById('terminal'));
+        terminal.element.style.padding = '20px';
+        fitAddon.fit();
+
+        terminal.onData(function(data) {
+            socket.send(JSON.stringify({'data': data}));
+            fitAddon.fit();
+        });
+
+        $.ajax({
+          type: 'get',
+          url: 'https://api.freeaihub.com/api/env/get/webssh',
+          mode: "no-cors",
+          dataType: "json",
+          xhrFields: {
+              withCredentials: true
+          },
+          crossDomain: true,  
+          success: async function(data) {
+            if(data.errno == 0){
+              let { ...json } =  data.data
+              let formdata = new FormData();
+              formdata.append("hostname", json.hostname);
+              formdata.append("username", json.username);
+              formdata.append("port", json.port);
+              formdata.append("password", json.password);
+              formdata.append("term", json.term);
+              let response = await fetch(
+                json.host,
+                  {
+                      method: 'POST',
+                      body: formdata
+                  }
+              )
+
+          
+
+              sockId = await response.json();
+            
+              let socketHost = json.ssh_host +=`/ws?id=${sockId.id}`;
+              console.log(socketHost)
+              socket = new WebSocket(socketHost);
+
+              socket.onopen = () => {
+                terminal.loadAddon(new AttachAddon.AttachAddon(socket));
+                terminal._initialized = true;
+              }
+
+              socket.onmessage= (term) => {
+                if(!terminal._initialized){
+                    return
+                }
+                terminal._initialized = false;
+                socket.send(JSON.stringify({ resize: [term.cols, term.rows] }));
+              }
+
+            }
+
+          }
+        })
+
+     </script> 
+    <script>
+      function randomWord(randomFlag, min, max){
+        let str = "",
+            range = min,
+            arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+    
+        // 随机产生
+        if(randomFlag){
+            range = Math.round(Math.random() * (max-min)) + min;
+        }
+        for(let i=0; i<range; i++){
+            let pos = Math.round(Math.random() * (arr.length-1));
+            str += arr[pos];
+        }
+        return str;
+      }
+
+
+    let uuidCookie = randomWord(false, 16)  
+
+
+    if(Cookies.get('uuid') == null) {
+        Cookies.set('uuid', uuidCookie, { path: '/', domain: '.freeaihub.com'})
+    }
+    </script>
+
+     <!-- actual script modules -->
+    <script type="module" crossorigin="anonymous">
+         // RFB holds the API to connect and communicate with a VNC server
+         import RFB from '/core/rfb.js';
+ 
+         let rfb;
+         let desktopName;
+ 
+         // When this function is called we have
+         // successfully connected to a server
+         function connectedToServer(e) {
+            //  status("Connected to " + desktopName);
+         }
+ 
+         // This function is called when we are disconnected
+         function disconnectedFromServer(e) {
+             if (e.detail.clean) {
+                 status("Disconnected");
+             } else {
+                 status("Something went wrong, connection is closed");
+             }
+         }
+ 
+         // When this function is called, the server requires
+         // credentials to authenticate
+         function credentialsAreRequired(e) {
+             const password = prompt("Password Required:");
+             rfb.sendCredentials({ password: password });
+         }
+ 
+         // When this function is called we have received
+         // a desktop name from the server
+         function updateDesktopName(e) {
+             desktopName = e.detail.name;
+         }
+ 
+         // Since most operating systems will catch Ctrl+Alt+Del
+         // before they get a chance to be intercepted by the browser,
+         // we provide a way to emulate this key sequence.
+         function sendCtrlAltDel() {
+             rfb.sendCtrlAltDel();
+             return false;
+         }
+ 
+         // Show a status text in the top bar
+         function status(text) {
+             document.getElementById('status').textContent = text;
+         }
+ 
+         // This function extracts the value of one variable from the
+         // query string. If the variable isn't defined in the URL
+         // it returns the default value instead.
+         function readQueryVariable(name, defaultValue) {
+             // A URL with a query parameter can look like this:
+             // https://www.example.com?myqueryparam=myvalue
+             //
+             // Note that we use location.href instead of location.search
+             // because Firefox < 53 has a bug w.r.t location.search
+             const re = new RegExp('.*[?&]' + name + '=([^&#]*)'),
+                   match = document.location.href.match(re);
+ 
+             if (match) {
+                 // We have to decode the URL since want the cleartext value
+                 return decodeURIComponent(match[1]);
+             }
+ 
+             return defaultValue;
+         }
+ 
+        //  document.getElementById('sendCtrlAltDelButton')
+        //      .onclick = sendCtrlAltDel;
+         
+        $('#myTab a:first').tab('show');//初始化显示哪个tab 
+      
+        $('#myTab a').click(function (e) { 
+          e.preventDefault();//阻止a链接的跳转行为 
+          $(this).tab('show');//显示当前选中的链接及关联的content 
+        })  
+
+        $('#myTab a[href="#profile"]').on('click', function (e) {
+          $.ajax({
+           type: 'get',
+           url: 'https://api.freeaihub.com/api/env/get/vnc',
+           mode: "no-cors",
+           dataType: "json",
+           xhrFields: {
+               withCredentials: true
+           },
+           crossDomain: true,  
+           success: function(data) {
+             if(data.errno == 0){
+               let { ...json } =  data.data
+   
+               vnc(json)
+             }
+           }
+         })
+        });
+
+  
+
+
+         function vnc(obj){
+         
+             // Build the websocket URL used to connect
+             let url;
+
+     
+             url = obj.url
+     
+             // Creating a new RFB object will start a new connection
+             rfb = new RFB(document.getElementById('screen'), url,
+                               { 
+                                 credentials: { password: obj.token },
+
+                                });
+     
+             // Add listeners to important events from the RFB module
+             rfb.addEventListener("connect",  connectedToServer);
+             rfb.addEventListener("disconnect", disconnectedFromServer);
+             rfb.addEventListener("credentialsrequired", credentialsAreRequired);
+             rfb.addEventListener("desktopname", updateDesktopName);
+          
+             // Set parameters that can be changed on an active connection
+             rfb.viewOnly = readQueryVariable('view_only', false);
+             rfb.scaleViewport = 'scale';
+
+         }
+        
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', (event) => {
+        document.querySelectorAll('pre code').forEach((block) => {
+          hljs.highlightBlock(block);
+        });
+      });
+    </script>
+  </body>
+</html>

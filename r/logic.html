@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>R语言 逻辑判断(logic) - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  <li><a href="./index.html"> 如何学习本课程</a></li>
+<li><a href="./intro.html"> R语言简介</a></li>
+<li><a href="./setup.html"> R语言环境搭建及运行</a></li>
+<li><a href="./syntax.html"> R语言基础语法</a></li>
+<li><a href="./datatype.html"> R语言基本数据类型</a></li>
+<li><a href="./variable.html"> R语言变量</a></li>
+<li><a href="./operator.html"> R语言操作符</a></li>
+<li><a href="./logic.html"> R语言逻辑判断</a></li>
+<li><a href="./library.html"> R语言包</a></li>
+<li><a href="./function.html"> R语言函数</a></li>
+<li><a href="./string.html"> R语言数据类型-字符串</a></li>
+<li><a href="./vector.html"> R语言数据类型-向量</a></li>
+<li><a href="./list.html"> R语言数据类型-列表</a></li>
+<li><a href="./matrix.html"> R语言数据类型-矩阵</a></li>
+<li><a href="./array.html"> R语言数据类型-数组</a></li>
+<li><a href="./factor.html"> R语言数据类型-因子</a></li>
+<li><a href="./dataframe.html"> R语言数据类型-数据帧</a></li>
+<li><a href="./plot.html"> R语言绘图</a></li>
+<li><a href="./distribution.html"> R语言分布</a></li>
+<li><a href="./data-operation.html"> R语言数据操作</a></li>
+<li><a href="./chisq.html"> R语言卡方检验</a></li>
+<li><a href="./dt.html"> R语言决策树</a></li>
+<li><a href="./lm.html"> R语言线性回归</a></li>
+<li><a href="./rf.html"> R语言随机森林算法</a></li>
+<li><a href="./nls.html"> R语言非线性最小二乘</a></li>
+<li><a href="./ancova.html"> R语言协方差分析</a></li>
+<li><a href="./survival.html"> R语言生存分析</a></li>
+                </ul>  
+              </div>
+            </div>
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>R语言 逻辑判断(logic)</h1>
+<p>决策结构要求程序员指定要由程序评估或测试的一个或多个条件，以及如果条件被确定为真则要执行的一个或多个语句，如果条件为假则执行其他语句。</p>
+<p>R提供以下类型的决策语句。 单击以下链接以检查其详细信息。</p>
+<table>
+<thead>
+<tr>
+<th>声明</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>if</code>语句</td>
+<td align="left"><code>if</code>语句由一个布尔表达式后跟一个或多个语句组成。</td>
+</tr>
+<tr>
+<td><code>if ... else</code>语句</td>
+<td align="left"><code>if</code>语句后面可以有一个可选的<code>else</code>语句，当布尔表达式为false时执行。</td>
+</tr>
+<tr>
+<td><code>switch</code>语句</td>
+<td align="left"><code>switch</code>语句允许根据值列表测试变量的相等性。</td>
+</tr>
+</tbody>
+</table>
+<h2><code>if</code>语句</h2>
+<p><code>if</code>由一个布尔表达式后跟一个或多个语句组成。</p>
+<h3>语法</h3>
+<p>在R中创建<code>if</code>语句的基本语法是：</p>
+<pre><code>if(boolean_expression) {
+   // statement(s) will execute if the boolean expression is true.
+}
+</code></pre>
+
+<p>如果布尔表达式的计算结果为true，那么<code>if</code>语句中的代码块将被执行。 如果布尔表达式的计算结果为false，那么第一组代码在<code>if</code>语句结束之后（在结束大括号之后）将被执行。</p>
+<h4>练习：</h4>
+<pre><code class="R">x &lt;- 30L
+if(is.integer(x))
+{
+   print(&quot;X is an Integer&quot;)
+}
+</code></pre>
+
+<h1><code>if...else</code>语句</h1>
+<p>if语句后面可以是一个可选的<code>else</code>语句，当布尔表达式为false时执行。</p>
+<h2>语法</h2>
+<p>在R中创建<code>if ... else</code>语句的基本语法是:</p>
+<pre><code>if(boolean_expression) {
+   // statement(s) will execute if the boolean expression is true.
+} else {
+   // statement(s) will execute if the boolean expression is false.
+}
+</code></pre>
+
+<p>如果布尔表达式的计算结果为真，则将执行if代码块，否则将执行代码块。</p>
+<h3>流程图</h3>
+<p><img alt="img" src="../image/r-ifelse.jpg" /></p>
+<h4>练习</h4>
+<pre><code class="R">x &lt;- c(&quot;what&quot;,&quot;is&quot;,&quot;truth&quot;)
+
+if(&quot;Truth&quot; %in% x) {
+   print(&quot;Truth is found&quot;)
+} else {
+   print(&quot;Truth is not found&quot;)
+}
+</code></pre>
+
+<p>这里“Truth”和“truth”是两个不同的字符串。</p>
+<h2><code>if ... else if ... else</code>语句</h2>
+<p><code>if</code>语句后面可以跟一个可选的<code>else if ... else</code>语句，这对于使用single<code>if ... else if</code>语句测试各种条件非常有用。</p>
+<p>当使用<code>if，else if，else</code>语句有几点要记住。
+- 如果可以有零或一个<code>else</code>，它必须在任何其他if之后。
+- 一个<code>i</code>f可以有0到许多<code>else if</code>和它们必须在<code>else</code>之前。
+- 一旦一个<code>else</code>如果成功，没有任何剩余的<code>else if</code>或<code>els</code>e将被测试。</p>
+<h3>语法</h3>
+<p>在R中创建<code>if ... else if ... else</code>语句的基本语法是</p>
+<pre><code>if(boolean_expression 1) {
+   // Executes when the boolean expression 1 is true.
+} else if( boolean_expression 2) {
+   // Executes when the boolean expression 2 is true.
+} else if( boolean_expression 3) {
+   // Executes when the boolean expression 3 is true.
+} else {
+   // executes when none of the above condition is true.
+}
+</code></pre>
+
+<h4>练习：</h4>
+<pre><code class="R">x &lt;- c(&quot;what&quot;,&quot;is&quot;,&quot;truth&quot;)
+
+if(&quot;Truth&quot; %in% x) {
+   print(&quot;Truth is found the first time&quot;)
+} else if (&quot;truth&quot; %in% x) {
+   print(&quot;truth is found the second time&quot;)
+} else {
+   print(&quot;No truth found&quot;)
+}
+</code></pre>
+
+<h2><code>switch</code>语句</h2>
+<p><code>switch</code>语句允许根据值列表测试变量的相等性。 每个值都称为大小写，并且针对每种情况检查打开的变量。</p>
+<h3>语法</h3>
+<p>在R中创建switch语句的基本语法是 -<code>switch(expression, case1, case2, case3....)</code></p>
+<p>以下规则适用于<code>switch</code>语句：</p>
+<ul>
+<li>如果<code>expression</code>的值不是字符串，那么它被强制为整数。</li>
+<li>在交换机中可以有任意数量的<code>case</code>语句。 每个案例后面都跟要比较的值和冒号。</li>
+<li>如果整数的值在1和nargs() - 1（参数的最大数目）之间，则对case条件的相应元素求值并返回结果。</li>
+<li>如果表达式求值为字符串，那么该字符串与元素的名称匹配。</li>
+<li>如果有多个匹配，则返回第一个匹配元素。</li>
+<li>无默认参数可用。</li>
+<li>在没有匹配的情况下，如果有一个未命名的元素...它的值被返回。 （如果有多个这样的参数，则返回错误。）</li>
+</ul>
+<h3>流程图</h3>
+<p><img alt="img" src="./images/r-switch.jpg" /></p>
+<h4>练习：switch</h4>
+<pre><code class="R">x &lt;- switch(3,   &quot;first&quot;,   &quot;second&quot;,   &quot;third&quot;,   &quot;fourth&quot; ) 
+print(x)
+</code></pre>
+
+<p>当上面的代码被编译和执行时，它产生以下结果 <code>[1] "third"</code></p>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=ir></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

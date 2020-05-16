@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+    <link href="/static/xterm/xterm.css" rel="stylesheet" type="text/css"/>
+
+    <link href="/static/css/docs.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css"/>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" id="font-awesome-css" href="https://cdn.freeaihub.com/asset/css/font-awesome.min.4.2.0.css" type="text/css" media="all">
+    <link rel="stylesheet" id="google-code-prettify-css" href="https://cdn.freeaihub.com/asset/css/prettify-2.1.css?ver=2.1
+" type="text/css" media="all">
+
+    <title>Shell 输入/输出重定向 - FreeAIHub</title>
+  
+    <style>
+
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+        flex: 1;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: calc(100vh - 96px);
+      }
+      .xterm-wrapper{
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      .entry-content {
+          word-break: break-word;
+          height: calc(100vh - 60px);
+          overflow-y: scroll;
+          padding: 30px;
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light">
+
+        <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar text-center">
+      <a class="navbar-brand mr-0 mr-md-2" aria-label="引导程序" href="/">
+        <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+      </a>
+      <ul class="navbar-nav ml-md-auto">
+        <li class="nav-item">
+          <a href="/" class="nav-link pl-2 pr-1 mx-1 py-3 my-n2">首页</a>
+        </li>
+        <li class="nav-item">
+          <a href="/" class="nav-link pl-2 pr-1 mx-1 py-3 my-n2">课程页面</a>
+        </li>
+      </ul>
+    </header>
+
+
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-3 col-xl-2 bd-sidebar">    
+            <form class="bd-search d-flex align-items-center justify-content-end">
+              <button class="btn bd-search-docs-toggle d-md-none p-0 ml-3 collapsed" type="button" data-toggle="collapse" data-target="#bd-docs-nav" aria-controls="bd-docs-nav" aria-expanded="false" aria-label="切换文档导航">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" role="img" focusable="false"><title>Menu</title><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg>
+              </button>
+            </form>
+            <div class="bd-links collapse" id="bd-docs-nav" aria-label="主导航">
+              <div class="bd-toc-item active">
+                <a class="bd-toc-link" href="#">如何学习本课程</a>
+                <ul class="nav bd-sidenav">
+                  <li class="active bd-sidenav-active"><a href="./intro.html"> 简介 </a></li>
+                  <li><a href="./index.html"> 如何学习本课程 </a></li>
+<li><a href="./intro.html"> Shell 简介 </a></li>
+<li><a href="./setup.html"> Shell 安装环境 </a></li>
+<li><a href="./variable.html"> Shell 变量 </a></li>
+<li><a href="./variable-special.html"> Shell 特殊变量 </a></li>
+<li><a href="./array.html"> Shell 数组 </a></li>
+<li><a href="./operator.html"> Shell 运算符 </a></li>
+<li><a href="./logic.html"> Shell 逻辑控制 </a></li>
+<li><a href="./loop.html"> Shell 循环 </a></li>
+<li><a href="./loopcontrol.html"> Shell 循环控制 </a></li>
+<li><a href="./loop-while.html"> Shell 循环-while </a></li>
+<li><a href="./loop-for.html"> Shell 循环-for </a></li>
+<li><a href="./loop-until.html"> Shell 循环-until </a></li>
+<li><a href="./loop-select.html"> Shell 循环-select </a></li>
+<li><a href="./function.html"> Shell 函数 </a></li>
+<li><a href="./quoting.html"> Shell 引用 </a></li>
+<li><a href="./substitution.html"> Shell 替换 </a></li>
+<li><a href="./io-redirection.html"> Shell 输入输出重定向 </a></li>
+                </ul>
+
+              </div>
+
+
+          </div>
+          </div>
+          <div class="entry-content col-md-9 col-xl-5 py-md-3 pl-md-5 bd-content">
+              
+          <h1>Shell 输入/输出重定向</h1>
+<p>大多数[Unix系统命令从终端的输入和发送所产生的输出返回到您的终端。一个命令通常从一个地方叫标准输入，默认情况下，这恰好是你的终端读取输入。</p>
+<p>同样，一个命令通常写入其输出到标准输出，这也是默认情况下，从你的终端。</p>
+<h2>输出重定向</h2>
+<p>通常用于标准输出命令的输出可以很容易地转移到一个文件中代替。这种能力被称为输出重定向：</p>
+<p>如果记号&gt; file附加任何命令，通常写入其输出到标准输出，该命令的输出将被写入文件，而不是你的终端：</p>
+<p>检查使用 who 命令，将完整的输出重定向命令在用户文件。</p>
+<pre><code class="bash">who &gt; users
+</code></pre>
+
+<p>请注意，没有输出出现在终端中。这是因为输出已被重定向到指定的文件从默认的标准输出设备（终端）。如果想检查用户的文件，然后将完整的内容：</p>
+<pre><code class="bash">cat users
+</code></pre>
+
+<p>如果命令输出重定向到一个文件，该文件已经包含了一些数据，这些数据将会丢失。考虑这个例子：</p>
+<pre><code class="bash">echo line 1 &gt; users
+cat users
+</code></pre>
+
+<p>您可以使用&gt;&gt;运算符将输出附加在现有的文件如下：</p>
+<pre><code class="bash">echo line 2 &gt;&gt; users
+cat users
+</code></pre>
+
+<h2>输入重定向</h2>
+<p>正如一个命令的输出可以被重定向到一个文件中，所以可以输入一个命令从文件重定向。作为不是字符&gt;用于输出重定向，小于字符&lt;用于重定向一个命令的输入。</p>
+<p>通常需要的命令，他们从标准输入的输入可以有自己的这种方式从文件输入重定向。例如，上面生成的文件中的用户的数量来计算的行，可以执行如下命令：</p>
+<pre><code class="bash">wc -l users
+</code></pre>
+
+<p>在这里，它产生的输出2行。可以指望的文件中的行数 wc 命令的标准输入重定向用户从文件：</p>
+<pre><code class="bash">wc -l &lt; /etc/passwd
+</code></pre>
+
+<p>请注意，在由两种形式的wc命令产生的输出是有区别的。在第一种情况下，该文件的用户的名称列出的行数，在第二种情况下，它不是。</p>
+<p>在第一种情况下，wc 知道，它是用户从文件读取输入。</p>
+<p>在第二种情况下，只知道它是从标准输入读取输入，所以它不显示文件名。</p>
+<h2>Here 文档:</h2>
+<p>here document 是用来输入重定向到一个交互式shell脚本或程序。</p>
+<p>在一个shell脚本中，我们可以运行一个交互式程序，无需用户操作，通过提供互动程序或交互式shell脚本所需的输入。</p>
+<p>这里的文件的一般形式是：</p>
+<pre><code>command &lt;&lt; delimiter
+document
+delimiter
+</code></pre>
+
+<p>这里的 shell 解释&lt;&lt;操作指令读取输入，直到它找到含有指定分隔符线。所有输入行的行分隔符，然后送入标准输入的命令。</p>
+<p>分界符告诉shell 这里文件已完成。没有它，shell 不断的读取输入。分隔符必须是一个字不包含空格或制表符。</p>
+<p>以下是输入命令wc -1 进行计数的行的总数：</p>
+<pre><code class="bash">wc -l &lt;&lt; EOF
+    This is a simple lookup program 
+    for good (and bad) restaurants
+    in Cape Town.
+EOF
+</code></pre>
+
+<h2>丢弃输出</h2>
+<p>有时会需要执行命令，但不想显示在屏幕上的输出。在这种情况下，可以丢弃的输出重定向到文件 /dev/null:</p>
+<pre><code>command &gt; /dev/null
+</code></pre>
+
+<p>这里 command 是要执行的命令的名字。文件/dev/null 是一个特殊的文件自动放弃其所有的输入。</p>
+<p>同时要放弃一个命令的输出和错误输出，使用标准的重定向到STDOUT 到 STDERR重定向：      </p>
+<pre><code>command &gt; /dev/null 2&gt;&amp;1
+</code></pre>
+
+<p>在这里，2代表stderr和1代表STDOUT。可以上显示一条消息到STDERR 到 STDERR重定向标准输入到如下：</p>
+<pre><code class="bash">echo message 1&gt;&amp;2
+</code></pre>
+
+<h2>重定向命令</h2>
+<p>以下是命令，可以使用重定向的完整列表：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pgm &gt; file</td>
+<td>Output of pgm is redirected to file</td>
+</tr>
+<tr>
+<td>pgm &lt; file</td>
+<td>Program pgm reads its input from file.</td>
+</tr>
+<tr>
+<td>pgm &gt;&gt; file</td>
+<td>Output of pgm is appended to file.</td>
+</tr>
+<tr>
+<td>n &gt; file</td>
+<td>Output from stream with descriptor n redirected to file.</td>
+</tr>
+<tr>
+<td>n &gt;&gt; file</td>
+<td>Output from stream with descriptor n appended to file.</td>
+</tr>
+<tr>
+<td>n &gt;&amp; m</td>
+<td>Merge output from stream n with stream m.</td>
+</tr>
+<tr>
+<td>n &lt;&amp; m</td>
+<td>Merge input from stream n with stream m.</td>
+</tr>
+<tr>
+<td>&lt;&lt; tag</td>
+<td>Standard input comes from here through next tag at start of line.</td>
+</tr>
+<tr>
+<td>|</td>
+<td>Takes output from one program, or process, and sends it to another.</td>
+</tr>
+</tbody>
+</table>
+<p>需要注意的是文件描述符0是正常标准输入（STDIN），1是标准输出（STDOUT），标准错误输出（STDERR）。</p>
+            
+          </div>
+
+          <div class="d-none d-xl-block col-xl-5 bd-toc xterm-wrapper">
+             <!-- 导航 -->
+            <ul class="nav nav-tabs" id="myTab">
+              <li class="nav-item">
+                <a class="nav-link"  href="#home">Terminal</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="#profile">VNC</a>
+              </li>
+            </ul>
+            <!-- 带显示效果的内容 -->
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="home" >
+                <div id="term-content">
+                  <div id="terminal"></div>
+                </div>
+                 
+              </div>
+			
+            <div class="tab-pane fade position-relative" id="profile">	
+
+              <div id="top_bar">
+                  <div id="status">Loading</div>
+                  <!-- <div id="sendCtrlAltDelButton">Send CtrlAltDel</div> -->
+              </div>
+              <div id="screen">
+                  <!-- This is where the remote screen will appear -->
+              </div>
+			      </div>
+           
+        </div>
+          </div>
+        </div> <!-- / .row -->
+      </div>
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <link rel="stylesheet" id="yarppRelatedCss-css" href="https://cdn.freeaihub.com/asset/css/related.css
+?ver=4.9.14" type="text/css" media="all">
+    <script type='text/javascript' src='https://cdn.freeaihub.com/asset/js/prettify.js?ver=2.1'></script>
+    <script type='text/javascript' src='https://cdn.freeaihub.com/asset/js/power.js?ver=2.1'></script>
+    <script type='text/javascript' src='https://cdn.freeaihub.com/asset/js/wp-embed.min.js?ver=4.9.14'></script>
+    <!-- Theme JS -->
+
+    <script src="/static/js/popper.min.js"></script>
+
+    <script src="/static/xterm/xterm.js"></script>
+    <script src="/static/xterm/xterm-addon-fit.js"></script>
+    <script src="/static/xterm/xterm-addon-attach.js"></script>
+    <!-- Promise polyfill for IE11 -->
+    <script src="/vendor/promise.js"></script>
+        
+    <!-- ES2015/ES6 modules polyfill -->
+    <script nomodule src="/vendor/browser-es-module-loader/dist/browser-es-module-loader.js"></script>
+ 
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+     <script>
+        var terminal; // 终端
+        var sockId;  // 终端 id
+        var socket; // websocket 服务
+
+        const isWindows = ['Windows', 'Win16', 'Win32', 'WinCE'].indexOf(navigator.platform) >= 0;
+        terminal = new Terminal({
+            windowsMode: isWindows,
+            convertEol: true,
+            fontFamily: `'Fira Mono', monospace`,
+            fontSize: 16,
+            fontWeight: 400,
+            rendererType: "canvas" // canvas 或者 dom
+        });
+        const fitAddon = new FitAddon.FitAddon();
+        terminal.loadAddon(fitAddon);
+
+        terminal.open(document.getElementById('terminal'));
+        terminal.element.style.padding = '20px';
+        fitAddon.fit();
+
+        terminal.onData(function(data) {
+            socket.send(JSON.stringify({'data': data}));
+            fitAddon.fit();
+        });
+
+        $.ajax({
+          type: 'get',
+          url: 'https://api.freeaihub.com/api/env/get/webssh',
+          mode: "no-cors",
+          dataType: "json",
+          xhrFields: {
+              withCredentials: true
+          },
+          crossDomain: true,  
+          success: async function(data) {
+            if(data.errno == 0){
+              let { ...json } =  data.data
+              let formdata = new FormData();
+              formdata.append("hostname", json.hostname);
+              formdata.append("username", json.username);
+              formdata.append("port", json.port);
+              formdata.append("password", json.password);
+              formdata.append("term", json.term);
+              let response = await fetch(
+                json.host,
+                  {
+                      method: 'POST',
+                      body: formdata
+                  }
+              )
+
+          
+
+              sockId = await response.json();
+            
+              let socketHost = json.ssh_host +=`/ws?id=${sockId.id}`;
+              console.log(socketHost)
+              socket = new WebSocket(socketHost);
+
+              socket.onopen = () => {
+                terminal.loadAddon(new AttachAddon.AttachAddon(socket));
+                terminal._initialized = true;
+              }
+
+              socket.onmessage= (term) => {
+                if(!terminal._initialized){
+                    return
+                }
+                terminal._initialized = false;
+                socket.send(JSON.stringify({ resize: [term.cols, term.rows] }));
+              }
+
+            }
+
+          }
+        })
+
+     </script> 
+    <script>
+      function randomWord(randomFlag, min, max){
+        let str = "",
+            range = min,
+            arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+    
+        // 随机产生
+        if(randomFlag){
+            range = Math.round(Math.random() * (max-min)) + min;
+        }
+        for(let i=0; i<range; i++){
+            let pos = Math.round(Math.random() * (arr.length-1));
+            str += arr[pos];
+        }
+        return str;
+      }
+
+
+    let uuidCookie = randomWord(false, 16)  
+
+
+    if(Cookies.get('uuid') == null) {
+        Cookies.set('uuid', uuidCookie, { path: '/', domain: '.freeaihub.com'})
+    }
+    </script>
+
+     <!-- actual script modules -->
+    <script type="module" crossorigin="anonymous">
+         // RFB holds the API to connect and communicate with a VNC server
+         import RFB from '/core/rfb.js';
+ 
+         let rfb;
+         let desktopName;
+ 
+         // When this function is called we have
+         // successfully connected to a server
+         function connectedToServer(e) {
+            //  status("Connected to " + desktopName);
+         }
+ 
+         // This function is called when we are disconnected
+         function disconnectedFromServer(e) {
+             if (e.detail.clean) {
+                 status("Disconnected");
+             } else {
+                 status("Something went wrong, connection is closed");
+             }
+         }
+ 
+         // When this function is called, the server requires
+         // credentials to authenticate
+         function credentialsAreRequired(e) {
+             const password = prompt("Password Required:");
+             rfb.sendCredentials({ password: password });
+         }
+ 
+         // When this function is called we have received
+         // a desktop name from the server
+         function updateDesktopName(e) {
+             desktopName = e.detail.name;
+         }
+ 
+         // Since most operating systems will catch Ctrl+Alt+Del
+         // before they get a chance to be intercepted by the browser,
+         // we provide a way to emulate this key sequence.
+         function sendCtrlAltDel() {
+             rfb.sendCtrlAltDel();
+             return false;
+         }
+ 
+         // Show a status text in the top bar
+         function status(text) {
+             document.getElementById('status').textContent = text;
+         }
+ 
+         // This function extracts the value of one variable from the
+         // query string. If the variable isn't defined in the URL
+         // it returns the default value instead.
+         function readQueryVariable(name, defaultValue) {
+             // A URL with a query parameter can look like this:
+             // https://www.example.com?myqueryparam=myvalue
+             //
+             // Note that we use location.href instead of location.search
+             // because Firefox < 53 has a bug w.r.t location.search
+             const re = new RegExp('.*[?&]' + name + '=([^&#]*)'),
+                   match = document.location.href.match(re);
+ 
+             if (match) {
+                 // We have to decode the URL since want the cleartext value
+                 return decodeURIComponent(match[1]);
+             }
+ 
+             return defaultValue;
+         }
+ 
+        //  document.getElementById('sendCtrlAltDelButton')
+        //      .onclick = sendCtrlAltDel;
+         
+        $('#myTab a:first').tab('show');//初始化显示哪个tab 
+      
+        $('#myTab a').click(function (e) { 
+          e.preventDefault();//阻止a链接的跳转行为 
+          $(this).tab('show');//显示当前选中的链接及关联的content 
+        })  
+
+        $('#myTab a[href="#profile"]').on('click', function (e) {
+          $.ajax({
+           type: 'get',
+           url: 'https://api.freeaihub.com/api/env/get/vnc',
+           mode: "no-cors",
+           dataType: "json",
+           xhrFields: {
+               withCredentials: true
+           },
+           crossDomain: true,  
+           success: function(data) {
+             if(data.errno == 0){
+               let { ...json } =  data.data
+   
+               vnc(json)
+             }
+           }
+         })
+        });
+
+  
+
+
+         function vnc(obj){
+         
+             // Build the websocket URL used to connect
+             let url;
+
+     
+             url = obj.url
+     
+             // Creating a new RFB object will start a new connection
+             rfb = new RFB(document.getElementById('screen'), url,
+                               { 
+                                 credentials: { password: obj.token },
+
+                                });
+     
+             // Add listeners to important events from the RFB module
+             rfb.addEventListener("connect",  connectedToServer);
+             rfb.addEventListener("disconnect", disconnectedFromServer);
+             rfb.addEventListener("credentialsrequired", credentialsAreRequired);
+             rfb.addEventListener("desktopname", updateDesktopName);
+          
+             // Set parameters that can be changed on an active connection
+             rfb.viewOnly = readQueryVariable('view_only', false);
+             rfb.scaleViewport = 'scale';
+
+         }
+        
+    </script>
+
+  </body>
+</html>

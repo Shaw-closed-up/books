@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>Pandas 分组(GroupBy) - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  <li><a href="./index.html"> 如何学习本课程</a></li>
+<li><a href="./intro.html"> Pandas简介</a></li>
+<li><a href="./setup.html"> Pandas安装</a></li>
+<li><a href="./data-structure.html"> Pandas数据结构</a></li>
+<li><a href="./series.html"> Pandas序列</a></li>
+<li><a href="./dataframe.html"> Pandas数据帧</a></li>
+<li><a href="./basic.html"> Pandas基本功能</a></li>
+<li><a href="./description.html"> Pandas描述性统计</a></li>
+<li><a href="./apply.html"> Pandas函数应用</a></li>
+<li><a href="./reindex.html"> Pandas索引重建</a></li>
+<li><a href="./iteration.html"> Pandas迭代</a></li>
+<li><a href="./sort.html"> Pandas排序</a></li>
+<li><a href="./string-operation.html"> Pandas字符串和文本数据</a></li>
+<li><a href="./option.html"> Pandas选项和自定义</a></li>
+<li><a href="./loc.html"> Pandas索引和选择数据</a></li>
+<li><a href="./statistics.html"> Pandas统计函数</a></li>
+<li><a href="./aggreation.html"> Pandas聚合</a></li>
+<li><a href="./groupby.html"> Pandas分组</a></li>
+<li><a href="./merge-join.html"> Pandas合并与连接 </a></li>
+<li><a href="./visualization.html"> Pandas可视化</a></li>
+<li><a href="./categorical.html"> Pandas分类数据处理 </a></li>
+<li><a href="./time-series.html"> Pandas时间序列</a></li>
+<li><a href="./window.html"> Pandas窗口函数</a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>Pandas 分组(GroupBy)</h1>
+<p>任何分组(<em>groupby</em>)操作都涉及原始对象的以下操作之一。它们是 - </p>
+<ul>
+<li>分割对象</li>
+<li>应用一个函数</li>
+<li>结合的结果</li>
+</ul>
+<p>在许多情况下，我们将数据分成多个集合，并在每个子集上应用一些函数。在应用函数中，可以执行以下操作 -</p>
+<ul>
+<li><em>聚合</em> - 计算汇总统计</li>
+<li><em>转换</em> - 执行一些特定于组的操作</li>
+<li><em>过滤</em> - 在某些情况下丢弃数据</li>
+</ul>
+<p>下面来看看创建一个DataFrame对象并对其执行所有操作 -</p>
+<pre><code class="python">import pandas as pd
+
+ipl_data = {'Team': ['Riders', 'Riders', 'Devils', 'Devils', 'Kings',
+         'kings', 'Kings', 'Kings', 'Riders', 'Royals', 'Royals', 'Riders'],
+         'Rank': [1, 2, 2, 3, 3,4 ,1 ,1,2 , 4,1,2],
+         'Year': [2014,2015,2014,2015,2014,2015,2016,2017,2016,2014,2015,2017],
+         'Points':[876,789,863,673,741,812,756,788,694,701,804,690]}
+df = pd.DataFrame(ipl_data)
+
+print(df)
+</code></pre>
+
+<h2>将数据拆分成组</h2>
+<p>Pandas对象可以分成任何对象。有多种方式来拆分对象，如 -</p>
+<ul>
+<li><em>obj.groupby(‘key’)</em></li>
+<li><em>obj.groupby([‘key1’,’key2’])</em></li>
+<li><em>obj.groupby(key,axis=1)</em></li>
+</ul>
+<p>现在来看看如何将分组对象应用于DataFrame对象</p>
+<p><strong>示例</strong></p>
+<pre><code class="python">import pandas as pd
+
+ipl_data = {'Team': ['Riders', 'Riders', 'Devils', 'Devils', 'Kings',
+         'kings', 'Kings', 'Kings', 'Riders', 'Royals', 'Royals', 'Riders'],
+         'Rank': [1, 2, 2, 3, 3,4 ,1 ,1,2 , 4,1,2],
+         'Year': [2014,2015,2014,2015,2014,2015,2016,2017,2016,2014,2015,2017],
+         'Points':[876,789,863,673,741,812,756,788,694,701,804,690]}
+df = pd.DataFrame(ipl_data)
+
+print(df.groupby('Team'))
+</code></pre>
+
+<h2>查看分组</h2>
+<pre><code class="python">import pandas as pd
+ipl_data = {'Team': ['Riders', 'Riders', 'Devils', 'Devils', 'Kings',
+         'kings', 'Kings', 'Kings', 'Riders', 'Royals', 'Royals', 'Riders'],
+         'Rank': [1, 2, 2, 3, 3,4 ,1 ,1,2 , 4,1,2],
+         'Year': [2014,2015,2014,2015,2014,2015,2016,2017,2016,2014,2015,2017],           'Points':[876,789,863,673,741,812,756,788,694,701,804,690]}
+df = pd.DataFrame(ipl_data)
+
+print(df.groupby('Team').groups)
+</code></pre>
+
+<p><strong>示例</strong></p>
+<p>按多列分组 -</p>
+<pre><code class="python">import pandas as pd
+ipl_data = {'Team': ['Riders', 'Riders', 'Devils', 'Devils', 'Kings',
+         'kings', 'Kings', 'Kings', 'Riders', 'Royals', 'Royals', 'Riders'],
+         'Rank': [1, 2, 2, 3, 3,4 ,1 ,1,2 , 4,1,2],
+         'Year': [2014,2015,2014,2015,2014,2015,2016,2017,2016,2014,2015,2017],
+         'Points':[876,789,863,673,741,812,756,788,694,701,804,690]}
+df = pd.DataFrame(ipl_data)
+print(df.groupby(['Team','Year']).groups)
+</code></pre>
+
+<h2>迭代遍历分组</h2>
+<p>使用<code>groupby</code>对象，可以遍历类似<code>itertools.obj</code>的对象。</p>
+<pre><code class="python">import pandas as pd
+
+ipl_data = {'Team': ['Riders', 'Riders', 'Devils', 'Devils', 'Kings',
+         'kings', 'Kings', 'Kings', 'Riders', 'Royals', 'Royals', 'Riders'],
+         'Rank': [1, 2, 2, 3, 3,4 ,1 ,1,2 , 4,1,2],
+         'Year': [2014,2015,2014,2015,2014,2015,2016,2017,2016,2014,2015,2017],
+         'Points':[876,789,863,673,741,812,756,788,694,701,804,690]}
+df = pd.DataFrame(ipl_data)
+
+grouped = df.groupby('Year')
+
+for name,group in grouped:
+    print(name)
+    print(group)
+</code></pre>
+
+<p>默认情况下，<code>groupby</code>对象具有与分组名相同的标签名称。</p>
+<h2>选择一个分组</h2>
+<p>使用<code>get_group()</code>方法，可以选择一个组。参考以下示例代码 - </p>
+<pre><code class="python">import pandas as pd
+
+ipl_data = {'Team': ['Riders', 'Riders', 'Devils', 'Devils', 'Kings',
+         'kings', 'Kings', 'Kings', 'Riders', 'Royals', 'Royals', 'Riders'],
+         'Rank': [1, 2, 2, 3, 3,4 ,1 ,1,2 , 4,1,2],
+         'Year': [2014,2015,2014,2015,2014,2015,2016,2017,2016,2014,2015,2017],
+         'Points':[876,789,863,673,741,812,756,788,694,701,804,690]}
+df = pd.DataFrame(ipl_data)
+
+grouped = df.groupby('Year')
+print(grouped.get_group(2014))
+</code></pre>
+
+<h2>聚合</h2>
+<p>聚合函数为每个组返回单个聚合值。当创建了分组(<em>group by</em>)对象，就可以对分组数据执行多个聚合操作。</p>
+<p>一个比较常用的是通过聚合或等效的<code>agg</code>方法聚合 -</p>
+<pre><code class="python">import pandas as pd
+import numpy as np
+
+ipl_data = {'Team': ['Riders', 'Riders', 'Devils', 'Devils', 'Kings',
+         'kings', 'Kings', 'Kings', 'Riders', 'Royals', 'Royals', 'Riders'],
+         'Rank': [1, 2, 2, 3, 3,4 ,1 ,1,2 , 4,1,2],
+         'Year': [2014,2015,2014,2015,2014,2015,2016,2017,2016,2014,2015,2017],
+         'Points':[876,789,863,673,741,812,756,788,694,701,804,690]}
+df = pd.DataFrame(ipl_data)
+
+grouped = df.groupby('Year')
+print(grouped['Points'].agg(np.mean))
+</code></pre>
+
+<p>另一种查看每个分组的大小的方法是应用<code>size()</code>函数 -</p>
+<pre><code class="python">import pandas as pd
+import numpy as np
+
+ipl_data = {'Team': ['Riders', 'Riders', 'Devils', 'Devils', 'Kings',
+         'kings', 'Kings', 'Kings', 'Riders', 'Royals', 'Royals', 'Riders'],
+         'Rank': [1, 2, 2, 3, 3,4 ,1 ,1,2 , 4,1,2],
+         'Year': [2014,2015,2014,2015,2014,2015,2016,2017,2016,2014,2015,2017],
+         'Points':[876,789,863,673,741,812,756,788,694,701,804,690]}
+df = pd.DataFrame(ipl_data)
+grouped = df.groupby('Team')
+print(grouped.agg(np.size))
+</code></pre>
+
+<h2>一次应用多个聚合函数</h2>
+<p>通过分组系列，还可以传递函数的列表或字典来进行聚合，并生成<code>DataFrame</code>作为输出 -</p>
+<pre><code class="python">import pandas as pd
+import numpy as np
+
+ipl_data = {'Team': ['Riders', 'Riders', 'Devils', 'Devils', 'Kings',
+         'kings', 'Kings', 'Kings', 'Riders', 'Royals', 'Royals', 'Riders'],
+         'Rank': [1, 2, 2, 3, 3,4 ,1 ,1,2 , 4,1,2],
+         'Year': [2014,2015,2014,2015,2014,2015,2016,2017,2016,2014,2015,2017],
+         'Points':[876,789,863,673,741,812,756,788,694,701,804,690]}
+df = pd.DataFrame(ipl_data)
+
+grouped = df.groupby('Team')
+agg = grouped['Points'].agg([np.sum, np.mean, np.std])
+print(agg)
+</code></pre>
+
+<h2>转换</h2>
+<p>分组或列上的转换返回索引大小与被分组的索引相同的对象。因此，转换应该返回与组块大小相同的结果。</p>
+<pre><code class="python">import pandas as pd
+import numpy as np
+
+ipl_data = {'Team': ['Riders', 'Riders', 'Devils', 'Devils', 'Kings',
+         'kings', 'Kings', 'Kings', 'Riders', 'Royals', 'Royals', 'Riders'],
+         'Rank': [1, 2, 2, 3, 3,4 ,1 ,1,2 , 4,1,2],
+         'Year': [2014,2015,2014,2015,2014,2015,2016,2017,2016,2014,2015,2017],
+         'Points':[876,789,863,673,741,812,756,788,694,701,804,690]}
+df = pd.DataFrame(ipl_data)
+
+grouped = df.groupby('Team')
+score = lambda x: (x - x.mean()) / x.std()*10
+print(grouped.transform(score))
+</code></pre>
+
+<h2>过滤</h2>
+<p>过滤根据定义的标准过滤数据并返回数据的子集。<code>filter()</code>函数用于过滤数据。</p>
+<pre><code class="python">import pandas as pd
+import numpy as np
+ipl_data = {'Team': ['Riders', 'Riders', 'Devils', 'Devils', 'Kings',
+         'kings', 'Kings', 'Kings', 'Riders', 'Royals', 'Royals', 'Riders'],
+         'Rank': [1, 2, 2, 3, 3,4 ,1 ,1,2 , 4,1,2],
+         'Year': [2014,2015,2014,2015,2014,2015,2016,2017,2016,2014,2015,2017],
+         'Points':[876,789,863,673,741,812,756,788,694,701,804,690]}
+df = pd.DataFrame(ipl_data)
+filter = df.groupby('Team').filter(lambda x: len(x) &gt;= 3)
+
+print(filter)
+</code></pre>
+
+<p>在上述过滤条件下，要求返回三次以上参加IPL的队伍。</p>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

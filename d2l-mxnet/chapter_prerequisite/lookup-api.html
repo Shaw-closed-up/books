@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>查阅文档 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>查阅文档</h1>
+<p>受篇幅所限，本书无法对所有用到的MXNet函数和类一一详细介绍。读者可以查阅相关文档来做更深入的了解。</p>
+<h2>查找模块里的所有函数和类</h2>
+<p>当我们想知道一个模块里面提供了哪些可以调用的函数和类的时候，可以使用<code>dir</code>函数。下面我们打印<code>nd.random</code>模块中所有的成员或属性。</p>
+<p>```{.python .input  n=1}
+from mxnet import nd</p>
+<p>print(dir(nd.random))</p>
+<pre><code>
+通常我们可以忽略掉由`__`开头和结尾的函数（Python的特别对象）或者由`_`开头的函数（一般为内部函数）。通过其余成员的名字我们大致猜测出这个模块提供了各种随机数的生成方法，包括从均匀分布采样（`uniform`）、从正态分布采样（`normal`）、从泊松分布采样（`poisson`）等。
+
+## 查找特定函数和类的使用
+
+想了解某个函数或者类的具体用法时，可以使用`help`函数。让我们以`NDArray`中的`ones_like`函数为例，查阅它的用法。
+
+```{.python .input}
+help(nd.ones_like)
+</code></pre>
+
+<p>从文档信息我们了解到，<code>ones_like</code>函数会创建和输入<code>NDArray</code>形状相同且元素为1的新<code>NDArray</code>。我们可以验证一下。</p>
+<p><code>{.python .input}
+x = nd.array([[0, 0, 0], [2, 2, 2]])
+y = x.ones_like()
+y</code></p>
+<p>在Jupyter记事本里，我们可以使用<code>?</code>来将文档显示在另外一个窗口中。例如，使用<code>nd.random.uniform?</code>将得到与<code>help(nd.random.uniform)</code>几乎一样的内容，但会显示在额外窗口里。此外，如果使用<code>nd.random.uniform??</code>，那么会额外显示该函数实现的代码。</p>
+<h2>在MXNet网站上查阅</h2>
+<p>读者也可以在MXNet的网站上查阅相关文档。访问MXNet网站 <a href="http://mxnet.apache.org/">https://mxnet.apache.org/</a> （如图2.1所示），点击网页顶部的下拉菜单“API”可查阅各个前端语言的接口。此外，也可以在网页右上方含“Search”字样的搜索框中直接搜索函数或类名称。</p>
+<p><img alt="MXNet官方网站" src="../img/mxnet-website.png" /></p>
+<p>图2.2展示了MXNet网站上有关<code>ones_like</code>函数的文档。</p>
+<p><img alt="MXNet网站上有关ones_like函数的文档" src="../img/ones_like.png" /></p>
+<h2>小结</h2>
+<ul>
+<li>遇到不熟悉的MXNet API时，可以主动查阅它的相关文档。</li>
+<li>查阅MXNet文档可以使用<code>dir</code>和<code>help</code>函数，或访问MXNet官方网站。</li>
+</ul>
+<h2>练习</h2>
+<ul>
+<li>查阅<code>NDArray</code>支持的其他操作。</li>
+</ul>
+<h2>扫码直达<a href="https://discuss.gluon.ai/t/topic/7116">讨论区</a></h2>
+<p><img alt="" src="../img/qr_lookup-api.svg" /></p>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

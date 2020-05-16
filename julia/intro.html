@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>Julia 简介 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  <li><a href="./index.html"> 如何学习本课程 </a></li>
+<li><a href="./intro.html"> Julia简介 </a></li>
+<li><a href="./setup.html"> Julia环境搭建及运行 </a></li>
+<li><a href="./start.html"> Julia开始 </a></li>
+<li><a href="./repl.html"> Julia交互 </a></li>
+<li><a href="./variable.html"> Julia变量 </a></li>
+<li><a href="./int-float.html"> Julia整数和浮点数 </a></li>
+<li><a href="./math.html"> Julia数学运算和基本函数 </a></li>
+<li><a href="./complex-fraction.html"> Julia复数和分数 </a></li>
+<li><a href="./string.html"> Julia数据类型 字符串 </a></li>
+<li><a href="./scope.html"> Julia变量的作用域 </a></li>
+<li><a href="./function.html"> Julia函数 </a></li>
+<li><a href="./method.html"> Julia方法 </a></li>
+<li><a href="./conditional.html"> Julia控制流 </a></li>
+<li><a href="./type.html"> Julia类型 </a></li>
+<li><a href="./construction-function.html"> Julia构造函数 </a></li>
+<li><a href="./type-convert.html"> Julia类型转换和类型提升 </a></li>
+<li><a href="./module.html"> Julia模块 </a></li>
+<li><a href="./datetime.html"> Julia日期和时间 </a></li>
+<li><a href="./meta.html"> Julia元编程 </a></li>
+<li><a href="./md-array.html"> Julia多维数组 </a>     </li>
+<li><a href="./la.html"> Julia线性代数 </a></li>
+<li><a href="./net-stream.html"> Julia网络和流 </a></li>
+<li><a href="./parallel-computation.html"> Julia并行计算 </a></li>
+<li><a href="./nullable.html"> Julia可空类型 </a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>Julia 简介</h1>
+<h2>简介</h2>
+<p>Julia 是个灵活的动态语言，适合科学和数值计算，性能可与传统静态类型语言媲美。</p>
+<p>由于 Julia 的编译器与像 Python 或者 R 语言的解释器不同，你可能首先会发现 Julia 的性能并不那么直观。如果你发现哪些地方比较慢， 我们强烈建议你在做任何尝试之前通读一下[代码性能优化]章节。一旦你明白了 Julia 是如何工作的，你就可以写出来速度媲美 C 语言的代码。</p>
+<p>通过使用类型推断和<a href="http://zh.wikipedia.org/zh-cn/即時編譯">即时(JIT)编译</a> ，以及 <a href="http://zh.wikipedia.org/wiki/LLVM">LLVM</a> ，Julia 具有可选的类型声明，重载，高性能等特性。Julia 是多编程范式的，包含指令式、函数式和面向对象编程的特征。 它提供了简易和简洁的高等数值计算，它类似于 R 、 MATLAB 和 Python ，支持一般用途的编程。 为了达到这个目的，Julia 在数学编程语言的基础上，参考了不少流行动态语言：<a href="http://zh.wikipedia.org/zh-cn/LISP">Lisp</a> 、 <a href="http://zh.wikipedia.org/zh-cn/Perl">Perl</a> 、 <a href="http://zh.wikipedia.org/zh-cn/Python">Python</a> 、 <a href="http://zh.wikipedia.org/zh-cn/Lua">Lua</a> 和 <a href="http://zh.wikipedia.org/zh-cn/Ruby">Ruby</a>。</p>
+<p>Julia 与传统动态语言最大的区别是：</p>
+<ul>
+<li>核心语言很小；标准库是用 Julia 本身写的，如整数运算在内的基础运算</li>
+<li>完善的类型，方便构造对象和做类型声明</li>
+<li>基于参数类型进行函数<a href="http://en.wikipedia.org/wiki/Multiple_dispatch">重载</a></li>
+<li>参数类型不同，自动生成高效、专用的代码</li>
+<li>高性能，接近静态编译语言，如 C 语言</li>
+</ul>
+<p>动态语言是有类型的：每个对象，不管是基础的还是用户自定义的，都有类型。许多动态语言没有类型声明，意味着它不能告诉编译器值的类型，也就不能准确的判断出类型。静态语言必须告诉编译器值的类型，类型仅存在于编译时，在运行时则不能更改。在 Julia 中，类型本身就是运行时对象，同时它也可以把信息传递给编译器。</p>
+<p>重载函数由参数（参数列表）的类型来区别，调用函数时传入的参数类型，决定了选取哪个函数来进行调用。对于数学领域的程序设计来说，这种方式比起传统面向对象程序设计中操作属于某个对象的方法的方式更显自然。在 Julia 中运算符仅仅是函数的别名。程序员可以为新数据类型定义 “+” 的新方法，原先的代码就可以无缝地重载到新数据类型上。</p>
+<p>因为运行时类型推断（得益于可选的类型声明），以及从开始就看重性能，Julia 的计算性能超越了其他动态语言，甚至可与静态编译语言媲美。在大数据处理的问题上，性能一直是决定性的因素：在刚刚过去的十年中，数据量还在以摩尔定律增长着。</p>
+<p>Julia 想要变成一个前所未有的集易用、强大、高效于一体的语言。除此之外，Julia 的优势还在于：</p>
+<ul>
+<li>免费开源（<a href="https://github.com/JuliaLang/julia/blob/master/LICENSE.md">MIT 协议</a> ）</li>
+<li>自定义类型与内置类型同样高效、紧凑</li>
+<li>不需要把代码向量化；非向量化的代码跑得也很快</li>
+<li>为并行和分布式计算而设计</li>
+<li>轻量级“绿色”线程（<a href="http://zh.wikipedia.org/zh-cn/协程">协程</a> ）</li>
+<li>低调又牛逼的类型系统</li>
+<li>优雅、可扩展的类型转换</li>
+<li>高效支持 <a href="http://zh.wikipedia.org/zh-cn/Unicode">Unicode</a>, 包括且不只 <a href="http://zh.wikipedia.org/zh-cn/UTF-8">UTF-8</a></li>
+<li>直接调用 C 函数（不需封装或 API）</li>
+<li>像 Shell 一样强大的管理其他进程的能力</li>
+<li>像 Lisp 一样的宏和其他元编程工具</li>
+</ul>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=julia></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Freeaihub - 一站式自由学习</title>
+
+<!-- Stylesheets -->
+<link href="/static/css/bootstrap.css" rel="stylesheet">
+<link href="/static/css/index.css" rel="stylesheet">
+
+<link rel="icon" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.ico" type="image/x-icon">
+<!-- Responsive -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+<!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script><![endif]-->
+<!--[if lt IE 9]><script src="js/respond.js"></script><![endif]-->
+</head>
+
+<body>
+
+<div class="page-wrapper">
+ 	
+    <!-- Preloader -->
+    <div class="preloader"></div>
+ 	
+    <!-- Main Header-->
+    <header class="main-header alternate">
+    	
+        <!-- Main Box -->
+    	<div class="main-box">
+        	<div class="auto-container">
+            	<div class="outer-container clearfix">
+                    <!--Logo Box-->
+                    <div class="logo-box">
+                        <div class="logo">
+                            <a href="index.html">
+                                <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" alt="freeai logo">
+                            </a></div>
+                    </div>
+                    
+                    <!--Nav Outer-->
+                    <div class="nav-outer clearfix">
+                        <!-- Main Menu -->
+                        <nav class="main-menu">
+                        
+                            <div class="navbar-header">
+                                <!-- Toggle Button -->    	
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                            </div>
+                            
+                            <div class="navbar-collapse collapse scroll-nav clearfix">
+                                <ul class="navigation clearfix">
+                                    <li class="dropdown current"><a href="#banner">Home</a>
+                                    </li>                                    
+                                 </ul>
+                            </div>
+                            
+                        </nav>
+                        <!-- Main Menu End-->
+                        
+                        <!--Other Links-->
+                        <!-- <div class="other-links">
+                        	<a href="contact.html" class="theme-btn btn-style-one">Get Quote</a>
+                        </div> -->
+                        
+                    </div>
+                    <!--Nav Outer End-->
+                    
+            	</div>    
+            </div>
+        </div>
+    
+    </header>
+    <!--End Main Header -->
+    
+    
+    <!--Main Banner / Banner Two-->
+    <section class="main-banner banner-two" id="banner" style="background-image:url(static/images/background/banner-bg-2.png);">
+    	<div class="auto-container">
+        	<div class="row clearfix">
+            	<!--Text Column-->
+                <div class="text-column col-md-5 col-sm-12 col-xs-12">
+                	<div class="inner">
+                        <h2>一站式自由学习</h2>
+                        <p>一站式人工智能知识学习平台，创新的交互式学习体验，高效学习且全部免费 在这里，你可以清晰找到人工智能时代所需要掌握的所有知识点。 从基础的linux操作系统到高等数学，微积分，到进阶的数据科学，再到机器学习与深度学习 更有像无人驾驶等不同方向应用级项目供您实践。 更棒的是，您可以随时随地进行这些交互式学习。</p>
+                    </div>
+                </div>
+                
+                <!--Image Column-->
+                <div class="image-column col-md-7 col-sm-12 col-xs-12">
+                	<div class="inner text-right">
+                    	<figure class="image"><img src="static/images/resource/banner-image-2.png" alt=""></figure>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+  	<!--End Main Banner-->
+
+    <!-- course start -->
+
+      <section class="features-section-three">
+        <div class="auto-container">
+
+
+            <!--Heading-->
+            <div class="sec-title-two centered">
+                <h2>基础课程</h2>
+                <p class="desc-text">学习IT技术的基础铺垫课程</p>
+            </div>
+
+            {lessonlists}
+
+
+
+
+        </div>
+    </section>
+
+    <!-- course end -->
+
+
+
+    <!--Footer Style Two-->
+    <footer class="footer-style-two">
+        <!--Footer Upper-->
+        <div class="footer-upper">
+            <div class="auto-container">
+            	<div class="outer-box">
+                	<div class="row clearfix">
+                        <!--Big Column-->
+                        <div class="big-column col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <!--Footer Column-->
+                            <div class="footer-column">
+                                <div class="footer-widget about-widget">
+                                    <div class="widget-inner">
+                                        <div class="logo">
+                                            <!-- <img src="static/images/footer-logo.png" alt=""> -->
+                                        </div>
+                                        <div class="text">
+                                            免除安装环境的困扰,让学习更轻松自由
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!--Big Column-->
+                        <div class="big-column col-lg-6 col-md-6 col-sm-12 col-xs-12">    
+                            <div class="row clearfix">
+                            
+                                <!-- Footer Column
+                                <div class="footer-column col-md-6 col-sm-6 col-xs-12">
+                                    <div class="footer-widget links-widget">
+                                        <div class="widget-inner">
+                                            <h3>Resources</h3>
+                                            <div class="links">
+                                                <ul>
+                                                    <li><a href="#">Learning Hub</a></li>
+                                                    <li><a href="#">Video Tutorials</a></li>
+                                                    <li><a href="#">Quick Start Guide</a></li>
+                                                    <li><a href="#">SEO Software Reviews</a></li>
+                                                    <li><a href="#">Update Stories</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <!--Footer Column-->
+                                <div class="footer-column col-md-6 col-sm-6 col-xs-12">
+                                    <div class="footer-widget links-widget">
+                                        <div class="widget-inner">
+                                            <h3>公司</h3>
+                                            <div class="links">
+                                                <ul>
+                                                    <li><a href="/aboutus/">关于我们</a></li>
+                                                    <li><a href="/aboutus/help.html">使用帮助</a></li>
+                                                    <li><a href="#">内容版权</a></li>
+                                                    <li><a href="#">改善建议</a></li>
+                                                    <li><a href="#">服务条款</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!--Big Column-->
+                        <div class="big-column col-lg-12 col-md-12 col-sm-12 col-xs-12">    
+                            <div class="row clearfix">
+                            
+                                <!--Footer Column-->
+                                <div class="footer-column col-md-6 col-sm-6 col-xs-12">
+                                    <div class="footer-widget copyright-widget">
+                                        <div class="widget-inner">
+                                            <div class="copyright">京ICP备19043805号</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </footer>
+    
+    
+</div>
+<!--End pagewrapper-->
+
+<!--Scroll to top-->
+<div class="scroll-to-top scroll-to-target" data-target="html"><span class="fa fa-angle-double-up"></span></div>
+
+
+<script src="/static/js/jquery.js"></script> 
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/pagenav.js"></script>
+<script src="/static/js/jquery.scrollTo.js"></script>
+
+
+<script src="/static/js/script.js"></script>
+
+
+</body>
+</html>

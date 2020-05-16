@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>R语言 数据帧(dataframe) - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  <li><a href="./index.html"> 如何学习本课程</a></li>
+<li><a href="./intro.html"> R语言简介</a></li>
+<li><a href="./setup.html"> R语言环境搭建及运行</a></li>
+<li><a href="./syntax.html"> R语言基础语法</a></li>
+<li><a href="./datatype.html"> R语言基本数据类型</a></li>
+<li><a href="./variable.html"> R语言变量</a></li>
+<li><a href="./operator.html"> R语言操作符</a></li>
+<li><a href="./logic.html"> R语言逻辑判断</a></li>
+<li><a href="./library.html"> R语言包</a></li>
+<li><a href="./function.html"> R语言函数</a></li>
+<li><a href="./string.html"> R语言数据类型-字符串</a></li>
+<li><a href="./vector.html"> R语言数据类型-向量</a></li>
+<li><a href="./list.html"> R语言数据类型-列表</a></li>
+<li><a href="./matrix.html"> R语言数据类型-矩阵</a></li>
+<li><a href="./array.html"> R语言数据类型-数组</a></li>
+<li><a href="./factor.html"> R语言数据类型-因子</a></li>
+<li><a href="./dataframe.html"> R语言数据类型-数据帧</a></li>
+<li><a href="./plot.html"> R语言绘图</a></li>
+<li><a href="./distribution.html"> R语言分布</a></li>
+<li><a href="./data-operation.html"> R语言数据操作</a></li>
+<li><a href="./chisq.html"> R语言卡方检验</a></li>
+<li><a href="./dt.html"> R语言决策树</a></li>
+<li><a href="./lm.html"> R语言线性回归</a></li>
+<li><a href="./rf.html"> R语言随机森林算法</a></li>
+<li><a href="./nls.html"> R语言非线性最小二乘</a></li>
+<li><a href="./ancova.html"> R语言协方差分析</a></li>
+<li><a href="./survival.html"> R语言生存分析</a></li>
+                </ul>  
+              </div>
+            </div>
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>R语言 数据帧(dataframe)</h1>
+<p>数据帧是表或二维阵列状结构，其中每一列包含一个变量的值，并且每一行包含来自每一列的一组值。</p>
+<p>以下是数据帧的特性。</p>
+<ul>
+<li>列名称应为非空。</li>
+<li>行名称应该是唯一的。</li>
+<li>存储在数据帧中的数据可以是数字，因子或字符类型。</li>
+<li>每个列应包含相同数量的数据项。</li>
+</ul>
+<h2>创建数据帧</h2>
+<pre><code class="R"># Create the data frame.
+emp.data &lt;- data.frame(
+   emp_id = c (1:5), 
+   emp_name = c(&quot;Rick&quot;,&quot;Dan&quot;,&quot;Michelle&quot;,&quot;Ryan&quot;,&quot;Gary&quot;),
+   salary = c(623.3,515.2,611.0,729.0,843.25), 
+
+   start_date = as.Date(c(&quot;2012-01-01&quot;, &quot;2013-09-23&quot;, &quot;2014-11-15&quot;, &quot;2014-05-11&quot;,
+      &quot;2015-03-27&quot;)),
+   stringsAsFactors = FALSE
+)
+# Print the data frame.         
+print(emp.data) 
+</code></pre>
+
+<h2>获取数据帧的结构</h2>
+<p>通过使用<code>str()</code>函数可以看到数据帧的结构。</p>
+<pre><code class="R"># Create the data frame.
+emp.data &lt;- data.frame(
+   emp_id = c (1:5), 
+   emp_name = c(&quot;Rick&quot;,&quot;Dan&quot;,&quot;Michelle&quot;,&quot;Ryan&quot;,&quot;Gary&quot;),
+   salary = c(623.3,515.2,611.0,729.0,843.25), 
+
+   start_date = as.Date(c(&quot;2012-01-01&quot;, &quot;2013-09-23&quot;, &quot;2014-11-15&quot;, &quot;2014-05-11&quot;,
+      &quot;2015-03-27&quot;)),
+   stringsAsFactors = FALSE
+)
+# Get the structure of the data frame.
+str(emp.data)
+</code></pre>
+
+<h2>数据框中的数据摘要</h2>
+<p>可以通过应用<code>summary()</code>函数获取数据的统计摘要和性质。</p>
+<pre><code class="R"># Create the data frame.
+emp.data &lt;- data.frame(
+   emp_id = c (1:5), 
+   emp_name = c(&quot;Rick&quot;,&quot;Dan&quot;,&quot;Michelle&quot;,&quot;Ryan&quot;,&quot;Gary&quot;),
+   salary = c(623.3,515.2,611.0,729.0,843.25), 
+
+   start_date = as.Date(c(&quot;2012-01-01&quot;, &quot;2013-09-23&quot;, &quot;2014-11-15&quot;, &quot;2014-05-11&quot;,
+      &quot;2015-03-27&quot;)),
+   stringsAsFactors = FALSE
+)
+# Print the summary.
+print(summary(emp.data))  
+</code></pre>
+
+<h2>从数据帧提取数据</h2>
+<p>使用列名称从数据框中提取特定列。</p>
+<pre><code class="R"># Create the data frame.
+emp.data &lt;- data.frame(
+   emp_id = c (1:5),
+   emp_name = c(&quot;Rick&quot;,&quot;Dan&quot;,&quot;Michelle&quot;,&quot;Ryan&quot;,&quot;Gary&quot;),
+   salary = c(623.3,515.2,611.0,729.0,843.25),
+
+   start_date = as.Date(c(&quot;2012-01-01&quot;,&quot;2013-09-23&quot;,&quot;2014-11-15&quot;,&quot;2014-05-11&quot;,
+      &quot;2015-03-27&quot;)),
+   stringsAsFactors = FALSE
+)
+# Extract Specific columns.
+result &lt;- data.frame(emp.data$emp_name,emp.data$salary)
+print(result)
+</code></pre>
+
+<p>先提取前两行，然后提取所有列</p>
+<pre><code class="R"># Create the data frame.
+emp.data &lt;- data.frame(
+   emp_id = c (1:5),
+   emp_name = c(&quot;Rick&quot;,&quot;Dan&quot;,&quot;Michelle&quot;,&quot;Ryan&quot;,&quot;Gary&quot;),
+   salary = c(623.3,515.2,611.0,729.0,843.25),
+
+   start_date = as.Date(c(&quot;2012-01-01&quot;, &quot;2013-09-23&quot;, &quot;2014-11-15&quot;, &quot;2014-05-11&quot;,
+      &quot;2015-03-27&quot;)),
+   stringsAsFactors = FALSE
+)
+# Extract first two rows.
+result &lt;- emp.data[1:2,]
+print(result)
+</code></pre>
+
+<p>用第2和第4列提取第3和第5行</p>
+<pre><code class="R"># Create the data frame.
+emp.data &lt;- data.frame(
+   emp_id = c (1:5), 
+   emp_name = c(&quot;Rick&quot;,&quot;Dan&quot;,&quot;Michelle&quot;,&quot;Ryan&quot;,&quot;Gary&quot;),
+   salary = c(623.3,515.2,611.0,729.0,843.25), 
+
+    start_date = as.Date(c(&quot;2012-01-01&quot;, &quot;2013-09-23&quot;, &quot;2014-11-15&quot;, &quot;2014-05-11&quot;,
+      &quot;2015-03-27&quot;)),
+   stringsAsFactors = FALSE
+)
+
+# Extract 3rd and 5th row with 2nd and 4th column.
+result &lt;- emp.data[c(3,5),c(2,4)]
+print(result)
+</code></pre>
+
+<h2>扩展数据帧</h2>
+<p>可以通过添加列和行来扩展数据帧。</p>
+<h3>添加列</h3>
+<p>只需使用新的列名称添加列向量。</p>
+<pre><code class="R"># Create the data frame.
+emp.data &lt;- data.frame(
+   emp_id = c (1:5), 
+   emp_name = c(&quot;Rick&quot;,&quot;Dan&quot;,&quot;Michelle&quot;,&quot;Ryan&quot;,&quot;Gary&quot;),
+   salary = c(623.3,515.2,611.0,729.0,843.25), 
+
+   start_date = as.Date(c(&quot;2012-01-01&quot;, &quot;2013-09-23&quot;, &quot;2014-11-15&quot;, &quot;2014-05-11&quot;,
+      &quot;2015-03-27&quot;)),
+   stringsAsFactors = FALSE
+)
+
+# Add the &quot;dept&quot; coulmn.
+emp.data$dept &lt;- c(&quot;IT&quot;,&quot;Operations&quot;,&quot;IT&quot;,&quot;HR&quot;,&quot;Finance&quot;)
+v &lt;- emp.data
+print(v)
+</code></pre>
+
+<h3>添加行</h3>
+<p>要将更多行永久添加到现有数据帧，我们需要引入与现有数据帧相同结构的新行，并使用<code>rbind()</code>函数。</p>
+<p>在下面的示例中，我们创建一个包含新行的数据帧，并将其与现有数据帧合并以创建最终数据帧。</p>
+<pre><code class="R"># Create the first data frame.
+emp.data &lt;- data.frame(
+   emp_id = c (1:5), 
+   emp_name = c(&quot;Rick&quot;,&quot;Dan&quot;,&quot;Michelle&quot;,&quot;Ryan&quot;,&quot;Gary&quot;),
+   salary = c(623.3,515.2,611.0,729.0,843.25), 
+
+   start_date = as.Date(c(&quot;2012-01-01&quot;, &quot;2013-09-23&quot;, &quot;2014-11-15&quot;, &quot;2014-05-11&quot;,
+      &quot;2015-03-27&quot;)),
+   dept = c(&quot;IT&quot;,&quot;Operations&quot;,&quot;IT&quot;,&quot;HR&quot;,&quot;Finance&quot;),
+   stringsAsFactors = FALSE
+)
+
+# Create the second data frame
+emp.newdata &lt;-  data.frame(
+   emp_id = c (6:8), 
+   emp_name = c(&quot;Rasmi&quot;,&quot;Pranab&quot;,&quot;Tusar&quot;),
+   salary = c(578.0,722.5,632.8), 
+   start_date = as.Date(c(&quot;2013-05-21&quot;,&quot;2013-07-30&quot;,&quot;2014-06-17&quot;)),
+   dept = c(&quot;IT&quot;,&quot;Operations&quot;,&quot;Fianance&quot;),
+   stringsAsFactors = FALSE
+)
+
+# Bind the two data frames.
+emp.finaldata &lt;- rbind(emp.data,emp.newdata)
+print(emp.finaldata)
+</code></pre>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=ir></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

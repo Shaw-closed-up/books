@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>第一节课 使用Keras写一个mlp - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  <li>文章目录</li>
+<li><a href="./class_1.html">Keras入门课1 -- 用MLP识别mnist手写字符</a></li>
+<li><a href="./class_2.html">Keras入门课2 -- 使用CNN识别mnist手写数字</a></li>
+<li><a href="./class_3.html">Keras入门课3 -- 使用CNN识别cifar10数据集</a></li>
+<li><a href="./class_4.html">Keras入门课4 -- 使用ResNet识别cifar10数据集</a></li>
+<li><a href="./class_5.html">Keras入门课5 -- 网络可视化及训练监控</a></li>
+<li>
+<p>知识点目录  数据处理相关</p>
+</li>
+<li>
+<p><a href="./class_1.html">载入Keras中预置的数据库及数据库数据的基本变换</a></p>
+</li>
+<li><a href="./class_2.html">根据不同的模型数据要求，给原始数据图像增加维度</a></li>
+<li>
+<p><a href="./class_3.html">使用Keras内置的ImageDataGenerator来做数据增强</a></p>
+</li>
+<li>
+<p>知识点目录   模型相关（Model）</p>
+</li>
+<li>
+<p><a href="./class_1.html">Sequential模型的定义，以及如何添加层</a></p>
+</li>
+<li><a href="./class_3.html">另一种使用Sequential()构建模型的方法，更加的简单快捷</a></li>
+<li><a href="./class_4.html">使用函数式模型（Functional）更加自由的构建模型</a></li>
+<li><a href="./class_4.html">将通过Functional方式定义的层初始化为一个模型（Model）</a></li>
+<li><a href="./class_1.html">使用compile对网络进行配置</a></li>
+<li><a href="./class_1.html">使用fit方法来对小数据库进行训练</a></li>
+<li><a href="./class_3.html">使用fit_generator来进行针对增强数据的训练</a></li>
+<li><a href="./class_1.html">使用evaluate方法来对模型进行效果评估</a></li>
+<li>
+<p><a href="./class_3.html">保存模型</a></p>
+</li>
+<li>
+<p>知识点目录   网络层相关（Layers）</p>
+</li>
+<li>
+<p><a href="./class_1.html">如何对Dense层及Dropout层进行基本的配置</a></p>
+</li>
+<li><a href="./class_2.html">Conv2D卷积层和MaxPooling2D池化层的使用</a></li>
+<li>
+<p><a href="./class_4.html">使用keras.layers.add方法，将两个张量进行相加</a></p>
+</li>
+<li>
+<p>知识点目录   经典网络</p>
+</li>
+<li>
+<p><a href="./class_4.html">搭建一个精简版的ResNet网络</a></p>
+</li>
+<li>
+<p>知识点目录   训练技巧</p>
+</li>
+<li>
+<p><a href="./class_4.html">在训练中调用回调函数</a></p>
+</li>
+<li><a href="./class_4.html">使用LearningRateScheduler在训练过程中动态的调节学习率</a></li>
+<li><a href="./class_4.html">使用ModelCheckpoint保存checkpoint</a></li>
+<li>
+<p><a href="./class_4.html">使用ReduceLROnPlateau在训练进入平台期的时候动态调节学习率</a></p>
+</li>
+<li>
+<p>知识点目录    其他</p>
+</li>
+<li>
+<p><a href="./class_5.html">何用TensorBoard监控训练过程</a></p>
+</li>
+<li><a href="./class_5.html">如何保存网络结构图</a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>第一节课 使用Keras写一个mlp</h1>
+<p>mlp就是multilayer perceptron，多层感知机。数据集用的是经典的mnist，数字分类问题。</p>
+<p>首先导入keras的各种模块</p>
+<p>keras.datasets 里面包含了多种常用数据集，如mnist，cifar10等等，可以实现自动下载和解析等等。</p>
+<p>keras.models 里面有最核心的模型结构，如顺序模型结构Sequential</p>
+<p>keras.layers 里面有一些常用的层结构，如全连接层Dense</p>
+<p>keras.optimizers 里面有一些常用优化函数，如adam等</p>
+<pre><code class="python">import keras
+from keras.datasets import mnist 
+from keras.models import Sequential 
+from keras.layers import Dense,Dropout
+from keras.optimizers import RMSprop
+</code></pre>
+
+<p>载入mnist数据，第一次会自动下载，之后运行会载入本地文件。</p>
+<pre><code class="python">(x_train,y_train),(x_test,y_test)=mnist.load_data()
+</code></pre>
+
+<p>↓查看一下数据格式，训练集一共有6万张，大小是28*28,单通道灰度图，测试集是1000张。标签是列向量</p>
+<pre><code class="python">print(x_train.shape,y_train.shape)
+print(x_test.shape,y_test.shape)
+</code></pre>
+
+<p>↓可视化一些图片</p>
+<pre><code class="python">import matplotlib.pyplot as plt
+im = plt.imshow(x_train[0],cmap='gray')
+plt.show()
+im2 = plt.imshow(x_train[1],cmap='gray')
+plt.show()
+</code></pre>
+
+<p>由于mlp的输入是一维向量，所以要转换</p>
+<p>将每一幅图像都转换为一个长向量，大小为28*28=784</p>
+<pre><code class="python">x_train = x_train.reshape(60000,784)
+x_test = x_test.reshape(10000,784)
+# x_train = x_train.astype('float32')
+# x_train = x_train.astype('float32')
+print(x_train.shape)
+</code></pre>
+
+<p>归一化，将图像的像素归到0~1</p>
+<pre><code class="python">x_train = x_train/255
+x_test = x_test/255
+</code></pre>
+
+<p>将label也转换成One-hot标签，这里直接用keras的预置的一个函数 keras.utils.to_categorical</p>
+<pre><code class="python">print(y_train[0:10])# 查看原始标签 0~9
+</code></pre>
+
+<pre><code class="python">y_train = keras.utils.to_categorical(y_train,10)
+y_test = keras.utils.to_categorical(y_test,10)
+
+print(y_train[0:10])#查看转换完毕的标签
+</code></pre>
+
+<p>开始构建模型，模型分包含两个隐层和一个输出层,都是全连接层，使用Sequential构建</p>
+<p>其中隐层输出采用ReLU激活函数，Sequential的第一层要指定input_shape，要注意，这里的input_shape 是不包含batch大小的，就只是后面几维</p>
+<pre><code class="python">model = Sequential()
+model.add(Dense(512,activation='relu',input_shape=(784,)))
+model.add(Dropout(0.2))
+model.add(Dense(512,activation='relu'))
+model.add(Dropout(0.2))
+model.add(Dense(10,activation='softmax'))
+</code></pre>
+
+<pre><code class="python">model.summary()#这一句用来输出网络结构
+</code></pre>
+
+<p>配置模型，主要包括
+loss：loss计算方法（损失函数）</p>
+<p>optimizer：优化函数</p>
+<p>metrics：指定哪些量需要在训练及测试中关注，一般都会写accuracy</p>
+<pre><code class="python">model.compile(loss='categorical_crossentropy',
+             optimizer=RMSprop(),
+             metrics=['accuracy'])
+</code></pre>
+
+<p>开始训练。这里使用的是model对象的fit方法。前两个参数分别是<strong>完整的训练数据和训练标签</strong></p>
+<p>batch_size 表示每一次塞入多少张图片</p>
+<p>epochs 表示训练几轮</p>
+<p>verbose 表示用何种方式显示输出信息，0表示不输出，1表示在一直输出更新，2表示每一个epoch才输出一次。</p>
+<p>validation_data 表示验证集，格式和训练集一样，如果此参数不为空的话，每一个epoch过后就会输出验证集的loss和accuracy</p>
+<pre><code class="python">model.fit(x_train,y_train,batch_size=64,epochs=2,verbose=1,
+         validation_data=(x_test,y_test))
+</code></pre>
+
+<p>测试结果，输出为loss以及其他之前compile模型时指定过的metrics的值</p>
+<pre><code class="python">score = model.evaluate(x_test,y_test,verbose=1)
+print('Test loss:',score[0])
+print('Test accuracy',score[1])
+</code></pre>
+
+<h2>总结</h2>
+<p>本文主要写了一个最简单的多层感知机模型，目的是熟悉keras最基本的操作。</p>
+<p>知识点：</p>
+<ol>
+<li>学习载入Keras中预置的数据库及数据库数据的基本变换</li>
+<li>Sequential模型的定义，以及如何添加层</li>
+<li>如何对Dense层及Dropout层进行基本的配置</li>
+<li>学习使用compile对网络进行配置</li>
+<li>使用fit方法来对小数据库进行训练，这里的小数据库指的是所有数据可以一次性载入到内存</li>
+<li>使用evaluate方法来对模型进行效果评估</li>
+</ol>
+<p>参考：</p>
+<blockquote>
+<p>https://github.com/keras-team/keras/tree/master/examples</p>
+</blockquote>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

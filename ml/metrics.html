@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>分类的评估方法 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  <li><a href="./index.html"> 如何学习本课程 </a></li>
+<li><a href="./intro.html"> 机器学习 简介 </a></li>
+<li><a href="./feature-engineering.html"> 机器学习 特征工程 </a></li>
+<li><a href="./feature-extraction.html"> 机器学习 特征提取 </a></li>
+<li><a href="./feature-preprocessing.html"> 机器学习 特征预处理 </a></li>
+<li><a href="./feature_selection.html"> 机器学习 特征选择 </a></li>
+<li><a href="./feature_selection.html"> 机器学习 特征选择 </a></li>
+<li><a href="./metrics.html"> 机器学习 模型评估 </a></li>
+<li><a href="./dataset-split.html"> 机器学习 数据集划分 </a></li>
+<li><a href="./dataset-split.html"> 机器学习 数据集划分 </a></li>
+<li><a href="./knn.html"> 机器学习算法 K近邻(KNN) </a></li>
+<li><a href="./nb.html"> 机器学习算法 朴素贝叶斯 </a></li>
+<li><a href="./dt.html"> 机器学习算法 决策树 </a></li>
+<li><a href="./rf.html"> 机器学习算法 集成学习-随机森林 </a></li>
+<li><a href="./lr.html"> 机器学习算法 线性回归 </a></li>
+<li><a href="./logstic.html"> 机器学习算法 逻辑回归 </a></li>
+<li><a href="./ridge.html"> 机器学习算法 岭回归 </a></li>
+<li><a href="./k-means.html"> 机器学习算法 聚类-KMeans </a></li>
+<li><a href="./fitting.html"> 机器学习模型 欠拟合与过拟合 </a></li>
+<li><a href="./save-load.html"> 机器学习模型 保存与加载 </a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>分类的评估方法</h1>
+<h2>精确率与召回率</h2>
+<h3>混淆矩阵</h3>
+<p>在分类任务下，预测结果(Predicted Condition)与正确标记(True Condition)之间存在四种不同的组合，构成混淆矩阵(适用于多分类)</p>
+<p><img alt="混淆矩阵" src="./images/混淆矩阵.png" /></p>
+<h3>精确率(Precision)与召回率(Recall)</h3>
+<ul>
+<li>精确率：预测结果为正例样本中真实为正例的比例（了解）</li>
+</ul>
+<p><img alt="精确率" src="./images/精确率.png" /></p>
+<ul>
+<li>召回率：真实为正例的样本中预测结果为正例的比例（查的全，对正样本的区分能力）</li>
+</ul>
+<p><img alt="召回率" src="./images/召回率.png" /></p>
+<p>那么怎么更好理解这个两个概念</p>
+<p><img alt="精确率与召回率理解" src="./images/精确率与召回率理解.png" /></p>
+<p>还有其他的评估标准，F1-score，反映了模型的稳健型</p>
+<p><img alt="F1" src="./images/F1.png" /></p>
+<h3>分类评估报告API</h3>
+<ul>
+<li><code>sklearn.metrics.classification_report(y_true, y_pred, labels=[], target_names=None )</code></li>
+<li>
+<ul>
+<li>y_true：真实目标值</li>
+</ul>
+</li>
+<li>y_pred：估计器预测目标值</li>
+<li>labels:指定类别对应的数字</li>
+<li>target_names：目标类别名称</li>
+<li>return：每个类别精确率与召回率</li>
+</ul>
+<p><code>print("精确率和召回率为：", classification_report(y_test, lr.predict(x_test), labels=[2, 4], target_names=['良性', '恶性']))</code></p>
+<p><strong>假设这样一个情况，如果99个样本癌症，1个样本非癌症，不管怎样我全都预测正例(默认癌症为正例),准确率就为99%但是这样效果并不好，这就是样本不均衡下的评估问题</strong></p>
+<h2>ROC曲线与AUC指标</h2>
+<h3>知道TPR与FPR</h3>
+<ul>
+<li>TPR = TP / (TP + FN)</li>
+<li>所有真实类别为1的样本中，预测类别为1的比例</li>
+<li>FPR = FP / (FP + FN)</li>
+<li>所有真实类别为0的样本中，预测类别为1的比例</li>
+</ul>
+<h3>ROC曲线</h3>
+<ul>
+<li>ROC曲线的横轴就是FPRate，纵轴就是TPRate，当二者相等时，表示的意义则是：对于不论真实类别是1还是0的样本，分类器预测为1的概率是相等的，此时AUC为0.5</li>
+</ul>
+<p><img alt="ROC" src="./images/ROC.png" /></p>
+<h3>AUC指标</h3>
+<ul>
+<li>AUC的概率意义是随机取一对正负样本，正样本得分大于负样本的概率</li>
+<li>AUC的最小值为0.5，最大值为1，取值越高越好</li>
+<li><strong>AUC=1，完美分类器，采用这个预测模型时，不管设定什么阈值都能得出完美预测。绝大多数预测的场合，不存在完美分类器。</strong></li>
+</ul>
+<p><strong>最终AUC的范围在[0.5, 1]之间，并且越接近1越好</strong></p>
+<h3>AUC计算API</h3>
+<ul>
+<li><code>from sklearn.metrics import roc_auc_score</code></li>
+<li><code>sklearn.metrics.roc_auc_score(y_true, y_score)</code><ul>
+<li>计算ROC曲线面积，即AUC值</li>
+<li>y_true:每个样本的真实类别，必须为0(反例),1(正例)标记</li>
+<li>y_score:每个样本预测的概率值</li>
+</ul>
+</li>
+</ul>
+<pre><code class="python"># 0.5~1之间，越接近于1约好
+y_test = np.where(y_test &gt; 2.5, 1, 0)
+
+print(&quot;AUC指标：&quot;, roc_auc_score(y_test, lr.predict(x_test)))
+</code></pre>
+
+<h2>总结</h2>
+<ul>
+<li>AUC只能用来评价二分类</li>
+<li>AUC非常适合评价样本不平衡中的分类器性能</li>
+</ul>
+<h2>作业：</h2>
+<ul>
+<li>如何衡量样本不均衡下的评估？ </li>
+</ul>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

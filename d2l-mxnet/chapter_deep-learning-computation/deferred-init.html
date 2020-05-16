@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>模型参数的延后初始化 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>模型参数的延后初始化</h1>
+<p>如果做了上一节练习，你会发现模型<code>net</code>在调用初始化函数<code>initialize</code>之后、在做前向计算<code>net(X)</code>之前时，权重参数的形状中出现了0。虽然直觉上<code>initialize</code>完成了所有参数初始化过程，然而这在Gluon中却是不一定的。我们在本节中详细讨论这个话题。</p>
+<h2>延后初始化</h2>
+<p>也许读者早就注意到了，在之前使用Gluon创建的全连接层都没有指定输入个数。例如，在上一节使用的多层感知机<code>net</code>里，我们创建的隐藏层仅仅指定了输出大小为256。当调用<code>initialize</code>函数时，由于隐藏层输入个数依然未知，系统也无法得知该层权重参数的形状。只有在当我们将形状是(2, 20)的输入<code>X</code>传进网络做前向计算<code>net(X)</code>时，系统才推断出该层的权重参数形状为(256, 20)。因此，这时候我们才能真正开始初始化参数。</p>
+<p>让我们使用上一节中定义的<code>MyInit</code>类来演示这一过程。我们创建多层感知机，并使用<code>MyInit</code>实例来初始化模型参数。</p>
+<p>```{.python .input  n=22}
+from mxnet import init, nd
+from mxnet.gluon import nn</p>
+<p>class MyInit(init.Initializer):
+    def _init_weight(self, name, data):
+        print('Init', name, data.shape)
+        # 实际的初始化逻辑在此省略了</p>
+<p>net = nn.Sequential()
+net.add(nn.Dense(256, activation='relu'),
+        nn.Dense(10))</p>
+<p>net.initialize(init=MyInit())</p>
+<pre><code>
+注意，虽然`MyInit`被调用时会打印模型参数的相关信息，但上面的`initialize`函数执行完并未打印任何信息。由此可见，调用`initialize`函数时并没有真正初始化参数。下面我们定义输入并执行一次前向计算。
+
+```{.python .input  n=25}
+X = nd.random.uniform(shape=(2, 20))
+Y = net(X)
+</code></pre>
+
+<p>这时候，有关模型参数的信息被打印出来。在根据输入<code>X</code>做前向计算时，系统能够根据输入的形状自动推断出所有层的权重参数的形状。系统在创建这些参数之后，调用<code>MyInit</code>实例对它们进行初始化，然后才进行前向计算。</p>
+<p>当然，这个初始化只会在第一次前向计算时被调用。之后我们再运行前向计算<code>net(X)</code>时则不会重新初始化，因此不会再次产生<code>MyInit</code>实例的输出。</p>
+<p>```{.python .input}
+Y = net(X)</p>
+<pre><code>
+系统将真正的参数初始化延后到获得足够信息时才执行的行为叫作延后初始化（deferred initialization）。它可以让模型的创建更加简单：只需要定义每个层的输出大小，而不用人工推测它们的输入个数。这对于之后将介绍的定义多达数十甚至数百层的网络来说尤其方便。
+
+然而，任何事物都有两面性。正如本节开头提到的那样，延后初始化也可能会带来一定的困惑。在第一次前向计算之前，我们无法直接操作模型参数，例如无法使用`data`函数和`set_data`函数来获取和修改参数。因此，我们经常会额外做一次前向计算来迫使参数被真正地初始化。
+
+## 避免延后初始化
+
+如果系统在调用`initialize`函数时能够知道所有参数的形状，那么延后初始化就不会发生。我们在这里分别介绍两种这样的情况。
+
+第一种情况是我们要对已初始化的模型重新初始化时。因为参数形状不会发生变化，所以系统能够立即进行重新初始化。
+
+```{.python .input}
+net.initialize(init=MyInit(), force_reinit=True)
+</code></pre>
+
+<p>第二种情况是我们在创建层的时候指定了它的输入个数，使系统不需要额外的信息来推测参数形状。下例中我们通过<code>in_units</code>来指定每个全连接层的输入个数，使初始化能够在<code>initialize</code>函数被调用时立即发生。</p>
+<p>```{.python .input}
+net = nn.Sequential()
+net.add(nn.Dense(256, in_units=20, activation='relu'))
+net.add(nn.Dense(10, in_units=256))</p>
+<p>net.initialize(init=MyInit())
+```</p>
+<h2>小结</h2>
+<ul>
+<li>系统将真正的参数初始化延后到获得足够信息时才执行的行为叫作延后初始化。</li>
+<li>延后初始化的主要好处是让模型构造更加简单。例如，我们无须人工推测每个层的输入个数。</li>
+<li>也可以避免延后初始化。</li>
+</ul>
+<h2>练习</h2>
+<ul>
+<li>如果在下一次前向计算<code>net(X)</code>前改变输入<code>X</code>的形状，包括批量大小和输入个数，会发生什么？</li>
+</ul>
+<h2>扫码直达<a href="https://discuss.gluon.ai/t/topic/6320">讨论区</a></h2>
+<p><img alt="" src="../img/qr_deferred-init.svg" /></p>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

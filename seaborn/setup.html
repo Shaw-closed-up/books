@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>Seaborn 环境安装及配置 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  <li><a href="./index.html"> 如何学习本课程 </a></li>
+<li><a href="./intro.html"> sklearn简介 </a></li>
+<li><a href="./setup.html"> 安装Seaborn库 </a></li>
+<li><a href="./visualization.html"> Seaborn数据可视化 </a></li>
+<li><a href="./palette.html"> Seaborn调色板 </a></li>
+<li><a href="./multipanel-categorical.html"> Seaborn多面板分类图 </a></li>
+<li><a href="./histogram.html"> Seaborn直方图 </a></li>
+<li><a href="./pairwise-relationship.html"> Seaborn可视化成对关系 </a></li>
+<li><a href="./kde.html"> Seaborn内核密度估计 </a></li>
+<li><a href="./pair-grid.html"> Seaborn配对网格 </a></li>
+<li><a href="./categorical.html"> Seaborn绘制分类数据 </a></li>
+<li><a href="./observations-distribution.html"> Seaborn绘制观测值的分布 </a></li>
+<li><a href="./statistical-estimation.html"> Seaborn统计估计 </a></li>
+<li><a href="./wideform.html"> Seaborn绘制宽格式数据 </a></li>
+<li><a href="./linear-relationships.html"> Seaborn绘制线性关系 </a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>Seaborn 环境安装及配置</h1>
+<h2>本课程在线环境的安装</h2>
+<p>本课程无需您做任何安装操作，在浏览器中即可开始本课程的学习。</p>
+<h3>导入库</h3>
+<p>让我们从导入Pandas开始，这是一个用于管理关系（表格式）数据集的好库。Seaborn在处理DataFrames时非常方便，DataFrames是用于数据分析的最广泛使用的数据结构。</p>
+<p>以下命令将帮助您导入Pandas</p>
+<pre><code class="python"># Pandas for managing datasets
+import pandas as pd
+</code></pre>
+
+<p>现在，让我们导入Matplotlib库，它可以帮助我们自定义绘图。</p>
+<pre><code class="python"># Matplotlib for additional customization
+from matplotlib import pyplot as plt
+</code></pre>
+
+<p>我们将使用以下命令导入Seaborn库</p>
+<pre><code class="python"># Seaborn for plotting and styling
+import seaborn as sb
+</code></pre>
+
+<h3>导入数据集</h3>
+<p>我们已经导入了所需的库。在本节中，我们将了解如何导入所需的数据集。</p>
+<p>Seaborn随附了库中的一些重要数据集。安装Seaborn后，数据集将自动下载。</p>
+<p>您可以使用任何这些数据集进行学习。</p>
+<p>借助以下功能，您可以加载所需的数据集</p>
+<pre><code>load_dataset()
+</code></pre>
+
+<h3>将数据作为Pandas DataFrame导入</h3>
+<p>在本节中，我们将导入数据集。默认情况下，此数据集作为Pandas DataFrame加载。如果Pandas DataFrame中有任何功能，则可以在此DataFrame上使用。</p>
+<p>要查看Seaborn库中的所有可用数据集，可以将以下命令与<strong>get_dataset_names（）</strong>函数一起使用，如下所示-</p>
+<pre><code class="python">import seaborn as sb
+print(sb.get_dataset_names())
+</code></pre>
+
+<p>以下代码行将帮助您导入数据集（注意，该数据集并非内置于seaborn，而是通过https://github.com/mwaskom/seaborn-data下载，有时会因网络问题出现加载时间过长而失败的情况），本课程中均使用本地文件保证加载速度。</p>
+<pre><code class="python"># Seaborn for plotting and styling
+import seaborn as sb
+df = sb.load_dataset('/share/datasets/seaborn-data/tips')
+print(df.head())
+</code></pre>
+
+<p>DataFrames以矩形网格的形式存储数据，通过该网格可以轻松查看数据。矩形网格的每一行都包含一个实例的值，网格的每一列都是一个向量，用于保存特定变量的数据。这意味着DataFrame的行不需要包含相同数据类型的值，它们可以是数字，字符，逻辑等。</p>
+<p>Python的DataFrames随Pandas库一起提供，它们被定义为带有二维标签的数据结构具有可能不同类型的列。</p>
+<h2>在您本地安装</h2>
+<h3>使用Pip安装程序</h3>
+<p>要安装最新版本的Seaborn，可以使用pip-</p>
+<pre><code>pip install seaborn
+</code></pre>
+
+<h3>对于Windows，Linux和Mac使用Anaconda</h3>
+<p>Anaconda（来自https://www.anaconda.com/是针对SciPy堆栈的免费Python发行版，也适用于Linux和Mac。</p>
+<p>也可以使用conda安装发行的版本-</p>
+<pre><code>conda install seaborn
+</code></pre>
+
+<h3>直接从github安装Seaborn的开发版本</h3>
+<p><a href="https://github.com/mwaskom/seaborn">https://github.com/mwaskom/seaborn“</a></p>
+<p><code class=gatsby-kernelname data-language=python></code></p>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

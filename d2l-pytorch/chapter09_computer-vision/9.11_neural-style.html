@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>9.11 样式迁移 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  
+    <li>简介</li>
+    <li><a href="/d2l-pytorch/chapter01_DL-intro/deep-learning-intro.html">1. 深度学习简介</a></li>
+    <li>预备知识</li>
+    <li><a href="/d2l-pytorch/chapter02_prerequisite/2.1_install.html">2.1 环境配置</a></li>
+    <li><a href="/d2l-pytorch/chapter02_prerequisite/2.2_tensor.html">2.2 数据操作</a></li>
+    <a href="/d2l-pytorch/chapter02_prerequisite/2.3_autograd.html">2.3 自动求梯度</a></li>
+    <li>深度学习基础</li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.1_linear-regression.html">3.1 线性回归</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.2_linear-regression-scratch.html">3.2 线性回归的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.3_linear-regression-pytorch.html">3.3 线性回归的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.4_softmax-regression.html">3.4 softmax回归</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.5_fashion-mnist.html">3.5 图像分类数据集（Fashion-MNIST）</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.6_softmax-regression-scratch.html">3.6 softmax回归的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.7_softmax-regression-pytorch.html">3.7 softmax回归的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.8_mlp.html">3.8 多层感知机</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.9_mlp-scratch.html">3.9 多层感知机的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.10_mlp-pytorch.html">3.10 多层感知机的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.11_underfit-overfit.html">3.11 模型选择、欠拟合和过拟合</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.12_weight-decay.html">3.12 权重衰减</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.13_dropout.html">3.13 丢弃法</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.14_backprop.html">3.14 正向传播、反向传播和计算图</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.15_numerical-stability-and-init.html">3.15 数值稳定性和模型初始化</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.16_kaggle-house-price.html">3.16 实战Kaggle比赛：房价预测</a></li>
+    <li>深度学习计算</li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.1_model-construction.html">4.1 模型构造</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.2_parameters.html">4.2 模型参数的访问、初始化和共享</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.3_deferred-init.html">4.3 模型参数的延后初始化</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.4_custom-layer.html">4.4 自定义层</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.5_read-write.html">4.5 读取和存储</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.6_use-gpu.html">4.6 GPU计算</a></li>
+    <li>卷积神经网络</li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.1_conv-layer.html">5.1 二维卷积层</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.2_padding-and-strides.html">5.2 填充和步幅</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.3_channels.html">5.3 多输入通道和多输出通道</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.4_pooling.html">5.4 池化层</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.5_lenet.html">5.5 卷积神经网络（LeNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.6_alexnet.html">5.6 深度卷积神经网络（AlexNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.7_vgg.html">5.7 使用重复元素的网络（VGG）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.8_nin.html">5.8 网络中的网络（NiN）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.9_googlenet.html">5.9 含并行连结的网络（GoogLeNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.10_batch-norm.html">5.10 批量归一化</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.11_resnet.html">5.11 残差网络（ResNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.12_densenet.html">5.12 稠密连接网络（DenseNet）</a></li>
+    <li>循环神经网络</li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.1_lang-model.html">6.1 语言模型</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.2_rnn.html">6.2 循环神经网络</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.3_lang-model-dataset.html">6.3 语言模型数据集（周杰伦专辑歌词）</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.4_rnn-scratch.html">6.4 循环神经网络的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.5_rnn-pytorch.html">6.5 循环神经网络的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.6_bptt.html">6.6 通过时间反向传播</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.7_gru.html">6.7 门控循环单元（GRU）</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.8_lstm.html">6.8 长短期记忆（LSTM）</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.9_deep-rnn.html">6.9 深度循环神经网络</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.10_bi-rnn.html">6.10 双向循环神经网络</a></li>
+    <li>优化算法</li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.1_optimization-intro.html">7.1 优化与深度学习</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.2_gd-sgd.html">7.2 梯度下降和随机梯度下降</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.3_minibatch-sgd.html">7.3 小批量随机梯度下降</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.4_momentum.html">7.4 动量法</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.5_adagrad.html">7.5 AdaGrad算法</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.6_rmsprop.html">7.6 RMSProp算法</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.7_adadelta.html">7.7 AdaDelta算法</a></li>
+    <a href="/d2l-pytorch/chapter07_optimization/7.8_adam.html">7.8 Adam算法</a></li>
+    <li>计算性能</li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.1_hybridize.html">8.1 命令式和符号式混合编程</a></li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.2_async-computation.html">8.2 异步计算</a></li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.3_auto-parallelism.html">8.3 自动并行计算</a></li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.4_multiple-gpus.html">8.4 多GPU计算</a></li>
+    <li>计算机视觉</li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.1_image-augmentation.html">9.1 图像增广</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.2_fine-tuning.html">9.2 微调</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.3_bounding-box.html">9.3 目标检测和边界框</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.4_anchor.html">9.4 锚框</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.5_multiscale-object-detection.html">9.5 多尺度目标检测</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.6_object-detection-dataset.html">9.6 目标检测数据集（皮卡丘）</a></li>
+    <li>9.7 单发多框检测（SSD）</li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.8_rcnn.html">9.8 区域卷积神经网络（R-CNN）系列</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.9_semantic-segmentation-and-dataset.html">9.9 语义分割和数据集</a></li>
+    <li>9.10 全卷积网络（FCN）</li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.11_neural-style.html">9.11 样式迁移</a></li>
+    <li>9.12 实战Kaggle比赛：图像分类（CIFAR-10）</li>
+    <li>9.13 实战Kaggle比赛：狗的品种识别（ImageNet Dogs）<li>
+    <li>自然语言处理</li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.1_word2vec.html">10.1 词嵌入（word2vec）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.2_approx-training.html">10.2 近似训练</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.3_word2vec-pytorch.html">10.3 word2vec的实现</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.4_fasttext.html">10.4 子词嵌入（fastText）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.5_glove.html">10.5 全局向量的词嵌入（GloVe）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.6_similarity-analogy.html">10.6 求近义词和类比词</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.7_sentiment-analysis-rnn.html">10.7 文本情感分类：使用循环神经网络</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.8_sentiment-analysis-cnn.html">10.8 文本情感分类：使用卷积神经网络（textCNN）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.9_seq2seq.html">10.9 编码器—解码器（seq2seq）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.10_beam-search.html">10.10 束搜索</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.11_attention.html">10.11 注意力机制</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.12_machine-translation.html">10.12 机器翻译</a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>9.11 样式迁移</h1>
+<p>如果你是一位摄影爱好者，也许接触过滤镜。它能改变照片的颜色样式，从而使风景照更加锐利或者令人像更加美白。但一个滤镜通常只能改变照片的某个方面。如果要照片达到理想中的样式，经常需要尝试大量不同的组合，其复杂程度不亚于模型调参。</p>
+<p>在本节中，我们将介绍如何使用卷积神经网络自动将某图像中的样式应用在另一图像之上，即样式迁移（style transfer）[1]。这里我们需要两张输入图像，一张是内容图像，另一张是样式图像，我们将使用神经网络修改内容图像使其在样式上接近样式图像。图9.12中的内容图像为本书作者在西雅图郊区的雷尼尔山国家公园（Mount Rainier National Park）拍摄的风景照，而样式图像则是一副主题为秋天橡树的油画。最终输出的合成图像在保留了内容图像中物体主体形状的情况下应用了样式图像的油画笔触，同时也让整体颜色更加鲜艳。</p>
+<div align=center>
+<img width="600" src="../img/chapter09/9.11_style-transfer.svg"/>
+</div>
+
+<div align=center>图9.12 输入内容图像和样式图像，输出样式迁移后的合成图像</div>
+
+<h2>9.11.1 方法</h2>
+<p>图9.13用一个例子来阐述基于卷积神经网络的样式迁移方法。首先，我们初始化合成图像，例如将其初始化成内容图像。该合成图像是样式迁移过程中唯一需要更新的变量，即样式迁移所需迭代的模型参数。然后，我们选择一个预训练的卷积神经网络来抽取图像的特征，其中的模型参数在训练中无须更新。深度卷积神经网络凭借多个层逐级抽取图像的特征。我们可以选择其中某些层的输出作为内容特征或样式特征。以图9.13为例，这里选取的预训练的神经网络含有3个卷积层，其中第二层输出图像的内容特征，而第一层和第三层的输出被作为图像的样式特征。接下来，我们通过正向传播（实线箭头方向）计算样式迁移的损失函数，并通过反向传播（虚线箭头方向）迭代模型参数，即不断更新合成图像。样式迁移常用的损失函数由3部分组成：内容损失（content loss）使合成图像与内容图像在内容特征上接近，样式损失（style loss）令合成图像与样式图像在样式特征上接近，而总变差损失（total variation loss）则有助于减少合成图像中的噪点。最后，当模型训练结束时，我们输出样式迁移的模型参数，即得到最终的合成图像。</p>
+<div align=center>
+<img width="500" src="../img/chapter09/9.11_neural-style.svg"/>
+</div>
+
+<div align=center>图9.13 基于卷积神经网络的样式迁移。实线箭头和虚线箭头分别表示正向传播和反向传播</div>
+
+<p>下面，我们通过实验来进一步了解样式迁移的技术细节。实验需要用到一些导入的包或模块。</p>
+<pre><code class="python">
+%matplotlib inline
+import time
+import torch
+import torch.nn.functional as F
+import torchvision
+import numpy as np
+from PIL import Image
+
+import sys
+sys.path.append(&quot;..&quot;) 
+import d2lzh_pytorch as d2l
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+</code></pre>
+
+<h2>9.11.2 读取内容图像和样式图像</h2>
+<p>首先，我们分别读取内容图像和样式图像。从打印出的图像坐标轴可以看出，它们的尺寸并不一样。</p>
+<pre><code class="python">d2l.set_figsize()
+content_img = Image.open('../../data/rainier.jpg')
+d2l.plt.imshow(content_img);
+</code></pre>
+
+<div align=center>
+<img width="400" src="../img/chapter09/9.11_output1.png"/>
+</div>
+
+<pre><code class="python">d2l.set_figsize()
+style_img = Image.open('../../data/autumn_oak.jpg')
+d2l.plt.imshow(style_img);
+</code></pre>
+
+<div align=center>
+<img width="400" src="../img/chapter09/9.11_output2.png"/>
+</div>
+
+<h2>9.11.3 预处理和后处理图像</h2>
+<p>下面定义图像的预处理函数和后处理函数。预处理函数<code>preprocess</code>对先对更改输入图像的尺寸，然后再将PIL图片转成卷积神经网络接受的输入格式，再在RGB三个通道分别做标准化，由于预训练模型是在均值为[0.485, 0.456, 0.406]标准差为[0.229, 0.224, 0.225]的图片数据上预训练的，所以我们要将图片标准化保持相同的均值和标准差。后处理函数<code>postprocess</code>则将输出图像中的像素值还原回标准化之前的值。由于图像每个像素的浮点数值在0到1之间，我们使用<code>clamp</code>函数对小于0和大于1的值分别取0和1。</p>
+<blockquote>
+<p><code>torchvision.transforms</code>模块有大量现成的转换方法，不过需要注意的是有的方法输入的是PIL图像，如<code>Resize</code>；有的方法输入的是<code>tensor</code>，如<code>Normalize</code>；而还有的是用于二者转换，如<code>ToTensor</code>将PIL图像转换成<code>tensor</code>。一定要注意这点，使用时看清<a href="http://pytorch.org/docs/stable/torchvision/transforms.html">文档</a>。</p>
+</blockquote>
+<pre><code class="python">rgb_mean = np.array([0.485, 0.456, 0.406])
+rgb_std = np.array([0.229, 0.224, 0.225])
+
+def preprocess(PIL_img, image_shape):
+    process = torchvision.transforms.Compose([
+        torchvision.transforms.Resize(image_shape),
+        torchvision.transforms.ToTensor(),
+        torchvision.transforms.Normalize(mean=rgb_mean, std=rgb_std)])
+
+    return process(PIL_img).unsqueeze(dim = 0) # (batch_size, 3, H, W)
+
+def postprocess(img_tensor):
+    inv_normalize = torchvision.transforms.Normalize(
+        mean= -rgb_mean / rgb_std,
+        std= 1/rgb_std)
+    to_PIL_image = torchvision.transforms.ToPILImage()
+    return to_PIL_image(inv_normalize(img_tensor[0].cpu()).clamp(0, 1))
+</code></pre>
+
+<h2>9.11.4 抽取特征</h2>
+<p>我们使用基于ImageNet数据集预训练的VGG-19模型来抽取图像特征 [1]。</p>
+<blockquote>
+<p>PyTorch官方在<code>torchvision.models</code>模块提供了一些常见的预训练好的计算机视觉模型，包括图片分类、语义分割、目标检测、实例分割、人关键点检测和视频分类等等。使用时要仔细阅读其<a href="https://pytorch.org/docs/stable/torchvision/models.html">文档</a>，搞清楚如何使用，例如刚刚提到的对图片进行标准化等。</p>
+</blockquote>
+<pre><code class="python">pretrained_net = torchvision.models.vgg19(pretrained=True, progress=True)
+</code></pre>
+
+<blockquote>
+<p>第一次执行上述代码会把预训练好的模型参数下载到环境变量<code>TORCH_HOME</code>指定的位置，如果没有该环境变量的话默认位置是<code>.cache/torch</code>。</p>
+</blockquote>
+<p>为了抽取图像的内容特征和样式特征，我们可以选择VGG网络中某些层的输出。一般来说，越靠近输入层的输出越容易抽取图像的细节信息，反之则越容易抽取图像的全局信息。为了避免合成图像过多保留内容图像的细节，我们选择VGG较靠近输出的层，也称内容层，来输出图像的内容特征。我们还从VGG中选择不同层的输出来匹配局部和全局的样式，这些层也叫样式层。在5.7节（使用重复元素的网络（VGG））中我们曾介绍过，VGG网络使用了5个卷积块。实验中，我们选择第四卷积块的最后一个卷积层作为内容层，以及每个卷积块的第一个卷积层作为样式层。这些层的索引可以通过打印<code>pretrained_net</code>实例来获取。</p>
+<pre><code class="python">pretrained_net
+</code></pre>
+
+<p>输出:</p>
+<pre><code>VGG(
+  (features): Sequential(
+    (0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU(inplace)
+    (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (3): ReLU(inplace)
+    (4): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (5): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (6): ReLU(inplace)
+    (7): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (8): ReLU(inplace)
+    (9): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (10): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (11): ReLU(inplace)
+    (12): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (13): ReLU(inplace)
+    (14): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (15): ReLU(inplace)
+    (16): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (17): ReLU(inplace)
+    (18): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (19): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (20): ReLU(inplace)
+    (21): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (22): ReLU(inplace)
+    (23): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (24): ReLU(inplace)
+    (25): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (26): ReLU(inplace)
+    (27): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (28): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (29): ReLU(inplace)
+    (30): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (31): ReLU(inplace)
+    (32): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (33): ReLU(inplace)
+    (34): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (35): ReLU(inplace)
+    (36): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  )
+  (avgpool): AdaptiveAvgPool2d(output_size=(7, 7))
+  (classifier): Sequential(
+    (0): Linear(in_features=25088, out_features=4096, bias=True)
+    (1): ReLU(inplace)
+    (2): Dropout(p=0.5)
+    (3): Linear(in_features=4096, out_features=4096, bias=True)
+    (4): ReLU(inplace)
+    (5): Dropout(p=0.5)
+    (6): Linear(in_features=4096, out_features=1000, bias=True)
+  )
+)
+
+</code></pre>
+
+<pre><code class="python">style_layers, content_layers = [0, 5, 10, 19, 28], [25]
+</code></pre>
+
+<p>在抽取特征时，我们只需要用到VGG从输入层到最靠近输出层的内容层或样式层之间的所有层。下面构建一个新的网络<code>net</code>，它只保留需要用到的VGG的所有层。我们将使用<code>net</code>来抽取特征。</p>
+<pre><code class="python">net_list = []
+for i in range(max(content_layers + style_layers) + 1):
+    net_list.append(pretrained_net.features[i])
+net = torch.nn.Sequential(*net_list)
+</code></pre>
+
+<p>给定输入<code>X</code>，如果简单调用前向计算<code>net(X)</code>，只能获得最后一层的输出。由于我们还需要中间层的输出，因此这里我们逐层计算，并保留内容层和样式层的输出。</p>
+<pre><code class="python">def extract_features(X, content_layers, style_layers):
+    contents = []
+    styles = []
+    for i in range(len(net)):
+        X = net[i](X)
+        if i in style_layers:
+            styles.append(X)
+        if i in content_layers:
+            contents.append(X)
+    return contents, styles
+</code></pre>
+
+<p>下面定义两个函数，其中<code>get_contents</code>函数对内容图像抽取内容特征，而<code>get_styles</code>函数则对样式图像抽取样式特征。因为在训练时无须改变预训练的VGG的模型参数，所以我们可以在训练开始之前就提取出内容图像的内容特征，以及样式图像的样式特征。由于合成图像是样式迁移所需迭代的模型参数，我们只能在训练过程中通过调用<code>extract_features</code>函数来抽取合成图像的内容特征和样式特征。</p>
+<pre><code class="python">def get_contents(image_shape, device):
+    content_X = preprocess(content_img, image_shape).to(device)
+    contents_Y, _ = extract_features(content_X, content_layers, style_layers)
+    return content_X, contents_Y
+
+def get_styles(image_shape, device):
+    style_X = preprocess(style_img, image_shape).to(device)
+    _, styles_Y = extract_features(style_X, content_layers, style_layers)
+    return style_X, styles_Y
+</code></pre>
+
+<h2>9.11.5 定义损失函数</h2>
+<p>下面我们来描述样式迁移的损失函数。它由内容损失、样式损失和总变差损失3部分组成。</p>
+<h3>9.11.5.1 内容损失</h3>
+<p>与线性回归中的损失函数类似，内容损失通过平方误差函数衡量合成图像与内容图像在内容特征上的差异。平方误差函数的两个输入均为<code>extract_features</code>函数计算所得到的内容层的输出。</p>
+<pre><code class="python">def content_loss(Y_hat, Y):
+    return F.mse_loss(Y_hat, Y)
+</code></pre>
+
+<h3>9.11.5.2 样式损失</h3>
+<p>样式损失也一样通过平方误差函数衡量合成图像与样式图像在样式上的差异。为了表达样式层输出的样式，我们先通过<code>extract_features</code>函数计算样式层的输出。假设该输出的样本数为1，通道数为$c$，高和宽分别为$h$和$w$，我们可以把输出变换成$c$行$hw$列的矩阵$\boldsymbol{X}$。矩阵$\boldsymbol{X}$可以看作是由$c$个长度为$hw$的向量$\boldsymbol{x}<em>1, \ldots, \boldsymbol{x}_c$组成的。其中向量$\boldsymbol{x}_i$代表了通道$i$上的样式特征。这些向量的格拉姆矩阵（Gram matrix）$\boldsymbol{X}\boldsymbol{X}^\top \in \mathbb{R}^{c \times c}$中$i$行$j$列的元素$x</em>{ij}$即向量$\boldsymbol{x}_i$与$\boldsymbol{x}_j$的内积，它表达了通道$i$和通道$j$上样式特征的相关性。我们用这样的格拉姆矩阵表达样式层输出的样式。需要注意的是，当$hw$的值较大时，格拉姆矩阵中的元素容易出现较大的值。此外，格拉姆矩阵的高和宽皆为通道数$c$。为了让样式损失不受这些值的大小影响，下面定义的<code>gram</code>函数将格拉姆矩阵除以了矩阵中元素的个数，即$chw$。</p>
+<pre><code class="python">def gram(X):
+    num_channels, n = X.shape[1], X.shape[2] * X.shape[3]
+    X = X.view(num_channels, n)
+    return torch.matmul(X, X.t()) / (num_channels * n)
+</code></pre>
+
+<p>自然地，样式损失的平方误差函数的两个格拉姆矩阵输入分别基于合成图像与样式图像的样式层输出。这里假设基于样式图像的格拉姆矩阵<code>gram_Y</code>已经预先计算好了。</p>
+<pre><code class="python">def style_loss(Y_hat, gram_Y):
+    return F.mse_loss(gram(Y_hat), gram_Y)
+</code></pre>
+
+<h3>9.11.5.3 总变差损失</h3>
+<p>有时候，我们学到的合成图像里面有大量高频噪点，即有特别亮或者特别暗的颗粒像素。一种常用的降噪方法是总变差降噪（total variation denoising）。假设$x_{i,j}$表示坐标为$(i,j)$的像素值，降低总变差损失</p>
+<p>$$\sum_{i,j} \left|x_{i,j} - x_{i+1,j}\right| + \left|x_{i,j} - x_{i,j+1}\right|$$</p>
+<p>能够尽可能使邻近的像素值相似。</p>
+<pre><code class="python">def tv_loss(Y_hat):
+    return 0.5 * (F.l1_loss(Y_hat[:, :, 1:, :], Y_hat[:, :, :-1, :]) + 
+                  F.l1_loss(Y_hat[:, :, :, 1:], Y_hat[:, :, :, :-1]))
+</code></pre>
+
+<h3>9.11.5.4 损失函数</h3>
+<p>样式迁移的损失函数即内容损失、样式损失和总变差损失的加权和。通过调节这些权值超参数，我们可以权衡合成图像在保留内容、迁移样式以及降噪三方面的相对重要性。</p>
+<pre><code class="python">content_weight, style_weight, tv_weight = 1, 1e3, 10
+
+def compute_loss(X, contents_Y_hat, styles_Y_hat, contents_Y, styles_Y_gram):
+    # 分别计算内容损失、样式损失和总变差损失
+    contents_l = [content_loss(Y_hat, Y) * content_weight for Y_hat, Y in zip(
+        contents_Y_hat, contents_Y)]
+    styles_l = [style_loss(Y_hat, Y) * style_weight for Y_hat, Y in zip(
+        styles_Y_hat, styles_Y_gram)]
+    tv_l = tv_loss(X) * tv_weight
+    # 对所有损失求和
+    l = sum(styles_l) + sum(contents_l) + tv_l
+    return contents_l, styles_l, tv_l, l
+</code></pre>
+
+<h2>9.11.6 创建和初始化合成图像</h2>
+<p>在样式迁移中，合成图像是唯一需要更新的变量。因此，我们可以定义一个简单的模型<code>GeneratedImage</code>，并将合成图像视为模型参数。模型的前向计算只需返回模型参数即可。</p>
+<pre><code class="python">class GeneratedImage(torch.nn.Module):
+    def __init__(self, img_shape):
+        super(GeneratedImage, self).__init__()
+        self.weight = torch.nn.Parameter(torch.rand(*img_shape))
+
+    def forward(self):
+        return self.weight
+</code></pre>
+
+<p>下面，我们定义<code>get_inits</code>函数。该函数创建了合成图像的模型实例，并将其初始化为图像<code>X</code>。样式图像在各个样式层的格拉姆矩阵<code>styles_Y_gram</code>将在训练前预先计算好。</p>
+<pre><code class="python">def get_inits(X, device, lr, styles_Y):
+    gen_img = GeneratedImage(X.shape).to(device)
+    gen_img.weight.data = X.data
+    optimizer = torch.optim.Adam(gen_img.parameters(), lr=lr)
+    styles_Y_gram = [gram(Y) for Y in styles_Y]
+    return gen_img(), styles_Y_gram, optimizer
+</code></pre>
+
+<h2>9.11.7 训练</h2>
+<p>在训练模型时，我们不断抽取合成图像的内容特征和样式特征，并计算损失函数。</p>
+<pre><code class="python">def train(X, contents_Y, styles_Y, device, lr, max_epochs, lr_decay_epoch):
+    print(&quot;training on &quot;, device)
+    X, styles_Y_gram, optimizer = get_inits(X, device, lr, styles_Y)
+    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, lr_decay_epoch, gamma=0.1)
+    for i in range(max_epochs):
+        start = time.time()
+
+        contents_Y_hat, styles_Y_hat = extract_features(
+                X, content_layers, style_layers)
+        contents_l, styles_l, tv_l, l = compute_loss(
+                X, contents_Y_hat, styles_Y_hat, contents_Y, styles_Y_gram)
+
+        optimizer.zero_grad()
+        l.backward(retain_graph = True)
+        optimizer.step()
+        scheduler.step()
+
+        if i % 50 == 0 and i != 0:
+            print('epoch %3d, content loss %.2f, style loss %.2f, '
+                  'TV loss %.2f, %.2f sec'
+                  % (i, sum(contents_l).item(), sum(styles_l).item(), tv_l.item(),
+                     time.time() - start))
+    return X.detach()
+</code></pre>
+
+<p>下面我们开始训练模型。首先将内容图像和样式图像的高和宽分别调整为150和225像素。合成图像将由内容图像来初始化。</p>
+<pre><code class="python">image_shape =  (150, 225)
+net = net.to(device)
+content_X, contents_Y = get_contents(image_shape, device)
+style_X, styles_Y = get_styles(image_shape, device)
+output = train(content_X, contents_Y, styles_Y, device, 0.01, 500, 200)
+</code></pre>
+
+<p>输出：</p>
+<pre><code>
+training on  cuda
+epoch  50, content loss 0.24, style loss 1.11, TV loss 1.33, 0.07 sec
+epoch 100, content loss 0.24, style loss 0.81, TV loss 1.20, 0.07 sec
+epoch 150, content loss 0.24, style loss 0.72, TV loss 1.12, 0.07 sec
+epoch 200, content loss 0.24, style loss 0.68, TV loss 1.06, 0.07 sec
+epoch 250, content loss 0.23, style loss 0.68, TV loss 1.05, 0.07 sec
+epoch 300, content loss 0.23, style loss 0.67, TV loss 1.04, 0.07 sec
+epoch 350, content loss 0.23, style loss 0.67, TV loss 1.04, 0.07 sec
+epoch 400, content loss 0.23, style loss 0.67, TV loss 1.03, 0.07 sec
+epoch 450, content loss 0.23, style loss 0.67, TV loss 1.03, 0.07 sec
+</code></pre>
+
+<p>下面我们查看一下训练好的合成图像。可以看到图9.14中的合成图像保留了内容图像的风景和物体，并同时迁移了样式图像的色彩。因为图像尺寸较小，所以细节上依然比较模糊。</p>
+<pre><code class="python">d2l.plt.imshow(postprocess(output));
+</code></pre>
+
+<div align=center>
+<img width="400" src="../img/chapter09/9.11_output3.png"/>
+</div>
+
+<div align=center>图9.14 150X225 尺寸的合成图像</div>
+
+<p>为了得到更加清晰的合成图像，下面我们在更大的$300 \times 450$尺寸上训练。我们将图9.14的高和宽放大2倍，以初始化更大尺寸的合成图像。</p>
+<pre><code class="python">image_shape = (300, 450)
+_, content_Y = get_contents(image_shape, device)
+_, style_Y = get_styles(image_shape, device)
+X = preprocess(postprocess(output), image_shape).to(device)
+big_output = train(X, content_Y, style_Y, device, 0.01, 500, 200)
+</code></pre>
+
+<p>输出:</p>
+<pre><code>
+training on  cuda
+epoch  50, content loss 0.34, style loss 0.63, TV loss 0.79, 0.18 sec
+epoch 100, content loss 0.30, style loss 0.50, TV loss 0.74, 0.18 sec
+epoch 150, content loss 0.29, style loss 0.46, TV loss 0.72, 0.18 sec
+epoch 200, content loss 0.28, style loss 0.43, TV loss 0.70, 0.18 sec
+epoch 250, content loss 0.28, style loss 0.43, TV loss 0.69, 0.18 sec
+epoch 300, content loss 0.27, style loss 0.42, TV loss 0.69, 0.18 sec
+epoch 350, content loss 0.27, style loss 0.42, TV loss 0.69, 0.18 sec
+epoch 400, content loss 0.27, style loss 0.42, TV loss 0.69, 0.18 sec
+epoch 450, content loss 0.27, style loss 0.42, TV loss 0.69, 0.18 sec
+</code></pre>
+
+<p>可以看到，由于图像尺寸更大，每一次迭代需要花费更多的时间。下面我们查看一下训练好的合成图像。</p>
+<pre><code class="python">d2l.set_figsize((7, 5))
+d2l.plt.imshow(postprocess(big_output));
+</code></pre>
+
+<div align=center>
+<img width="600" src="../img/chapter09/9.11_output4.png"/>
+</div>
+
+<div align=center>图9.15 300X450 尺寸的合成图像</div>
+
+<p>从训练得到的图9.15中可以看到，此时的合成图像因为尺寸更大，所以保留了更多的细节。合成图像里面不仅有大块的类似样式图像的油画色彩块，色彩块中甚至出现了细微的纹理。</p>
+<h2>小结</h2>
+<ul>
+<li>样式迁移常用的损失函数由3部分组成：内容损失使合成图像与内容图像在内容特征上接近，样式损失令合成图像与样式图像在样式特征上接近，而总变差损失则有助于减少合成图像中的噪点。</li>
+<li>可以通过预训练的卷积神经网络来抽取图像的特征，并通过最小化损失函数来不断更新合成图像。</li>
+<li>用格拉姆矩阵表达样式层输出的样式。</li>
+</ul>
+<h2>练习</h2>
+<ul>
+<li>选择不同的内容和样式层，输出有什么变化？</li>
+<li>调整损失函数中的权值超参数，输出是否保留更多内容或减少更多噪点？</li>
+<li>替换实验中的内容图像和样式图像，你能创作出更有趣的合成图像吗？</li>
+</ul>
+<h2>参考文献</h2>
+<p>[1] Gatys, L. A., Ecker, A. S., &amp; Bethge, M. (2016). Image style transfer using convolutional neural networks. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (pp. 2414-2423).</p>
+<hr />
+<blockquote>
+<p>注：除代码外本节与原书基本相同，<a href="http://zh.d2l.ai/chapter_computer-vision/neural-style.html">原书传送门</a></p>
+</blockquote>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

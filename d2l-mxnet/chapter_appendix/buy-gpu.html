@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>GPU购买指南 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>GPU购买指南</h1>
+<p>深度学习训练通常需要大量的计算资源。GPU目前是深度学习最常使用的计算加速硬件。相对于CPU来说，GPU更便宜且计算更加密集。一方面，相同计算能力的GPU的价格一般是CPU价格的十分之一；另一方面，一台服务器通常可以搭载8块或者16块GPU。因此，GPU数量可以看作是衡量一台服务器的深度学习计算能力的一个指标。</p>
+<h2>选择GPU</h2>
+<p>目前独立显卡主要有AMD和NVIDIA两家厂商。其中NVIDIA在深度学习布局较早，对深度学习框架支持更好。因此，目前大家主要会选择NVIDIA的GPU。</p>
+<p>NVIDIA有面向个人用户（如GTX系列）和企业用户（如Tesla系列）的两类GPU。这两类GPU的计算能力相当。然而，面向企业用户的GPU通常使用被动散热并增加了显存校验，从而更适合数据中心，并通常要比面向个人用户的GPU贵上10倍。</p>
+<p>如果是拥有100台机器以上的大公司用户，通常可以考虑针对企业用户的NVIDIA Tesla系列。如果是拥有10~100台机器的实验室和中小公司用户，预算充足的情况下可以考虑NVIDIA DGX系列，否则可以考虑购买如Supermicro之类的性价比比较高的服务器，然后再购买安装GTX系列的GPU。</p>
+<p>NVIDIA一般每一两年发布一次新版本的GPU，例如2016年发布的GTX 1000系列以及2018年发布的RTX 2000系列。每个系列中会有数个不同的型号，分别对应不同的性能。</p>
+<p>GPU的性能主要由以下3个参数构成：</p>
+<ol>
+<li>计算能力。通常我们关心的是32位浮点计算能力。16位浮点训练也开始流行，如果只做预测的话也可以用8位整数。</li>
+<li>显存大小。当模型越大或者训练时的批量越大时，所需要的显存就越多。</li>
+<li>显存带宽。只有当显存带宽足够时才能充分发挥计算能力。</li>
+</ol>
+<p>对大部分用户来说，只要考虑计算能力就可以了。显存尽量不小于4 GB。但如果GPU要同时显示图形界面，那么推荐的显存大小至少为6 GB。显存带宽通常相对固定，选择空间较小。</p>
+<p>图11.19描绘了GTX 900和GTX 1000系列里各个型号的32位浮点计算能力和价格的对比（其中的价格为Wikipedia的建议价格）。</p>
+<p><img alt="浮点计算能力和价格的对比" src="../img/gtx.png" /></p>
+<p>我们可以从图11.19中读出以下两点信息：</p>
+<ol>
+<li>在同一个系列里面，价格和性能大体上成正比。但后发布的型号性价比更高，如980 Ti和1080 Ti。</li>
+<li>GTX 1000系列比900系列在性价比上高出2倍左右。</li>
+</ol>
+<p>如果大家继续比较NVIDIA的一些其他系列，也可以发现类似的规律。据此，我们推荐大家在能力范围内尽可能买较新的GPU。</p>
+<h2>整机配置</h2>
+<p>通常，我们主要用GPU做深度学习训练。因此，不需要购买高端的CPU。至于整机配置，尽量参考网上推荐的中高档的配置就好。不过，考虑到GPU的功耗、散热和体积，在整机配置上也需要考虑以下3个额外因素：</p>
+<ol>
+<li>机箱体积。显卡尺寸较大，通常考虑较大且自带风扇的机箱。</li>
+<li>电源。购买GPU时需要查一下GPU的功耗，如50 W到300 W不等。购买电源要确保功率足够，且不会造成机房供电过载。</li>
+<li>主板的PCIe卡槽。推荐使用PCIe 3.0 16x来保证充足的GPU到内存的带宽。如果搭载多块GPU，要仔细阅读主板说明，以确保多块GPU一起使用时仍然是16倍带宽。注意，有些主板搭载4块GPU时会降到8倍甚至4倍带宽。</li>
+</ol>
+<h2>小结</h2>
+<ul>
+<li>在预算范围内，尽可能买较新的GPU。</li>
+<li>整机配置需要考虑到GPU的功耗、散热和体积。</li>
+</ul>
+<h2>练习</h2>
+<ul>
+<li>浏览本附录讨论区中大家有关机器配置方面的交流。</li>
+</ul>
+<h2>扫码直达<a href="https://discuss.gluon.ai/t/topic/1177">讨论区</a></h2>
+<p><img alt="" src="../img/qr_buy-gpu.svg" /></p>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>NumPy 切片和索引(slice and index) - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  <li><a href="./index.html"> 如何学习本课程</a></li>
+<li><a href="./intro.html"> NumPy简介</a></li>
+<li><a href="./setup.html"> NumPy安装</a></li>
+<li><a href="./datatype.html"> NumPy数据类型</a></li>
+<li><a href="./ndarray.html"> NumPyNDArray</a></li>
+<li><a href="./ndarray-creation.html"> NumPy创建NDArray</a></li>
+<li><a href="./ndarray-property.html"> NumPyNDArray属性</a></li>
+<li><a href="./ndarray-operation.html"> NumPy操作NDArray</a></li>
+<li><a href="./slice-index.html"> NumPy切片和索引</a></li>
+<li><a href="./advance-index.html"> NumPy高级索引</a></li>
+<li><a href="./broadcast.html"> NumPy广播</a></li>
+<li><a href="./bit-operation.html"> NumPy位运算</a></li>
+<li><a href="./math.html"> NumPy数学函数</a></li>
+<li><a href="./arithmetic.html"> NumPy算术函数</a></li>
+<li><a href="./statistics.html"> NumPy统计函数</a></li>
+<li><a href="./sort.html"> NumPy排序</a></li>
+<li><a href="./statistics.html"> NumPy统计函数</a></li>
+<li><a href="./linalg.html"> NumPy线性代数</a></li>
+<li><a href="./matrix.html"> NumPy矩阵</a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>NumPy 切片和索引(slice and index)</h1>
+<p>ndarray对象的内容可以通过索引或切片来访问和修改，与 Python 中 list 的切片操作一样。</p>
+<p>ndarray 数组可以基于 0 - n 的下标进行索引，切片对象可以通过内置的 slice 函数，并设置 start, stop 及 step 参数进行，从原数组中切割出一个新数组。</p>
+<h4>练习</h4>
+<pre><code class="python">import numpy as np  
+a = np.arange(10) 
+
+# 从索引 2 开始到索引 7 停止，间隔为2 
+s = slice(2,7,2)   
+a[s]
+</code></pre>
+
+<p>以上实例中，我们首先通过 arange() 函数创建 ndarray 对象。 然后，分别设置起始，终止和步长的参数为 2，7 和 2。</p>
+<p>我们也可以通过冒号分隔切片参数 <strong>start:stop:step</strong> 来进行切片操作：</p>
+<h4>练习</h4>
+<pre><code class="python">import numpy as np
+a = np.arange(10)
+
+# 从索引 2 开始到索引 7 停止，间隔为 2
+b = a[2:7:2]   
+b
+</code></pre>
+
+<p>冒号 <strong>:</strong> 的解释：如果只放置一个参数，如 <strong>[2]</strong>，将返回与该索引相对应的单个元素。如果为 <strong>[2:]</strong>，表示从该索引开始以后的所有项都将被提取。如果使用了两个参数，如 <strong>[2:7]</strong>，那么则提取两个索引(不包括停止索引)之间的项。</p>
+<h4>练习</h4>
+<pre><code class="python">import numpy as np  
+a = np.arange(10)  # [0 1 2 3 4 5 6 7 8 9] 
+b = a[5]
+b
+</code></pre>
+
+<h4>练习</h4>
+<pre><code class="python">import numpy as np  
+a = np.arange(10) 
+print(a[2:])
+</code></pre>
+
+<h4>练习</h4>
+<pre><code class="python">import numpy as np  
+a = np.arange(10)  # [0 1 2 3 4 5 6 7 8 9] 
+print(a[2:5])
+</code></pre>
+
+<p>多维数组同样适用上述索引提取方法：</p>
+<h4>练习</h4>
+<pre><code class="python">import numpy as np  
+a = np.array([[1,2,3],[3,4,5],[4,5,6]]) 
+print(a) 
+
+# 从某个索引处开始切割
+print('从数组索引 a[1:] 处开始切割') 
+print(a[1:])
+</code></pre>
+
+<p>切片还可以包括省略号 <strong>…</strong>，来使选择元组的长度与数组的维度相同。 如果在行位置使用省略号，它将返回包含行中元素的 ndarray。</p>
+<h4>练习</h4>
+<pre><code class="python">import numpy as np  
+a = np.array([[1,2,3],[3,4,5],[4,5,6]])   
+
+# 第2列元素
+print(a[...,1])   
+
+# 第2行元素 
+print(a[1,...])
+
+# 第2列及剩下的所有元素
+print(a[...,1:])  
+</code></pre>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

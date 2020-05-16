@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>Scipy 常量 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  <li><a href="./index.html"> 如何学习本课程 </a></li>
+<li><a href="./intro.html"> SciPy 简介 </a></li>
+<li><a href="./setup.html"> SciPy 安装 </a></li>
+<li><a href="./basic.html"> SciPy 基本功能 </a></li>
+<li><a href="./cluster.html"> SciPy 簇聚 </a></li>
+<li><a href="./constant.html"> Scipy 常量 </a></li>
+<li><a href="./fftpack.html"> Scipy 快速傅立叶变换 </a></li>
+<li><a href="./integrate.html"> SciPy 积分 </a></li>
+<li><a href="./interpolate.html"> SciPy 插值 </a></li>
+<li><a href="./io.html"> SciPy 输入和输出 </a></li>
+<li><a href="./linalg.html"> SciPy 线性代数 </a></li>
+<li><a href="./ndimage.html"> SciPy 图像处理 </a></li>
+<li><a href="./optimize.html"> SciPy 优化算法 </a></li>
+<li><a href="./stats.html"> SciPy 统计函数 </a></li>
+<li><a href="./spatial.html"> SciPy 空间度量 </a></li>
+<li><a href="./odr.html"> SciPy 正交距离回归 </a></li>
+<li><a href="./special.html"> SciPy 特殊包 </a>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>Scipy 常量</h1>
+<p>SciPy常量(<code>constant</code>)包提供了广泛的常量，用于一般科学领域。</p>
+<h2>SciPy常量包</h2>
+<p><code>scipy.constants</code>包提供了各种常量。必须导入所需的常量并根据需要来使用它们。下面看看这些常量变量是如何导入和使用的。</p>
+<p>首先，通过下面的例子来比较<code>'pi'</code>值。</p>
+<pre><code class="python">#Import pi constant from both the packages
+from scipy import constants
+import math
+
+
+print(&quot;scipy - pi = %.16f&quot;%constants.pi)
+print(&quot;math - pi = %.16f&quot;%math.pi)
+</code></pre>
+
+<h2>可用的常量列表</h2>
+<p>下表简要介绍了各种常数(常量)。</p>
+<p><strong>数学常量</strong></p>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>常量</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>pi</code></td>
+<td>PI值</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>golden</code></td>
+<td>黄金比例</td>
+</tr>
+</tbody>
+</table>
+<p><strong>物理常量</strong></p>
+<p>下表列出了最常用的物理常量。</p>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>常量</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>c</code></td>
+<td>真空中的光速</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>speed_of_light</code></td>
+<td>真空中的光速</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>h</code></td>
+<td>普朗克常数</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>Planck</code></td>
+<td>普朗克常数<code>h</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>G</code></td>
+<td>牛顿的引力常数</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>e</code></td>
+<td>基本电荷</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>R</code></td>
+<td>摩尔气体常数</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>Avogadro</code></td>
+<td>阿伏加德罗常数</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>k</code></td>
+<td>波尔兹曼常数</td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>electron_mass</code>或者 <code>m_e</code></td>
+<td>电子质量</td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>proton_mass</code>或者<code>m_p</code></td>
+<td>质子质量</td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>neutron_mass</code>或<code>m_n</code></td>
+<td>中子质量</td>
+</tr>
+</tbody>
+</table>
+<p><strong>单位</strong></p>
+<p>下表列出了SI单位。</p>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>单位</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>milli</code></td>
+<td>0.001</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>micro</code></td>
+<td>1e-06</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>kilo</code></td>
+<td>1000</td>
+</tr>
+</tbody>
+</table>
+<p>这些单位范围从<code>yotta</code>，<code>zetta</code>，<code>exa</code>，<code>peta</code>，<code>tera ...... kilo</code>，<code>hector</code>，<code>... nano</code>，<code>pico</code>，<code>...</code>到<code>zepto</code>。</p>
+<p><strong>其他重要常量</strong></p>
+<p>下表列出了SciPy中使用的其他重要常量。</p>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>单位</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>gram</code></td>
+<td>0.001 kg</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>atomic_mass</code></td>
+<td>原子质量常数</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>degree</code></td>
+<td>弧度</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>minute</code></td>
+<td>一分钟秒数(60)</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>day</code></td>
+<td>一天的秒数</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>inch</code></td>
+<td>一米的英寸数</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>micron</code></td>
+<td>一米的微米数</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>light_year</code></td>
+<td>一光年的米数</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>atm</code></td>
+<td>帕斯卡标准大气压</td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>acre</code></td>
+<td>一平方米的英亩数</td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>liter</code></td>
+<td>一立方米的升数</td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>gallon</code></td>
+<td>一立方米的加仑数</td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>kmh</code></td>
+<td>公里每小时，以米/秒为单位</td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>degree_fahrenheit</code></td>
+<td>一凯尔文的华氏数</td>
+</tr>
+<tr>
+<td>15</td>
+<td><code>eV</code></td>
+<td>一焦耳的电子伏特数</td>
+</tr>
+<tr>
+<td>16</td>
+<td><code>hp</code></td>
+<td>一瓦特的马力数</td>
+</tr>
+<tr>
+<td>17</td>
+<td><code>dyn</code></td>
+<td>一牛顿的达因数</td>
+</tr>
+<tr>
+<td>18</td>
+<td><code>lambda2nu</code></td>
+<td>将波长转换为光频率</td>
+</tr>
+</tbody>
+</table>
+<p>要记住所有这些都有点困难。可使用<code>scipy.constants.find()</code>方法获取指定键的简单方法。 看看下面的例子。</p>
+<pre><code class="python">import scipy.constants
+res = scipy.constants.physical_constants[&quot;alpha particle mass&quot;]
+print(res)
+</code></pre>
+
+<p><code class=gatsby-kernelname data-language=python></code></p>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

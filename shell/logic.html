@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+    <link href="/static/xterm/xterm.css" rel="stylesheet" type="text/css"/>
+
+    <link href="/static/css/docs.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css"/>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" id="font-awesome-css" href="https://cdn.freeaihub.com/asset/css/font-awesome.min.4.2.0.css" type="text/css" media="all">
+    <link rel="stylesheet" id="google-code-prettify-css" href="https://cdn.freeaihub.com/asset/css/prettify-2.1.css?ver=2.1
+" type="text/css" media="all">
+
+    <title>Shell 条件语句 - FreeAIHub</title>
+  
+    <style>
+
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+        flex: 1;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: calc(100vh - 96px);
+      }
+      .xterm-wrapper{
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      .entry-content {
+          word-break: break-word;
+          height: calc(100vh - 60px);
+          overflow-y: scroll;
+          padding: 30px;
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light">
+
+        <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar text-center">
+      <a class="navbar-brand mr-0 mr-md-2" aria-label="引导程序" href="/">
+        <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+      </a>
+      <ul class="navbar-nav ml-md-auto">
+        <li class="nav-item">
+          <a href="/" class="nav-link pl-2 pr-1 mx-1 py-3 my-n2">首页</a>
+        </li>
+        <li class="nav-item">
+          <a href="/" class="nav-link pl-2 pr-1 mx-1 py-3 my-n2">课程页面</a>
+        </li>
+      </ul>
+    </header>
+
+
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-3 col-xl-2 bd-sidebar">    
+            <form class="bd-search d-flex align-items-center justify-content-end">
+              <button class="btn bd-search-docs-toggle d-md-none p-0 ml-3 collapsed" type="button" data-toggle="collapse" data-target="#bd-docs-nav" aria-controls="bd-docs-nav" aria-expanded="false" aria-label="切换文档导航">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" role="img" focusable="false"><title>Menu</title><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg>
+              </button>
+            </form>
+            <div class="bd-links collapse" id="bd-docs-nav" aria-label="主导航">
+              <div class="bd-toc-item active">
+                <a class="bd-toc-link" href="#">如何学习本课程</a>
+                <ul class="nav bd-sidenav">
+                  <li class="active bd-sidenav-active"><a href="./intro.html"> 简介 </a></li>
+                  <li><a href="./index.html"> 如何学习本课程 </a></li>
+<li><a href="./intro.html"> Shell 简介 </a></li>
+<li><a href="./setup.html"> Shell 安装环境 </a></li>
+<li><a href="./variable.html"> Shell 变量 </a></li>
+<li><a href="./variable-special.html"> Shell 特殊变量 </a></li>
+<li><a href="./array.html"> Shell 数组 </a></li>
+<li><a href="./operator.html"> Shell 运算符 </a></li>
+<li><a href="./logic.html"> Shell 逻辑控制 </a></li>
+<li><a href="./loop.html"> Shell 循环 </a></li>
+<li><a href="./loopcontrol.html"> Shell 循环控制 </a></li>
+<li><a href="./loop-while.html"> Shell 循环-while </a></li>
+<li><a href="./loop-for.html"> Shell 循环-for </a></li>
+<li><a href="./loop-until.html"> Shell 循环-until </a></li>
+<li><a href="./loop-select.html"> Shell 循环-select </a></li>
+<li><a href="./function.html"> Shell 函数 </a></li>
+<li><a href="./quoting.html"> Shell 引用 </a></li>
+<li><a href="./substitution.html"> Shell 替换 </a></li>
+<li><a href="./io-redirection.html"> Shell 输入输出重定向 </a></li>
+                </ul>
+
+              </div>
+
+
+          </div>
+          </div>
+          <div class="entry-content col-md-9 col-xl-5 py-md-3 pl-md-5 bd-content">
+              
+          <h1>Shell 条件语句</h1>
+<p>在编写shell脚本，有可能是一种情况，当你需要采取一个路径两条路径。所以，需要利用条件语句，让程序作出正确的决策和执行正确的动作。</p>
+<p>UNIX Shell支持条件语句，从而根据不同的条件下执行不同的操作。在这里，我们将解释以下两个逻辑条件语句：</p>
+<ul>
+<li>if...else 语句</li>
+<li>case...esac 条件语句</li>
+</ul>
+<h2>if...else 语句:</h2>
+<p>if else语句是有用的决策语句，可以用来从一个给定的选项中选择一个选项。</p>
+<p>UNIX Shell支持以下形式的if.. else语句：</p>
+<p>大部分的 if 语句检查前面的章节中讨论的关系运算符的关系。</p>
+<h3>if...fi语句</h3>
+<p>if...fi 语句的基本控制语句，它允许Shell有条件作出决定并执行语句。</p>
+<h4>语法</h4>
+<pre><code class="shell">if [ expression ]
+then
+   Statement(s) to be executed if expression is true
+fi
+</code></pre>
+
+<p>Shell expression求值。如果结果值是true，给定statement被执行。如果 expression 为false ，则没有语句将不会被执行。大部分的时候，会使用比较操作符决策。</p>
+<p>关注对括号和表达之间的空间。这个空间是强制性的，否则语法错误。</p>
+<p>如果expression 是一个shell命令，那么它会被假定如此，如果它执行后返回0。如果它是一个布尔表达式，那么返回true。</p>
+<h4>示例</h4>
+<p>文件名:iffi.sh</p>
+<pre><code class="shell">#!/bin/sh
+
+a=10
+b=20
+
+if [ $a == $b ]
+then
+   echo &quot;a is equal to b&quot;
+fi
+
+if [ $a != $b ]
+then
+   echo &quot;a is not equal to b&quot;
+fi
+</code></pre>
+
+<pre><code class="shell">bash /share/lesson/shell/iffi.sh
+</code></pre>
+
+<p>康康</p>
+<h3>if...else...fi 语句</h3>
+<p>if...else...fi 语句是控制语句，它允许下一个表格执行语句 Shell 更可控的方式在两个选择之间作出决定。</p>
+<h4>语法</h4>
+<pre><code class="shell">if [ expression ]
+then
+   Statement(s) to be executed if expression is true
+else
+   Statement(s) to be executed if expression is not true
+fi
+</code></pre>
+
+<p>Shell expression 求值。如果结果值是真实的，给定 statement(s) 被执行。如果表达式为 false，则语句将不会被执行。 </p>
+<h4>例子：</h4>
+<p>文件名:ifelsefi.sh</p>
+<pre><code class="shell">#!/bin/sh
+
+a=10
+b=20
+
+if [ $a == $b ]
+then
+   echo &quot;a is equal to b&quot;
+else
+   echo &quot;a is not equal to b&quot;
+fi
+</code></pre>
+
+<pre><code class="shell">bash /share/lesson/shell/ifelsefi.sh
+</code></pre>
+
+<p>康康</p>
+<h3>if...elif...fi语句</h3>
+<h4>语法</h4>
+<pre><code class="shell">if [ expression 1 ]
+then
+   Statement(s) to be executed if expression 1 is true
+elif [ expression 2 ]
+then
+   Statement(s) to be executed if expression 2 is true
+elif [ expression 3 ]
+then
+   Statement(s) to be executed if expression 3 is true
+else
+   Statement(s) to be executed if no expression is true
+fi
+</code></pre>
+
+<h4>示例:</h4>
+<p>文件名:ifeliffi.sh</p>
+<pre><code class="shell">#!/bin/sh
+
+a=10
+b=20
+
+if [ $a == $b ]
+then
+   echo &quot;a is equal to b&quot;
+elif [ $a -gt $b ]
+then
+   echo &quot;a is greater than b&quot;
+elif [ $a -lt $b ]
+then
+   echo &quot;a is less than b&quot;
+else
+   echo &quot;None of the condition met&quot;
+fi
+</code></pre>
+
+<pre><code class="shell">bash /share/lesson/shell/ifeliffi.sh
+</code></pre>
+
+<p>康康</p>
+<h2>case...esac 语句:</h2>
+<p>if...elif 可以使用多个 elif  语句执行多分支。然而，这并不总是最佳的解决方案，尤其是当所有的分支依赖于一个单一的变量的值。</p>
+<p>UNIX Shell支持  case...esac 语句处理正是由于这个情况，它这样做更有效地比 if... elif 语句。</p>
+<p>目前只有一种形式的情况下，这里详细case...esac 语句：</p>
+<p>UNIX shell 的 case...esac 语句，比较像其他编程语言里的 switch...case ，如C或C + +和Perl等非常相似。</p>
+<p>可以使用多个if...elif 语句执行多分支。然而，这并不总是最佳的解决方案，尤其是当所有的分支依赖于一个单一的变量的值。</p>
+<p>Shell支持 case...esac 语句处理正是这种情况下，它这样做比 if...elif 语句更有效。</p>
+<h4>语法</h4>
+<p>case...esac 语句基本语法 是为了给一个表达式计算和几种不同的语句来执行基于表达式的值。</p>
+<p>解释器检查每一种情况下对表达式的值，直到找到一个匹配。如果没有匹配，默认情况下会被使用。</p>
+<pre><code class="shell">case word in
+  pattern1)
+     Statement(s) to be executed if pattern1 matches
+     ;;
+  pattern2)
+     Statement(s) to be executed if pattern2 matches
+     ;;
+  pattern3)
+     Statement(s) to be executed if pattern3 matches
+     ;;
+esac
+</code></pre>
+
+<p>这里的字符串字每个模式进行比较，直到找到一个匹配。执行语句匹配模式。如果没有找到匹配，声明退出的情况下不执行任何动作。</p>
+<p>没有最大数量的模式，但最小是一个。</p>
+<p>当语句部分执行，命令;; 表明程序流程跳转到结束整个 case 语句。和C编程语言的 break 类似。</p>
+<h4>例1：</h4>
+<p>文件名:caseesac.sh</p>
+<pre><code class="shell">#!/bin/sh
+
+FRUIT=&quot;kiwi&quot;
+
+case &quot;$FRUIT&quot; in
+   &quot;apple&quot;) echo &quot;Apple pie is quite tasty.&quot; 
+   ;;
+   &quot;banana&quot;) echo &quot;I like banana nut bread.&quot; 
+   ;;
+   &quot;kiwi&quot;) echo &quot;New Zealand is famous for kiwi.&quot; 
+   ;;
+esac
+</code></pre>
+
+<pre><code class="shell">bash /share/lesson/shell/ifeliffi.sh
+</code></pre>
+
+<p>康康</p>
+<h4>例2：</h4>
+<p>case语句是一个很好用的命令行参数如下计算：</p>
+<p>文件名:easc-parm.sh                    </p>
+<pre><code class="shell">#!/bin/sh
+
+option=&quot;${1}&quot; 
+case ${option} in 
+   -f) FILE=&quot;${2}&quot; 
+      echo &quot;File name is $FILE&quot;
+      ;; 
+   -d) DIR=&quot;${2}&quot; 
+      echo &quot;Dir name is $DIR&quot;
+      ;; 
+   *)  
+      echo &quot;`basename ${0}`:usage: [-f file] | [-d directory]&quot; 
+      exit 1 # Command to come out of the program with status 1
+      ;; 
+esac 
+</code></pre>
+
+<pre><code class="shell">bash /share/lesson/shell/easc-parm.sh -f /etc/passwd
+</code></pre>
+
+<pre><code class="shell">bash /share/lesson/shell/easc-parm.sh -d /var
+</code></pre>
+
+<p>康康</p>
+            
+          </div>
+
+          <div class="d-none d-xl-block col-xl-5 bd-toc xterm-wrapper">
+             <!-- 导航 -->
+            <ul class="nav nav-tabs" id="myTab">
+              <li class="nav-item">
+                <a class="nav-link"  href="#home">Terminal</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="#profile">VNC</a>
+              </li>
+            </ul>
+            <!-- 带显示效果的内容 -->
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="home" >
+                <div id="term-content">
+                  <div id="terminal"></div>
+                </div>
+                 
+              </div>
+			
+            <div class="tab-pane fade position-relative" id="profile">	
+
+              <div id="top_bar">
+                  <div id="status">Loading</div>
+                  <!-- <div id="sendCtrlAltDelButton">Send CtrlAltDel</div> -->
+              </div>
+              <div id="screen">
+                  <!-- This is where the remote screen will appear -->
+              </div>
+			      </div>
+           
+        </div>
+          </div>
+        </div> <!-- / .row -->
+      </div>
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <link rel="stylesheet" id="yarppRelatedCss-css" href="https://cdn.freeaihub.com/asset/css/related.css
+?ver=4.9.14" type="text/css" media="all">
+    <script type='text/javascript' src='https://cdn.freeaihub.com/asset/js/prettify.js?ver=2.1'></script>
+    <script type='text/javascript' src='https://cdn.freeaihub.com/asset/js/power.js?ver=2.1'></script>
+    <script type='text/javascript' src='https://cdn.freeaihub.com/asset/js/wp-embed.min.js?ver=4.9.14'></script>
+    <!-- Theme JS -->
+
+    <script src="/static/js/popper.min.js"></script>
+
+    <script src="/static/xterm/xterm.js"></script>
+    <script src="/static/xterm/xterm-addon-fit.js"></script>
+    <script src="/static/xterm/xterm-addon-attach.js"></script>
+    <!-- Promise polyfill for IE11 -->
+    <script src="/vendor/promise.js"></script>
+        
+    <!-- ES2015/ES6 modules polyfill -->
+    <script nomodule src="/vendor/browser-es-module-loader/dist/browser-es-module-loader.js"></script>
+ 
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+     <script>
+        var terminal; // 终端
+        var sockId;  // 终端 id
+        var socket; // websocket 服务
+
+        const isWindows = ['Windows', 'Win16', 'Win32', 'WinCE'].indexOf(navigator.platform) >= 0;
+        terminal = new Terminal({
+            windowsMode: isWindows,
+            convertEol: true,
+            fontFamily: `'Fira Mono', monospace`,
+            fontSize: 16,
+            fontWeight: 400,
+            rendererType: "canvas" // canvas 或者 dom
+        });
+        const fitAddon = new FitAddon.FitAddon();
+        terminal.loadAddon(fitAddon);
+
+        terminal.open(document.getElementById('terminal'));
+        terminal.element.style.padding = '20px';
+        fitAddon.fit();
+
+        terminal.onData(function(data) {
+            socket.send(JSON.stringify({'data': data}));
+            fitAddon.fit();
+        });
+
+        $.ajax({
+          type: 'get',
+          url: 'https://api.freeaihub.com/api/env/get/webssh',
+          mode: "no-cors",
+          dataType: "json",
+          xhrFields: {
+              withCredentials: true
+          },
+          crossDomain: true,  
+          success: async function(data) {
+            if(data.errno == 0){
+              let { ...json } =  data.data
+              let formdata = new FormData();
+              formdata.append("hostname", json.hostname);
+              formdata.append("username", json.username);
+              formdata.append("port", json.port);
+              formdata.append("password", json.password);
+              formdata.append("term", json.term);
+              let response = await fetch(
+                json.host,
+                  {
+                      method: 'POST',
+                      body: formdata
+                  }
+              )
+
+          
+
+              sockId = await response.json();
+            
+              let socketHost = json.ssh_host +=`/ws?id=${sockId.id}`;
+              console.log(socketHost)
+              socket = new WebSocket(socketHost);
+
+              socket.onopen = () => {
+                terminal.loadAddon(new AttachAddon.AttachAddon(socket));
+                terminal._initialized = true;
+              }
+
+              socket.onmessage= (term) => {
+                if(!terminal._initialized){
+                    return
+                }
+                terminal._initialized = false;
+                socket.send(JSON.stringify({ resize: [term.cols, term.rows] }));
+              }
+
+            }
+
+          }
+        })
+
+     </script> 
+    <script>
+      function randomWord(randomFlag, min, max){
+        let str = "",
+            range = min,
+            arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+    
+        // 随机产生
+        if(randomFlag){
+            range = Math.round(Math.random() * (max-min)) + min;
+        }
+        for(let i=0; i<range; i++){
+            let pos = Math.round(Math.random() * (arr.length-1));
+            str += arr[pos];
+        }
+        return str;
+      }
+
+
+    let uuidCookie = randomWord(false, 16)  
+
+
+    if(Cookies.get('uuid') == null) {
+        Cookies.set('uuid', uuidCookie, { path: '/', domain: '.freeaihub.com'})
+    }
+    </script>
+
+     <!-- actual script modules -->
+    <script type="module" crossorigin="anonymous">
+         // RFB holds the API to connect and communicate with a VNC server
+         import RFB from '/core/rfb.js';
+ 
+         let rfb;
+         let desktopName;
+ 
+         // When this function is called we have
+         // successfully connected to a server
+         function connectedToServer(e) {
+            //  status("Connected to " + desktopName);
+         }
+ 
+         // This function is called when we are disconnected
+         function disconnectedFromServer(e) {
+             if (e.detail.clean) {
+                 status("Disconnected");
+             } else {
+                 status("Something went wrong, connection is closed");
+             }
+         }
+ 
+         // When this function is called, the server requires
+         // credentials to authenticate
+         function credentialsAreRequired(e) {
+             const password = prompt("Password Required:");
+             rfb.sendCredentials({ password: password });
+         }
+ 
+         // When this function is called we have received
+         // a desktop name from the server
+         function updateDesktopName(e) {
+             desktopName = e.detail.name;
+         }
+ 
+         // Since most operating systems will catch Ctrl+Alt+Del
+         // before they get a chance to be intercepted by the browser,
+         // we provide a way to emulate this key sequence.
+         function sendCtrlAltDel() {
+             rfb.sendCtrlAltDel();
+             return false;
+         }
+ 
+         // Show a status text in the top bar
+         function status(text) {
+             document.getElementById('status').textContent = text;
+         }
+ 
+         // This function extracts the value of one variable from the
+         // query string. If the variable isn't defined in the URL
+         // it returns the default value instead.
+         function readQueryVariable(name, defaultValue) {
+             // A URL with a query parameter can look like this:
+             // https://www.example.com?myqueryparam=myvalue
+             //
+             // Note that we use location.href instead of location.search
+             // because Firefox < 53 has a bug w.r.t location.search
+             const re = new RegExp('.*[?&]' + name + '=([^&#]*)'),
+                   match = document.location.href.match(re);
+ 
+             if (match) {
+                 // We have to decode the URL since want the cleartext value
+                 return decodeURIComponent(match[1]);
+             }
+ 
+             return defaultValue;
+         }
+ 
+        //  document.getElementById('sendCtrlAltDelButton')
+        //      .onclick = sendCtrlAltDel;
+         
+        $('#myTab a:first').tab('show');//初始化显示哪个tab 
+      
+        $('#myTab a').click(function (e) { 
+          e.preventDefault();//阻止a链接的跳转行为 
+          $(this).tab('show');//显示当前选中的链接及关联的content 
+        })  
+
+        $('#myTab a[href="#profile"]').on('click', function (e) {
+          $.ajax({
+           type: 'get',
+           url: 'https://api.freeaihub.com/api/env/get/vnc',
+           mode: "no-cors",
+           dataType: "json",
+           xhrFields: {
+               withCredentials: true
+           },
+           crossDomain: true,  
+           success: function(data) {
+             if(data.errno == 0){
+               let { ...json } =  data.data
+   
+               vnc(json)
+             }
+           }
+         })
+        });
+
+  
+
+
+         function vnc(obj){
+         
+             // Build the websocket URL used to connect
+             let url;
+
+     
+             url = obj.url
+     
+             // Creating a new RFB object will start a new connection
+             rfb = new RFB(document.getElementById('screen'), url,
+                               { 
+                                 credentials: { password: obj.token },
+
+                                });
+     
+             // Add listeners to important events from the RFB module
+             rfb.addEventListener("connect",  connectedToServer);
+             rfb.addEventListener("disconnect", disconnectedFromServer);
+             rfb.addEventListener("credentialsrequired", credentialsAreRequired);
+             rfb.addEventListener("desktopname", updateDesktopName);
+          
+             // Set parameters that can be changed on an active connection
+             rfb.viewOnly = readQueryVariable('view_only', false);
+             rfb.scaleViewport = 'scale';
+
+         }
+        
+    </script>
+
+  </body>
+</html>

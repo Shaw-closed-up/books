@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>Seaborn 绘制观测值的分布 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  <li><a href="./index.html"> 如何学习本课程 </a></li>
+<li><a href="./intro.html"> sklearn简介 </a></li>
+<li><a href="./setup.html"> 安装Seaborn库 </a></li>
+<li><a href="./visualization.html"> Seaborn数据可视化 </a></li>
+<li><a href="./palette.html"> Seaborn调色板 </a></li>
+<li><a href="./multipanel-categorical.html"> Seaborn多面板分类图 </a></li>
+<li><a href="./histogram.html"> Seaborn直方图 </a></li>
+<li><a href="./pairwise-relationship.html"> Seaborn可视化成对关系 </a></li>
+<li><a href="./kde.html"> Seaborn内核密度估计 </a></li>
+<li><a href="./pair-grid.html"> Seaborn配对网格 </a></li>
+<li><a href="./categorical.html"> Seaborn绘制分类数据 </a></li>
+<li><a href="./observations-distribution.html"> Seaborn绘制观测值的分布 </a></li>
+<li><a href="./statistical-estimation.html"> Seaborn统计估计 </a></li>
+<li><a href="./wideform.html"> Seaborn绘制宽格式数据 </a></li>
+<li><a href="./linear-relationships.html"> Seaborn绘制线性关系 </a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>Seaborn 绘制观测值的分布</h1>
+<p>在上一章中处理的分类散点图中，该方法在它可以提供的有关每个类别中值的分布的信息方面受到限制。现在，进一步，让我们看看什么可以帮助我们进行类别比较。</p>
+<h2>箱形图</h2>
+<p><strong>箱线图</strong>是通过四分位数可视化数据分布的便捷方法。</p>
+<p>箱形图通常具有从框延伸的垂直线，称为晶须。这些晶须表示上下四分位数之外的变异性，因此箱形图也称为<strong>箱须</strong>图和<strong>箱须</strong>图。数据中的所有异常值均作为单个点绘制。</p>
+<h3>例</h3>
+<pre><code class="python">%matplotlib inline
+import pandas as pd
+import seaborn as sb
+from matplotlib import pyplot as plt
+df = pd.read_csv('/share/datasets/seaborn-data/iris.csv')
+sb.swarmplot(x = &quot;species&quot;, y = &quot;petal_length&quot;, data = df)
+plt.show()
+</code></pre>
+
+<p>图上的点表示异常值。</p>
+<h2>小提琴图</h2>
+<p>小提琴图是箱形图与内核密度估计值的组合。因此，这些图更易于分析和理解数据的分布。</p>
+<p>让我们使用称为的提示数据集来了解更多关于小提琴图的信息。该数据集包含与餐厅顾客提供的小费相关的信息。</p>
+<h3>例</h3>
+<pre><code class="python">%matplotlib inline
+import pandas as pd
+import seaborn as sb
+from matplotlib import pyplot as plt
+df = pd.read_csv('/share/datasets/seaborn-data/tips.csv')
+sb.violinplot(x = &quot;day&quot;, y = &quot;total_bill&quot;, data=df)
+plt.show()
+</code></pre>
+
+<p>小提琴内显示了箱形图的四分位和晶须值。由于小提琴图使用KDE，所以小提琴的较宽部分表示较高的密度，而狭窄的区域表示相对较低的密度。箱形图的四分位数间距和kde的较高密度部分位于小提琴图的每个类别的相同区域。</p>
+<p>上图显示了一周中四天的total_bill分布。但是，除此之外，如果我们想了解性别分布的行为，请在下面的示例中进行探讨。</p>
+<h3>例</h3>
+<pre><code class="python">%matplotlib inline
+import pandas as pd
+import seaborn as sb
+from matplotlib import pyplot as plt
+df = pd.read_csv('/share/datasets/seaborn-data/tips.csv')
+sb.violinplot(x = &quot;day&quot;, y = &quot;total_bill&quot;,hue = 'sex', data = df)
+plt.show()
+</code></pre>
+
+<p>现在我们可以清楚地看到男性和女性之间的消费行为。</p>
+<p>我们可以很容易地说，通过观察情节，男人比女人赚更多的钱。</p>
+<p>而且，如果色相变量只有两个类别，我们可以通过在给定的一天将每个小提琴分为两个而不是两个小提琴来美化图表。小提琴的任何部分都引用hue变量中的每个类别。</p>
+<h3>例</h3>
+<pre><code class="python">%matplotlib inline
+import pandas as pd
+import seaborn as sb
+from matplotlib import pyplot as plt
+df = pd.read_csv('/share/datasets/seaborn-data/tips.csv')
+sb.violinplot(x = &quot;day&quot;, y=&quot;total_bill&quot;,hue = 'sex', data = df)
+plt.show()
+</code></pre>
+
+<p><code class=gatsby-kernelname data-language=python></code></p>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

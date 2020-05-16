@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>Seaborn 内核密度估计(kde) - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  <li><a href="./index.html"> 如何学习本课程 </a></li>
+<li><a href="./intro.html"> sklearn简介 </a></li>
+<li><a href="./setup.html"> 安装Seaborn库 </a></li>
+<li><a href="./visualization.html"> Seaborn数据可视化 </a></li>
+<li><a href="./palette.html"> Seaborn调色板 </a></li>
+<li><a href="./multipanel-categorical.html"> Seaborn多面板分类图 </a></li>
+<li><a href="./histogram.html"> Seaborn直方图 </a></li>
+<li><a href="./pairwise-relationship.html"> Seaborn可视化成对关系 </a></li>
+<li><a href="./kde.html"> Seaborn内核密度估计 </a></li>
+<li><a href="./pair-grid.html"> Seaborn配对网格 </a></li>
+<li><a href="./categorical.html"> Seaborn绘制分类数据 </a></li>
+<li><a href="./observations-distribution.html"> Seaborn绘制观测值的分布 </a></li>
+<li><a href="./statistical-estimation.html"> Seaborn统计估计 </a></li>
+<li><a href="./wideform.html"> Seaborn绘制宽格式数据 </a></li>
+<li><a href="./linear-relationships.html"> Seaborn绘制线性关系 </a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>Seaborn 内核密度估计(kde)</h1>
+<p>核密度估计（KDE）是一种估计连续随机变量的概率密度函数的方法。用于非参数分析。</p>
+<p>在<strong>distplot</strong>中将<strong>hist</strong>标志设置为False 将产生内核密度估计图。</p>
+<h2>例</h2>
+<pre><code class="python">%matplotlib inline
+import pandas as pd
+import seaborn as sb
+from matplotlib import pyplot as plt
+df = pd.read_csv('/share/datasets/seaborn-data/iris.csv')
+sb.distplot(df['petal_length'],hist=False)
+plt.show()
+</code></pre>
+
+<h2>拟合参数分布</h2>
+<p><strong>distplot（）</strong>用于可视化数据集的参数分布。</p>
+<h3>例</h3>
+<pre><code class="python">%matplotlib inline
+import pandas as pd
+import seaborn as sb
+from matplotlib import pyplot as plt
+df = pd.read_csv('/share/datasets/seaborn-data/iris.csv')
+sb.distplot(df['petal_length'])
+plt.show()
+</code></pre>
+
+<h2>绘制双变量分布</h2>
+<p>双变量分布用于确定两个变量之间的关系。这主要涉及两个变量之间的关系以及一个变量相对于另一个变量的行为方式。</p>
+<p>分析seaborn中的双变量分布的最佳方法是使用<strong>jointplot（）</strong>函数。</p>
+<p>Jointplot创建一个多面板图形，该图形可以投影两个变量之间的双变量关系，以及每个变量在独立轴上的单变量分布。</p>
+<h2>散点图</h2>
+<p>散点图是可视化分布的最便捷方法，其中每个观测值均通过x和y轴以二维图表示。</p>
+<h3>例</h3>
+<pre><code class="python">%matplotlib inline
+import pandas as pd
+import seaborn as sb
+from matplotlib import pyplot as plt
+df = pd.read_csv('/share/datasets/seaborn-data/iris.csv')
+sb.jointplot(x = 'petal_length',y = 'petal_width',data = df)
+plt.show()
+</code></pre>
+
+<p>上图显示了IRIS数据中的<strong>花瓣长度</strong>和<strong>花瓣宽度</strong>之间的关系。图中的趋势表明，所研究的变量之间存在正相关。</p>
+<h3>六边形图</h3>
+<p>当数据稀疏时，即当数据非常分散且难以通过散点图进行分析时，六边形合并用于双变量数据分析。</p>
+<p>称为“种类”和值“十六进制”的附加参数绘制了十六进制图。</p>
+<h3>例</h3>
+<pre><code class="python">%matplotlib inline
+import pandas as pd
+import seaborn as sb
+from matplotlib import pyplot as plt
+df = pd.read_csv('/share/datasets/seaborn-data/iris.csv')
+sb.jointplot(x = 'petal_length',y = 'petal_width',data = df,kind = 'hex')
+plt.show()
+</code></pre>
+
+<p>内核密度估计是估计变量分布的非参数方法。在seaborn中，我们可以使用<strong>jointplot()</strong>绘制kde <strong>。</strong></p>
+<p>将值“ kde”传递给参数种类以绘制内核图。</p>
+<h3>例</h3>
+<pre><code class="python">%matplotlib inline
+import pandas as pd
+import seaborn as sb
+from matplotlib import pyplot as plt
+df = pd.read_csv('/share/datasets/seaborn-data/iris.csv')
+sb.jointplot(x = 'petal_length',y = 'petal_width',data = df,kind = 'hex')
+plt.show()
+</code></pre>
+
+<p><code class=gatsby-kernelname data-language=python></code></p>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

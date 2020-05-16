@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>使用Jupyter记事本 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>使用Jupyter记事本</h1>
+<p>本附录介绍如何使用Jupyter记事本编辑和运行本书的代码。请确保你已按照<a href="../chapter_prerequisite/install.html">“获取和运行本书的代码”</a>一节中的步骤安装好Jupyter记事本并获取了本书的代码。</p>
+<h2>在本地编辑和运行本书的代码</h2>
+<p>下面我们介绍如何在本地使用Jupyter记事本来编辑和运行本书的代码。假设本书的代码所在的本地路径为<code>xx/yy/d2l-zh/</code>。在命令行模式下进入该路径（<code>cd xx/yy/d2l-zh</code>），然后运行命令<code>jupyter notebook</code>。这时在浏览器打开 http://localhost:8888 （通常会自动打开）就可以看到Jupyter记事本的界面和本书的代码所在的各个文件夹，如图11.1所示。</p>
+<p><img alt="本书的代码所在的各个文件夹" src="../img/jupyter00.png" /></p>
+<p>我们可以通过点击网页上显示的文件夹访问其中的记事本文件。它们的后缀通常是“ipynb”。
+简洁起见，我们创建一个临时的test.ipynb文件，点击后所显示的内容如图11.2所示。该记事本包括了格式化文本单元（markdown cell）和代码单元（code cell），其中格式化文本单元中的内容包括“这是标题”和“这是一段正文。”，代码单元中包括两行Python代码。</p>
+<p><img alt="test.ipynb文件包括了格式化文本单元和代码单元" src="../img/jupyter01.png" /></p>
+<p>双击格式化文本单元，进入编辑模式。在该单元的末尾添加一段新文本“你好世界。”，如图11.3所示。</p>
+<p><img alt="编辑格式化文本单元" src="../img/jupyter02.png" /></p>
+<p>如图11.4所示，点击菜单栏的“Cell” $\rightarrow$ “Run Cells”，运行编辑好的单元。</p>
+<p><img alt="运行单元" src="../img/jupyter03.png" /></p>
+<p>运行完以后，图11.5展示了编辑后的格式化文本单元。</p>
+<p><img alt="编辑后的格式化文本单元" src="../img/jupyter04.png" /></p>
+<p>接下来，点击代码单元。在最后一行代码后添加乘以2的操作 <code>* 2</code>，如图11.6所示。</p>
+<p><img alt="编辑代码单元" src="../img/jupyter05.png" /></p>
+<p>我们也可以用快捷键运行单元（默认Ctrl + Enter），并得到图11.7所示的输出结果。</p>
+<p><img alt="运行代码单元得到输出结果" src="../img/jupyter06.png" /></p>
+<p>当一个记事本包含的单元较多时，我们可以点击菜单栏的“Kernel” $\rightarrow$ “Restart &amp; Run All”，以运行整个记事本中的所有单元。点击菜单栏的“Help” $\rightarrow$ “Edit Keyboard Shortcuts”后可以根据自己的偏好编辑快捷键。</p>
+<h2>高级选项</h2>
+<p>下面介绍有关使用Jupyter记事本的一些高级选项。读者可以根据自己的兴趣参考其中的内容。</p>
+<h3>用Jupyter记事本读写GitHub源文件</h3>
+<p>如果想为本书内容做贡献，需要修改在GitHub上markdown格式的源文件（后缀为.md）。通过notedown插件，就可以使用Jupyter记事本修改并运行markdown格式的源代码。Linux/macOS用户可以执行以下命令获得GitHub源文件并激活运行环境：</p>
+<pre><code>git clone https://github.com/d2l-ai/d2l-zh.git
+cd d2l-zh
+conda env create -f environment.yml
+# 若conda版本低于4.4，运行source activate gluon；Windows用户则运行activate gluon
+conda activate gluon
+</code></pre>
+
+<p>下面安装notedown插件，运行Jupyter记事本并加载插件。</p>
+<pre><code>pip install https://github.com/mli/notedown/tarball/master
+jupyter notebook --NotebookApp.contents_manager_class='notedown.NotedownContentsManager'
+</code></pre>
+
+<p>如果想每次运行Jupyter记事本时默认开启notedown插件，可以参考下面的步骤。</p>
+<p>首先，执行下面的命令生成Jupyter记事本配置文件（如果已经生成，可以跳过）：</p>
+<pre><code>jupyter notebook --generate-config
+</code></pre>
+
+<p>然后，将下面这一行加入到Jupyter记事本配置文件（一般在用户主目录下的隐藏文件夹<code>.jupyter</code>中的<code>jupyter_notebook_config.py</code>）的末尾：</p>
+<pre><code>c.NotebookApp.contents_manager_class = 'notedown.NotedownContentsManager'
+</code></pre>
+
+<p>之后，只需要运行<code>jupyter notebook</code>命令即可默认开启notedown插件。</p>
+<h3>在远端服务器上运行Jupyter记事本</h3>
+<p>有时候，我们希望在远端服务器上运行Jupyter记事本，并通过本地计算机上的浏览器访问。如果本地计算机上安装了Linux或者macOS（Windows通过putty等第三方软件也能支持），那么可以使用端口映射。</p>
+<pre><code>ssh myserver -L 8888:localhost:8888
+</code></pre>
+
+<p>以上<code>myserver</code>是远端服务器地址。然后我们可以使用 http://localhost:8888 打开运行Jupyter记事本的远端服务器<code>myserver</code>。我们将在下一节详细介绍如何在AWS实例上运行Jupyter记事本。</p>
+<h3>运行计时</h3>
+<p>我们可以通过ExecutionTime插件来对Jupyter记事本的每个代码单元的运行计时。下面是安装该插件的命令：</p>
+<pre><code>pip install jupyter_contrib_nbextensions
+jupyter contrib nbextension install --user
+jupyter nbextension enable execute_time/ExecuteTime
+</code></pre>
+
+<h2>小结</h2>
+<ul>
+<li>可以使用Jupyter记事本编辑和运行本书的代码。</li>
+</ul>
+<h2>练习</h2>
+<ul>
+<li>尝试在本地编辑和运行本书的代码。</li>
+</ul>
+<h2>扫码直达<a href="https://discuss.gluon.ai/t/topic/6965">讨论区</a></h2>
+<p><img alt="" src="../img/qr_jupyter.svg" /></p>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

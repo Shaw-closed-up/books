@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>如何为本书贡献 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>如何为本书贡献</h1>
+<p>我们在“致谢”部分感谢了本书的所有贡献者，并列出他们的GitHub ID或姓名。每位贡献者也将在本书出版时获得一本贡献者专享的赠书。</p>
+<p>你可以在本书的GitHub代码库查看贡献者列表 [1]。如果你希望成为本书的贡献者之一，需要安装Git并为本书的GitHub代码库提交pull request [2]。当你的pull request被本书作者合并进了代码库后，你就成为了本书的贡献者。</p>
+<p>本附录介绍为本书贡献的基本Git操作步骤。</p>
+<p>下列操作步骤假设贡献者的GitHub ID为“astonzhang”。</p>
+<p>第一步，安装Git。Git的开源书里详细介绍了安装Git的方法 [3]。如果你没有GitHub账号，需要注册一个账号 [4]。</p>
+<p>第二步，登录GitHub。在浏览器输入本书的代码库地址 [2]。点击图11.20右上方红框中的“Fork”按钮获得一份本书的代码库。</p>
+<p><img alt="代码库的页面" src="../img/contrib01.png" /></p>
+<p>这时，本书的代码库会复制到你的用户名下，例如图11.21左上方显示的“你的GitHub用户名/d2l-zh”。</p>
+<p><img alt="复制代码库" src="../img/contrib02.png" /></p>
+<p>第三步，点击图11.21右方的“Clone or download”绿色按钮，并点击红框中的按钮复制位于你的用户名下的代码库地址。按<a href="../chapter_prerequisite/install.html">“获取和运行本书的代码”</a>一节中介绍的方法进入命令行模式。假设我们希望将代码库保存在本地的<code>~/repo</code>路径之下。进入该路径，键入<code>git clone</code>并粘贴位于你的用户名下的代码库地址。执行以下命令：</p>
+<pre><code># 将your_GitHub_ID替换成你的GitHub用户名
+git clone https://github.com/your_GitHub_ID/d2l-zh.git
+</code></pre>
+
+<p>这时，本地的<code>~/repo/d2l-zh</code>路径下将包含本书的代码库中的所有文件。</p>
+<p>第四步，编辑本地路径下的本书的代码库。假设我们修改了<code>~/repo/d2l-zh/chapter_deep-learning-basics/linear-regression.md</code>文件中的一个错别字。在命令行模式中进入路径<code>~/repo/d2l-zh</code>，执行命令</p>
+<pre><code>git status
+</code></pre>
+
+<p>此时Git将提示chapter_deep-learning-basics/linear-regression.md文件已被修改，如图11.22所示。</p>
+<p><img alt="Git提示“chapter_deep-learning-basics/linear-regression.md”文件已被修改" src="../img/contrib03.png" /></p>
+<p>确认将提交该修改的文件后，执行以下命令：</p>
+<pre><code>git add chapter_deep-learning-basics/linear-regression.md
+git commit -m 'fix typo in linear-regression.md'
+git push
+</code></pre>
+
+<p>其中的<code>'fix typo in linear-regression.md'</code>是描述提交改动的信息，也可以替换为其他有意义的描述信息。</p>
+<p>第五步，再次在浏览器输入本书的代码库地址 [2]。点击图11.20左方红框中的“New pull request”按钮。在弹出的页面中，点击图11.23右方红框中的“compare across forks”链接，再点击下方红框中的“head fork: d2l-ai/d2l-zh”按钮。在弹出的文本框中输入你的GitHub用户名，在下拉菜单中选择“你的GitHub用户名/d2l-zh”，如图11.23所示。</p>
+<p><img alt="选择改动来源所在的代码库" src="../img/contrib04.png" /></p>
+<p>第六步，如图11.24所示，在标题和正文的文本框中描述想要提交的pull request。点击红框中的“Create pull request”绿色按钮提交pull request。</p>
+<p><img alt="描述并提交pull request" src="../img/contrib05.png" /></p>
+<p>提交完成后，我们会看到图11.25所示的页面中显示pull request已提交。</p>
+<p><img alt="显示pull request已提交" src="../img/contrib06.png" /></p>
+<h2>小结</h2>
+<ul>
+<li>可以通过使用GitHub为本书做贡献。</li>
+</ul>
+<h2>练习</h2>
+<ul>
+<li>如果你觉得本书某些地方可以改进，尝试提交一个pull request。</li>
+</ul>
+<h2>参考文献</h2>
+<p>[1] 本书的贡献者列表。https://github.com/d2l-ai/d2l-zh/graphs/contributors</p>
+<p>[2] 本书的代码库地址。https://github.com/d2l-ai/d2l-zh</p>
+<p>[3] 安装Git。https://git-scm.com/book/zh/v2</p>
+<p>[4] GitHub网址。https://github.com/</p>
+<h2>扫码直达<a href="https://discuss.gluon.ai/t/topic/7570">讨论区</a></h2>
+<p><img alt="" src="../img/qr_how-to-contribute.svg" /></p>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>

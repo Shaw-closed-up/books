@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
+    <title>10.7 文本情感分类：使用循环神经网络 - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
+  </head>
+  <body class="bg-light" style="padding-top: 84px;">
+      <!-- NAVBAR
+    ================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
+      <div class="container-fluid" style="height: 42px;">
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="../index.html">
+
+          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+        </a>
+
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fe fe-x"></i>
+          </button>
+
+          <!-- Navigation -->
+          <ul class="navbar-nav ml-auto">
+         
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
+            </li>
+            <li class="nav-item dropdown">
+            
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
+    <!-- CONTENT
+    ================================================== -->
+    <section style="overflow: hidden;">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
+                  
+    <li>简介</li>
+    <li><a href="/d2l-pytorch/chapter01_DL-intro/deep-learning-intro.html">1. 深度学习简介</a></li>
+    <li>预备知识</li>
+    <li><a href="/d2l-pytorch/chapter02_prerequisite/2.1_install.html">2.1 环境配置</a></li>
+    <li><a href="/d2l-pytorch/chapter02_prerequisite/2.2_tensor.html">2.2 数据操作</a></li>
+    <a href="/d2l-pytorch/chapter02_prerequisite/2.3_autograd.html">2.3 自动求梯度</a></li>
+    <li>深度学习基础</li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.1_linear-regression.html">3.1 线性回归</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.2_linear-regression-scratch.html">3.2 线性回归的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.3_linear-regression-pytorch.html">3.3 线性回归的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.4_softmax-regression.html">3.4 softmax回归</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.5_fashion-mnist.html">3.5 图像分类数据集（Fashion-MNIST）</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.6_softmax-regression-scratch.html">3.6 softmax回归的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.7_softmax-regression-pytorch.html">3.7 softmax回归的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.8_mlp.html">3.8 多层感知机</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.9_mlp-scratch.html">3.9 多层感知机的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.10_mlp-pytorch.html">3.10 多层感知机的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.11_underfit-overfit.html">3.11 模型选择、欠拟合和过拟合</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.12_weight-decay.html">3.12 权重衰减</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.13_dropout.html">3.13 丢弃法</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.14_backprop.html">3.14 正向传播、反向传播和计算图</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.15_numerical-stability-and-init.html">3.15 数值稳定性和模型初始化</a></li>
+    <li><a href="/d2l-pytorch/chapter03_DL-basics/3.16_kaggle-house-price.html">3.16 实战Kaggle比赛：房价预测</a></li>
+    <li>深度学习计算</li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.1_model-construction.html">4.1 模型构造</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.2_parameters.html">4.2 模型参数的访问、初始化和共享</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.3_deferred-init.html">4.3 模型参数的延后初始化</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.4_custom-layer.html">4.4 自定义层</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.5_read-write.html">4.5 读取和存储</a></li>
+    <li><a href="/d2l-pytorch/chapter04_DL_computation/4.6_use-gpu.html">4.6 GPU计算</a></li>
+    <li>卷积神经网络</li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.1_conv-layer.html">5.1 二维卷积层</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.2_padding-and-strides.html">5.2 填充和步幅</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.3_channels.html">5.3 多输入通道和多输出通道</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.4_pooling.html">5.4 池化层</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.5_lenet.html">5.5 卷积神经网络（LeNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.6_alexnet.html">5.6 深度卷积神经网络（AlexNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.7_vgg.html">5.7 使用重复元素的网络（VGG）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.8_nin.html">5.8 网络中的网络（NiN）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.9_googlenet.html">5.9 含并行连结的网络（GoogLeNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.10_batch-norm.html">5.10 批量归一化</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.11_resnet.html">5.11 残差网络（ResNet）</a></li>
+    <li><a href="/d2l-pytorch/chapter05_CNN/5.12_densenet.html">5.12 稠密连接网络（DenseNet）</a></li>
+    <li>循环神经网络</li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.1_lang-model.html">6.1 语言模型</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.2_rnn.html">6.2 循环神经网络</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.3_lang-model-dataset.html">6.3 语言模型数据集（周杰伦专辑歌词）</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.4_rnn-scratch.html">6.4 循环神经网络的从零开始实现</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.5_rnn-pytorch.html">6.5 循环神经网络的简洁实现</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.6_bptt.html">6.6 通过时间反向传播</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.7_gru.html">6.7 门控循环单元（GRU）</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.8_lstm.html">6.8 长短期记忆（LSTM）</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.9_deep-rnn.html">6.9 深度循环神经网络</a></li>
+    <li><a href="/d2l-pytorch/chapter06_RNN/6.10_bi-rnn.html">6.10 双向循环神经网络</a></li>
+    <li>优化算法</li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.1_optimization-intro.html">7.1 优化与深度学习</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.2_gd-sgd.html">7.2 梯度下降和随机梯度下降</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.3_minibatch-sgd.html">7.3 小批量随机梯度下降</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.4_momentum.html">7.4 动量法</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.5_adagrad.html">7.5 AdaGrad算法</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.6_rmsprop.html">7.6 RMSProp算法</a></li>
+    <li><a href="/d2l-pytorch/chapter07_optimization/7.7_adadelta.html">7.7 AdaDelta算法</a></li>
+    <a href="/d2l-pytorch/chapter07_optimization/7.8_adam.html">7.8 Adam算法</a></li>
+    <li>计算性能</li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.1_hybridize.html">8.1 命令式和符号式混合编程</a></li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.2_async-computation.html">8.2 异步计算</a></li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.3_auto-parallelism.html">8.3 自动并行计算</a></li>
+    <li><a href="/d2l-pytorch/chapter08_computational-performance/8.4_multiple-gpus.html">8.4 多GPU计算</a></li>
+    <li>计算机视觉</li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.1_image-augmentation.html">9.1 图像增广</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.2_fine-tuning.html">9.2 微调</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.3_bounding-box.html">9.3 目标检测和边界框</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.4_anchor.html">9.4 锚框</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.5_multiscale-object-detection.html">9.5 多尺度目标检测</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.6_object-detection-dataset.html">9.6 目标检测数据集（皮卡丘）</a></li>
+    <li>9.7 单发多框检测（SSD）</li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.8_rcnn.html">9.8 区域卷积神经网络（R-CNN）系列</a></li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.9_semantic-segmentation-and-dataset.html">9.9 语义分割和数据集</a></li>
+    <li>9.10 全卷积网络（FCN）</li>
+    <li><a href="/d2l-pytorch/chapter09_computer-vision/9.11_neural-style.html">9.11 样式迁移</a></li>
+    <li>9.12 实战Kaggle比赛：图像分类（CIFAR-10）</li>
+    <li>9.13 实战Kaggle比赛：狗的品种识别（ImageNet Dogs）<li>
+    <li>自然语言处理</li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.1_word2vec.html">10.1 词嵌入（word2vec）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.2_approx-training.html">10.2 近似训练</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.3_word2vec-pytorch.html">10.3 word2vec的实现</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.4_fasttext.html">10.4 子词嵌入（fastText）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.5_glove.html">10.5 全局向量的词嵌入（GloVe）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.6_similarity-analogy.html">10.6 求近义词和类比词</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.7_sentiment-analysis-rnn.html">10.7 文本情感分类：使用循环神经网络</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.8_sentiment-analysis-cnn.html">10.8 文本情感分类：使用卷积神经网络（textCNN）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.9_seq2seq.html">10.9 编码器—解码器（seq2seq）</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.10_beam-search.html">10.10 束搜索</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.11_attention.html">10.11 注意力机制</a></li>
+    <li><a href="/d2l-pytorch/chapter10_natural-language-processing/10.12_machine-translation.html">10.12 机器翻译</a></li>
+                </ul>  
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>10.7 文本情感分类：使用循环神经网络</h1>
+<p>文本分类是自然语言处理的一个常见任务，它把一段不定长的文本序列变换为文本的类别。本节关注它的一个子问题：使用文本情感分类来分析文本作者的情绪。这个问题也叫情感分析，并有着广泛的应用。例如，我们可以分析用户对产品的评论并统计用户的满意度，或者分析用户对市场行情的情绪并用以预测接下来的行情。</p>
+<p>同搜索近义词和类比词一样，文本分类也属于词嵌入的下游应用。在本节中，我们将应用预训练的词向量和含多个隐藏层的双向循环神经网络，来判断一段不定长的文本序列中包含的是正面还是负面的情绪。</p>
+<p>在实验开始前，导入所需的包或模块。</p>
+<pre><code class="python">import collections
+import os
+import random
+import tarfile
+import torch
+from torch import nn
+import torchtext.vocab as Vocab
+import torch.utils.data as Data
+
+import sys
+sys.path.append(&quot;..&quot;) 
+import d2lzh_pytorch as d2l
+
+os.environ[&quot;CUDA_VISIBLE_DEVICES&quot;] = &quot;0&quot;
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+DATA_ROOT = &quot;/S1/CSCL/tangss/Datasets&quot;
+</code></pre>
+
+<h2>10.7.1 文本情感分类数据</h2>
+<p>我们使用斯坦福的IMDb数据集（Stanford's Large Movie Review Dataset）作为文本情感分类的数据集 [1]。这个数据集分为训练和测试用的两个数据集，分别包含25,000条从IMDb下载的关于电影的评论。在每个数据集中，标签为“正面”和“负面”的评论数量相等。</p>
+<h3>10.7.1.1 读取数据</h3>
+<p>首先<a href="http://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz">下载</a>这个数据集到<code>DATA_ROOT</code>路径下，然后解压。</p>
+<pre><code class="python">fname = os.path.join(DATA_ROOT, &quot;aclImdb_v1.tar.gz&quot;)
+if not os.path.exists(os.path.join(DATA_ROOT, &quot;aclImdb&quot;)):
+    print(&quot;从压缩包解压...&quot;)
+    with tarfile.open(fname, 'r') as f:
+        f.extractall(DATA_ROOT)
+</code></pre>
+
+<p>接下来，读取训练数据集和测试数据集。每个样本是一条评论及其对应的标签：1表示“正面”，0表示“负面”。</p>
+<pre><code class="python">from tqdm import tqdm
+# 本函数已保存在d2lzh_pytorch包中方便以后使用
+def read_imdb(folder='train', data_root=&quot;/S1/CSCL/tangss/Datasets/aclImdb&quot;): 
+    data = []
+    for label in ['pos', 'neg']:
+        folder_name = os.path.join(data_root, folder, label)
+        for file in tqdm(os.listdir(folder_name)):
+            with open(os.path.join(folder_name, file), 'rb') as f:
+                review = f.read().decode('utf-8').replace('\n', '').lower()
+                data.append([review, 1 if label == 'pos' else 0])
+    random.shuffle(data)
+    return data
+
+train_data, test_data = read_imdb('train'), read_imdb('test')
+</code></pre>
+
+<h3>10.7.1.2 预处理数据</h3>
+<p>我们需要对每条评论做分词，从而得到分好词的评论。这里定义的<code>get_tokenized_imdb</code>函数使用最简单的方法：基于空格进行分词。</p>
+<pre><code class="python"># 本函数已保存在d2lzh_pytorch包中方便以后使用
+def get_tokenized_imdb(data):
+    &quot;&quot;&quot;
+    data: list of [string, label]
+    &quot;&quot;&quot;
+    def tokenizer(text):
+        return [tok.lower() for tok in text.split(' ')]
+    return [tokenizer(review) for review, _ in data]
+</code></pre>
+
+<p>现在，我们可以根据分好词的训练数据集来创建词典了。我们在这里过滤掉了出现次数少于5的词。</p>
+<pre><code class="python"># 本函数已保存在d2lzh_pytorch包中方便以后使用
+def get_vocab_imdb(data):
+    tokenized_data = get_tokenized_imdb(data)
+    counter = collections.Counter([tk for st in tokenized_data for tk in st])
+    return Vocab.Vocab(counter, min_freq=5)
+
+vocab = get_vocab_imdb(train_data)
+'# words in vocab:', len(vocab)
+</code></pre>
+
+<p>输出：</p>
+<pre><code>('# words in vocab:', 46151)
+</code></pre>
+
+<p>因为每条评论长度不一致所以不能直接组合成小批量，我们定义<code>preprocess_imdb</code>函数对每条评论进行分词，并通过词典转换成词索引，然后通过截断或者补0来将每条评论长度固定成500。</p>
+<pre><code class="python"># 本函数已保存在d2lzh_torch包中方便以后使用
+def preprocess_imdb(data, vocab):
+    max_l = 500  # 将每条评论通过截断或者补0，使得长度变成500
+
+    def pad(x):
+        return x[:max_l] if len(x) &gt; max_l else x + [0] * (max_l - len(x))
+
+    tokenized_data = get_tokenized_imdb(data)
+    features = torch.tensor([pad([vocab.stoi[word] for word in words]) for words in tokenized_data])
+    labels = torch.tensor([score for _, score in data])
+    return features, labels
+</code></pre>
+
+<h3>10.7.1.3 创建数据迭代器</h3>
+<p>现在，我们创建数据迭代器。每次迭代将返回一个小批量的数据。</p>
+<pre><code class="python">batch_size = 64
+train_set = Data.TensorDataset(*preprocess_imdb(train_data, vocab))
+test_set = Data.TensorDataset(*preprocess_imdb(test_data, vocab))
+train_iter = Data.DataLoader(train_set, batch_size, shuffle=True)
+test_iter = Data.DataLoader(test_set, batch_size)
+</code></pre>
+
+<p>打印第一个小批量数据的形状以及训练集中小批量的个数。</p>
+<pre><code class="python">for X, y in train_iter:
+    print('X', X.shape, 'y', y.shape)
+    break
+'#batches:', len(train_iter)
+</code></pre>
+
+<p>输出：</p>
+<pre><code>X torch.Size([64, 500]) y torch.Size([64])
+('#batches:', 391)
+</code></pre>
+
+<h2>10.7.2 使用循环神经网络的模型</h2>
+<p>在这个模型中，每个词先通过嵌入层得到特征向量。然后，我们使用双向循环神经网络对特征序列进一步编码得到序列信息。最后，我们将编码的序列信息通过全连接层变换为输出。具体来说，我们可以将双向长短期记忆在最初时间步和最终时间步的隐藏状态连结，作为特征序列的表征传递给输出层分类。在下面实现的<code>BiRNN</code>类中，<code>Embedding</code>实例即嵌入层，<code>LSTM</code>实例即为序列编码的隐藏层，<code>Linear</code>实例即生成分类结果的输出层。</p>
+<pre><code class="python">class BiRNN(nn.Module):
+    def __init__(self, vocab, embed_size, num_hiddens, num_layers):
+        super(BiRNN, self).__init__()
+        self.embedding = nn.Embedding(len(vocab), embed_size)
+        # bidirectional设为True即得到双向循环神经网络
+        self.encoder = nn.LSTM(input_size=embed_size, 
+                                hidden_size=num_hiddens, 
+                                num_layers=num_layers,
+                                bidirectional=True)
+        # 初始时间步和最终时间步的隐藏状态作为全连接层输入
+        self.decoder = nn.Linear(4*num_hiddens, 2)
+
+    def forward(self, inputs):
+        # inputs的形状是(批量大小, 词数)，因为LSTM需要将序列长度(seq_len)作为第一维，所以将输入转置后
+        # 再提取词特征，输出形状为(词数, 批量大小, 词向量维度)
+        embeddings = self.embedding(inputs.permute(1, 0))
+        # rnn.LSTM只传入输入embeddings，因此只返回最后一层的隐藏层在各时间步的隐藏状态。
+        # outputs形状是(词数, 批量大小, 2 * 隐藏单元个数)
+        outputs, _ = self.encoder(embeddings) # output, (h, c)
+        # 连结初始时间步和最终时间步的隐藏状态作为全连接层输入。它的形状为
+        # (批量大小, 4 * 隐藏单元个数)。
+        encoding = torch.cat((outputs[0], outputs[-1]), -1)
+        outs = self.decoder(encoding)
+        return outs
+</code></pre>
+
+<p>创建一个含两个隐藏层的双向循环神经网络。</p>
+<pre><code class="python">embed_size, num_hiddens, num_layers = 100, 100, 2
+net = BiRNN(vocab, embed_size, num_hiddens, num_layers)
+</code></pre>
+
+<h3>10.7.2.1 加载预训练的词向量</h3>
+<p>由于情感分类的训练数据集并不是很大，为应对过拟合，我们将直接使用在更大规模语料上预训练的词向量作为每个词的特征向量。这里，我们为词典<code>vocab</code>中的每个词加载100维的GloVe词向量。</p>
+<pre><code class="python">glove_vocab = Vocab.GloVe(name='6B', dim=100, cache=os.path.join(DATA_ROOT, &quot;glove&quot;))
+</code></pre>
+
+<p>然后，我们将用这些词向量作为评论中每个词的特征向量。注意，预训练词向量的维度需要与创建的模型中的嵌入层输出大小<code>embed_size</code>一致。此外，在训练中我们不再更新这些词向量。</p>
+<pre><code class="python"># 本函数已保存在d2lzh_torch包中方便以后使用
+def load_pretrained_embedding(words, pretrained_vocab):
+    &quot;&quot;&quot;从预训练好的vocab中提取出words对应的词向量&quot;&quot;&quot;
+    embed = torch.zeros(len(words), pretrained_vocab.vectors[0].shape[0]) # 初始化为0
+    oov_count = 0 # out of vocabulary
+    for i, word in enumerate(words):
+        try:
+            idx = pretrained_vocab.stoi[word]
+            embed[i, :] = pretrained_vocab.vectors[idx]
+        except KeyError:
+            oov_count += 1
+    if oov_count &gt; 0:
+        print(&quot;There are %d oov words.&quot; % oov_count)
+    return embed
+
+net.embedding.weight.data.copy_(
+    load_pretrained_embedding(vocab.itos, glove_vocab))
+net.embedding.weight.requires_grad = False # 直接加载预训练好的, 所以不需要更新它
+</code></pre>
+
+<p>输出:</p>
+<pre><code>There are 21202 oov words.
+</code></pre>
+
+<h3>10.7.2.2 训练并评价模型</h3>
+<p>这时候就可以开始训练模型了。</p>
+<pre><code class="python">lr, num_epochs = 0.01, 5
+# 要过滤掉不计算梯度的embedding参数
+optimizer = torch.optim.Adam(filter(lambda p: p.requires_grad, net.parameters()), lr=lr)
+loss = nn.CrossEntropyLoss()
+d2l.train(train_iter, test_iter, net, loss, optimizer, device, num_epochs)
+</code></pre>
+
+<p>输出：</p>
+<pre><code>training on  cuda
+epoch 1, loss 0.5759, train acc 0.666, test acc 0.832, time 250.8 sec
+epoch 2, loss 0.1785, train acc 0.842, test acc 0.852, time 253.3 sec
+epoch 3, loss 0.1042, train acc 0.866, test acc 0.856, time 253.7 sec
+epoch 4, loss 0.0682, train acc 0.888, test acc 0.868, time 254.2 sec
+epoch 5, loss 0.0483, train acc 0.901, test acc 0.862, time 251.4 sec
+</code></pre>
+
+<p>最后，定义预测函数。</p>
+<pre><code class="python"># 本函数已保存在d2lzh_pytorch包中方便以后使用
+def predict_sentiment(net, vocab, sentence):
+    &quot;&quot;&quot;sentence是词语的列表&quot;&quot;&quot;
+    device = list(net.parameters())[0].device
+    sentence = torch.tensor([vocab.stoi[word] for word in sentence], device=device)
+    label = torch.argmax(net(sentence.view((1, -1))), dim=1)
+    return 'positive' if label.item() == 1 else 'negative'
+</code></pre>
+
+<p>下面使用训练好的模型对两个简单句子的情感进行分类。</p>
+<pre><code class="python">predict_sentiment(net, vocab, ['this', 'movie', 'is', 'so', 'great']) # positive
+</code></pre>
+
+<pre><code class="python">predict_sentiment(net, vocab, ['this', 'movie', 'is', 'so', 'bad']) # negative
+</code></pre>
+
+<h2>小结</h2>
+<ul>
+<li>文本分类把一段不定长的文本序列变换为文本的类别。它属于词嵌入的下游应用。</li>
+<li>可以应用预训练的词向量和循环神经网络对文本的情感进行分类。</li>
+</ul>
+<h2>参考文献</h2>
+<p>[1] Maas, A. L., Daly, R. E., Pham, P. T., Huang, D., Ng, A. Y., &amp; Potts, C. (2011, June). Learning word vectors for sentiment analysis. In Proceedings of the 49th annual meeting of the association for computational linguistics: Human language technologies-volume 1 (pp. 142-150). Association for Computational Linguistics.</p>
+<hr />
+<blockquote>
+<p>注：本节除代码外与原书基本相同，<a href="https://zh.d2l.ai/chapter_natural-language-processing/sentiment-analysis-rnn.html">原书传送门</a></p>
+</blockquote>
+          </div>
+          <backend type="k"></backend>
+          <code class=gatsby-kernelname data-language=python></code>
+        </div> <!-- / .row -->
+      </div>
+      
+    </section>
+
+    <!-- JAVASCRIPT
+    ================================================== -->
+    <!-- Libs JS -->
+    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
+          
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </body>
+</html>
