@@ -41,47 +41,20 @@
 
   </head>
   <body class="bg-light" style="padding-top: 84px;">
-      <!-- NAVBAR
-    ================================================== -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
-      <div class="container-fluid" style="height: 42px;">
+      <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar text-center">
+      <a class="navbar-brand mr-0 mr-md-2" aria-label="引导程序" href="/">
+        <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+      </a>
+      <ul class="navbar-nav ml-md-auto">
+        <li class="nav-item">
+          <a href="/" class="nav-link pl-2 pr-1 mx-1 py-3 my-n2">首页</a>
+        </li>
+        <li class="nav-item">
+          <a href="/" class="nav-link pl-2 pr-1 mx-1 py-3 my-n2">课程页面</a>
+        </li>
+      </ul>
+    </header>
 
-        <!-- Brand -->
-        <a class="navbar-brand" href="../index.html">
-
-          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
-        </a>
-
-        <!-- Toggler -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Collapse -->
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-
-          <!-- Toggler -->
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fe fe-x"></i>
-          </button>
-
-          <!-- Navigation -->
-          <ul class="navbar-nav ml-auto">
-         
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
-            </li>
-            <li class="nav-item dropdown">
-            
-            </li>
-          </ul>
-        </div>
-
-      </div>
-    </nav>
 
 
     <!-- BREADCRUMB
@@ -272,7 +245,7 @@ plt.show()
 <h2>总结</h2>
 <p>注意一下，为了融合得当，我们必须非常小心地调节学习率。另外对于高斯分布而言，这些结果是相当平庸的；相比之下，一个简单的均值和协方差估计就能够很好地实现上述功能。但是，当我们并不知道真实的数据分布是什么的时候，这种方式就能够非常好地模拟相应的数据。需要注意的是，这种方式非常依赖判别模型的能力。如果判别模型非常地弱，那么生成的数据将会远离真实的数据。例如，在这个例子中，模型在方差较小的方向上生成数据就有些困难。总之，这并不容易设计和实现。(set and forget?)这里给出一些资源，其中相关人员展示了一些如何训练GAN的经验性技巧<a href="https://github.com/soumith/ganhacks">Soumith Chintala's handy list of tricks</a>。</p>
           </div>
-          <backend type="k"></backend>
+          <backend type='k'></backend>
           <code class=gatsby-kernelname data-language=python></code>
         </div> <!-- / .row -->
       </div>

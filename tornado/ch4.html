@@ -4,57 +4,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link href="/static/img/favicon.png" rel="icon" type="image/png">
-    <link href="/static/xterm/xterm.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/freeaihub.ico" rel="icon" type="image/png">
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/xterm/xterm.css" rel="stylesheet" type="text/css"/>
 
-    <link href="/static/css/docs.css" rel="stylesheet" type="text/css"/>
-    <link href="/static/css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/css/docs.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/css/style.css" rel="stylesheet" type="text/css"/>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" id="font-awesome-css" href="https://cdn.freeaihub.com/asset/css/font-awesome.min.4.2.0.css" type="text/css" media="all">
-    <link rel="stylesheet" id="google-code-prettify-css" href="https://cdn.freeaihub.com/asset/css/prettify-2.1.css?ver=2.1
-" type="text/css" media="all">
+    <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/bootstrap/bootstrap.min.css" >
+    <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
+    <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/css/prettify.css" type="text/css" media="all">
 
     <title>Tornado 第四章：数据库 - FreeAIHub</title>
-  
-    <style>
-
-      #status {
-          text-align: center;
-      }
-      #sendCtrlAltDelButton {
-          position: fixed;
-          top: 0px;
-          right: 0px;
-          border: 1px outset;
-          padding: 5px 5px 4px 5px;
-          cursor: pointer;
-      }
-
-      #screen {
-        flex: 1;
-        overflow: hidden;
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: calc(100vh - 96px);
-      }
-      .xterm-wrapper{
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-      }
-      .entry-content {
-          word-break: break-word;
-          height: calc(100vh - 60px);
-          overflow-y: scroll;
-          padding: 30px;
-      }
-
-  </style>
-
   </head>
   <body class="bg-light">
-
         <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar text-center">
       <a class="navbar-brand mr-0 mr-md-2" aria-label="引导程序" href="/">
         <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
@@ -85,8 +47,7 @@
             <div class="bd-links collapse" id="bd-docs-nav" aria-label="主导航">
               <div class="bd-toc-item active">
                 <a class="bd-toc-link" href="#">如何学习本课程</a>
-                <ul class="nav bd-sidenav">
-                  <li class="active bd-sidenav-active"><a href="./intro.html"> 简介 </a></li>
+                <ul class="nav bd-sidenav pb-6">
                   <li><a href="./index.html"> 如何学习本课程 </a></li>
 <li><a href="./intro.html"> Tornado简介 </a></li>
 <li><a href="./setup.html"> Tornado开发环境安装 </a></li>
@@ -107,7 +68,7 @@
           </div>
           <div class="entry-content col-md-9 col-xl-5 py-md-3 pl-md-5 bd-content">
               
-          <h1>Tornado 第四章：数据库</h1>
+            <h1>Tornado 第四章：数据库</h1>
 <p>在本章中，我们将给出几个使用数据库的Tornado Web应用的例子。我们将从一个简单的RESTful API例子起步，然后创建3.1.2节中的Burt's Book网站的完整功能版本。</p>
 <p>本章中的例子使用MongoDB作为数据库，并通过pymongo作为驱动来连接MongoDB。当然，还有很多数据库系统可以用在Web应用中：Redis、CouchDB和MySQL都是一些知名的选择，并且Tornado自带处理MySQL请求的库。我们选择使用MongoDB是因为它的简单性和便捷性：安装简单，并且能够和Python代码很好地融合。它结构自然，预定义数据结构不是必需的，很适合原型开发。</p>
 <p>在本章中，我们假设你已经在机器上安装了MongoDB，能够运行示例代码，不过也可以在远程服务器上使用MongoDB，相关的代码调整也很容易。如果你不想在你的机器上安装MongoDB，或者没有一个适合你操作系统的MongoDB版本，你也可以选择一些MongoDB主机服务。我们推荐使用<a href="http://www.mongohq.com/">MongoHQ</a>。在我们最初的例子中，假设你已经在你的机器上运行了MongoDB，但使用远程服务器（包括MongoHQ）运行的MongoDB时，调整代码也很简单。</p>
@@ -808,10 +769,10 @@ relative=False) }}&lt;/div&gt;
 <p>如果你对使用Tornado创建在扩展性方面表现更好的MongoDB应用感兴趣的话，你可以自学asyncmongo（https://github.com/bitly/asyncmongo），这是一种异步执行MongoDB请求的类似PyMongo的库。我们将在<a href="http://dockerpool.com/static/books/introduction_to_tornado_cn/ch5.html">第5章</a>中讨论什么是异步请求，以及为什么它在Web应用中扩展性更好。</p>
             
           </div>
-
-          <div class="d-none d-xl-block col-xl-5 bd-toc xterm-wrapper">
+          <backend type='k'></backend>
+          <div class="d-none d-xl-block col-xl-5 bd-toc xterm-wrapper overflow-hidden">
              <!-- 导航 -->
-            <ul class="nav nav-tabs" id="myTab">
+            <ul class="nav nav-tabs nav-float" id="myTab">
               <li class="nav-item">
                 <a class="nav-link"  href="#home">Terminal</a>
               </li>
@@ -819,6 +780,18 @@ relative=False) }}&lt;/div&gt;
                 <a class="nav-link " href="#profile">VNC</a>
               </li>
             </ul>
+            <div class="controls">
+              <div class="dropdown">
+                <a class=" dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Dropdown
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                  <button class="dropdown-item" type="button">Action</button>
+                  <button class="dropdown-item" type="button">Another action</button>
+                  <button class="dropdown-item" type="button">Something else here</button>
+                </div>
+              </div>
+            </div>
             <!-- 带显示效果的内容 -->
             <div class="tab-content" id="myTabContent">
               <div class="tab-pane fade show active" id="home" >
@@ -844,7 +817,7 @@ relative=False) }}&lt;/div&gt;
         </div> <!-- / .row -->
       </div>
     </section>
-
+    
     <!-- JAVASCRIPT
     ================================================== -->
     <!-- Libs JS -->
@@ -856,8 +829,8 @@ relative=False) }}&lt;/div&gt;
     <script type='text/javascript' src='https://cdn.freeaihub.com/asset/js/power.js?ver=2.1'></script>
     <script type='text/javascript' src='https://cdn.freeaihub.com/asset/js/wp-embed.min.js?ver=4.9.14'></script>
     <!-- Theme JS -->
-
-    <script src="/static/js/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
     <script src="/static/xterm/xterm.js"></script>
     <script src="/static/xterm/xterm-addon-fit.js"></script>
@@ -895,38 +868,53 @@ relative=False) }}&lt;/div&gt;
             fitAddon.fit();
         });
 
+        var detail = $('backend').attr('type')
+
+        window.addEventListener("resize", windowChangeXtrem, { capture: true });
+
+        function windowChangeXtrem() {
+          terminal.onResize((term) => {
+            socket.send(JSON.stringify({'resize': [term.cols, term.rows]}));
+          })
+
+          // 确保终端尺寸和容器尺寸一致
+          fitAddon.fit();
+        }
+
+
         $.ajax({
           type: 'get',
-          url: 'https://api.freeaihub.com/api/env/get/webssh',
+          url: `http://apis.freeaihub.cn/env/get/${detail}`,
           mode: "no-cors",
           dataType: "json",
           xhrFields: {
-              withCredentials: true
+               withCredentials: true
           },
           crossDomain: true,  
           success: async function(data) {
-            if(data.errno == 0){
-              let { ...json } =  data.data
-              let formdata = new FormData();
-              formdata.append("hostname", json.hostname);
-              formdata.append("username", json.username);
-              formdata.append("port", json.port);
-              formdata.append("password", json.password);
-              formdata.append("term", json.term);
-              let response = await fetch(
-                json.host,
+
+            let { host0 } = data.data
+
+            let formdata = new FormData();
+
+            formdata.append("hostname", host0.ssh_host);
+            formdata.append("username", host0.username);
+            formdata.append("port", host0.ssh_port);
+            formdata.append("password", host0.token);
+            formdata.append("term", host0.ssh_term);
+
+            let response = await fetch(
+              host0.ssh_login,
                   {
                       method: 'POST',
                       body: formdata
                   }
-              )
+            )
 
-          
-
-              sockId = await response.json();
+                   sockId = await response.json();
             
-              let socketHost = json.ssh_host +=`/ws?id=${sockId.id}`;
-              console.log(socketHost)
+              let socketHost = host0.ssh_ws +=`/ws?id=${sockId.id}`;
+
               socket = new WebSocket(socketHost);
 
               socket.onopen = () => {
@@ -942,10 +930,61 @@ relative=False) }}&lt;/div&gt;
                 socket.send(JSON.stringify({ resize: [term.cols, term.rows] }));
               }
 
-            }
-
+            
           }
-        })
+         })
+
+        // $.ajax({
+        //   type: 'get',
+        //   url: 'https://api.freeaihub.com/api/env/get/webssh',
+        //   mode: "no-cors",
+        //   dataType: "json",
+        //   xhrFields: {
+        //       withCredentials: true
+        //   },
+        //   crossDomain: true,  
+        //   success: async function(data) {
+        //     if(data.errno == 0){
+        //       let { ...json } =  data.data
+        //       let formdata = new FormData();
+        //       formdata.append("hostname", json.hostname);
+        //       formdata.append("username", json.username);
+        //       formdata.append("port", json.port);
+        //       formdata.append("password", json.password);
+        //       formdata.append("term", json.term);
+        //       let response = await fetch(
+        //         json.host,
+        //           {
+        //               method: 'POST',
+        //               body: formdata
+        //           }
+        //       )
+
+          
+
+        //       sockId = await response.json();
+            
+        //       let socketHost = json.ssh_host +=`/ws?id=${sockId.id}`;
+        //       console.log(socketHost)
+        //       socket = new WebSocket(socketHost);
+
+        //       socket.onopen = () => {
+        //         terminal.loadAddon(new AttachAddon.AttachAddon(socket));
+        //         terminal._initialized = true;
+        //       }
+
+        //       socket.onmessage= (term) => {
+        //         if(!terminal._initialized){
+        //             return
+        //         }
+        //         terminal._initialized = false;
+        //         socket.send(JSON.stringify({ resize: [term.cols, term.rows] }));
+        //       }
+
+        //     }
+
+        //   }
+        // })
 
      </script> 
     <script>
@@ -1054,20 +1093,33 @@ relative=False) }}&lt;/div&gt;
         })  
 
         $('#myTab a[href="#profile"]').on('click', function (e) {
+          var detail = $('backend').attr('type')
+
           $.ajax({
-           type: 'get',
-           url: 'https://api.freeaihub.com/api/env/get/vnc',
-           mode: "no-cors",
-           dataType: "json",
-           xhrFields: {
+          type: 'get',
+          url: `http://apis.freeaihub.cn/env/get/${detail}`,
+          mode: "no-cors",
+          dataType: "json",
+          xhrFields: {
                withCredentials: true
-           },
-           crossDomain: true,  
+          },
+          crossDomain: true, 
+
+
+          // $.ajax({
+          //  type: 'get',
+          //  url: 'https://api.freeaihub.com/api/env/get/vnc',
+          //  mode: "no-cors",
+          //  dataType: "json",
+          //  xhrFields: {
+          //      withCredentials: true
+          //  },
+          //  crossDomain: true,  
            success: function(data) {
              if(data.errno == 0){
-               let { ...json } =  data.data
-   
-               vnc(json)
+               let { host0 } =  data.data
+
+               vnc(host0)
              }
            }
          })
@@ -1077,13 +1129,14 @@ relative=False) }}&lt;/div&gt;
 
 
          function vnc(obj){
-         
+
              // Build the websocket URL used to connect
              let url;
 
      
-             url = obj.url
+             url = obj.novnc_url
      
+
              // Creating a new RFB object will start a new connection
              rfb = new RFB(document.getElementById('screen'), url,
                                { 

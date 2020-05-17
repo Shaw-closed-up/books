@@ -41,47 +41,20 @@
 
   </head>
   <body class="bg-light" style="padding-top: 84px;">
-      <!-- NAVBAR
-    ================================================== -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
-      <div class="container-fluid" style="height: 42px;">
+      <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar text-center">
+      <a class="navbar-brand mr-0 mr-md-2" aria-label="引导程序" href="/">
+        <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+      </a>
+      <ul class="navbar-nav ml-md-auto">
+        <li class="nav-item">
+          <a href="/" class="nav-link pl-2 pr-1 mx-1 py-3 my-n2">首页</a>
+        </li>
+        <li class="nav-item">
+          <a href="/" class="nav-link pl-2 pr-1 mx-1 py-3 my-n2">课程页面</a>
+        </li>
+      </ul>
+    </header>
 
-        <!-- Brand -->
-        <a class="navbar-brand" href="../index.html">
-
-          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
-        </a>
-
-        <!-- Toggler -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Collapse -->
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-
-          <!-- Toggler -->
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fe fe-x"></i>
-          </button>
-
-          <!-- Navigation -->
-          <ul class="navbar-nav ml-auto">
-         
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
-            </li>
-            <li class="nav-item dropdown">
-            
-            </li>
-          </ul>
-        </div>
-
-      </div>
-    </nav>
 
 
     <!-- BREADCRUMB
@@ -159,7 +132,7 @@
 <h3>Windows环境(不推荐)</h3>
 <p>可以在<a href="https://www.python.org">Python官方网站</a>下载到Python的Windows安装程序（exe文件），需要注意的是如果在Windows 7环境下安装Python 3.x，需要先安装Service Pack 1补丁包（可以通过一些工具软件自动安装系统补丁的功能来安装），安装过程建议勾选“Add Python 3.6 to PATH”（将Python 3.6添加到PATH环境变量）并选择自定义安装，在设置“Optional Features”界面最好将“pip”、“tcl/tk”、“Python test suite”等项全部勾选上。强烈建议使用自定义的安装路径并保证路径中没有中文。安装完成会看到“Setup was successful”的提示。如果稍后运行Python程序时，出现因为缺失一些动态链接库文件而导致Python解释器无法工作的问题，可以按照后面说的方法加以解决。如果系统显示api-ms-win-crt*.dll文件缺失，可以参照<a href="">《api-ms-win-crt*.dll缺失原因分析和解决方法》</a>一文讲解的方法进行处理或者直接在<a href="https://www.microsoft.com/zh-cn/download/details.aspx?id=48145">微软官网</a>下载Visual C++ Redistributable for Visual Studio 2015文件进行修复；如果是因为更新Windows的DirectX之后导致某些动态链接库文件缺失问题，可以下载一个DirectX修复工具进行修复。</p>
           </div>
-          <backend type="k"></backend>
+          <backend type='k'></backend>
           <code class=gatsby-kernelname data-language=python></code>
         </div> <!-- / .row -->
       </div>

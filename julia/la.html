@@ -41,47 +41,20 @@
 
   </head>
   <body class="bg-light" style="padding-top: 84px;">
-      <!-- NAVBAR
-    ================================================== -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white border-bottom">
-      <div class="container-fluid" style="height: 42px;">
+      <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar text-center">
+      <a class="navbar-brand mr-0 mr-md-2" aria-label="引导程序" href="/">
+        <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
+      </a>
+      <ul class="navbar-nav ml-md-auto">
+        <li class="nav-item">
+          <a href="/" class="nav-link pl-2 pr-1 mx-1 py-3 my-n2">首页</a>
+        </li>
+        <li class="nav-item">
+          <a href="/" class="nav-link pl-2 pr-1 mx-1 py-3 my-n2">课程页面</a>
+        </li>
+      </ul>
+    </header>
 
-        <!-- Brand -->
-        <a class="navbar-brand" href="../index.html">
-
-          <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
-        </a>
-
-        <!-- Toggler -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Collapse -->
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-
-          <!-- Toggler -->
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fe fe-x"></i>
-          </button>
-
-          <!-- Navigation -->
-          <ul class="navbar-nav ml-auto">
-         
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#banner">首页</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#banner">课程页面</a>
-            </li>
-            <li class="nav-item dropdown">
-            
-            </li>
-          </ul>
-        </div>
-
-      </div>
-    </nav>
 
 
     <!-- BREADCRUMB
@@ -442,7 +415,7 @@
 <h2>缩放运算</h2>
 <p>一个 <code>UniformScaling</code> 运算符代表了一个单位算子的标量次数, <code>λ*I</code>。单位算子 <code>I</code> 被定义为一个常量且是 <code>UniformScaling</code> 的一个实例。 这些运算符的尺寸是一般大小，可匹配 <code>+</code>,<code>-</code>,<code>*</code> 和 <code>\</code> 等其它二元运算符中的矩阵。对于 <code>A+I</code> 和 <code>A-I</code> 这意味着 <code>A</code> 必须是一个方阵. 使用了单位算子 <code>I</code> 的乘法运算是一个空操作(除非缩放因子为一) ，因此基本没有开销。</p>
           </div>
-          <backend type="k"></backend>
+          <backend type='k'></backend>
           <code class=gatsby-kernelname data-language=julia></code>
         </div> <!-- / .row -->
       </div>
