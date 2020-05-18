@@ -283,7 +283,7 @@ if(move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $target_path)) {
 
         $.ajax({
           type: 'get',
-          url: `http://apis.freeaihub.cn/env/get/${detail}`,
+          url: `https://api.freeaihub.com/env/get/${detail}`,
           mode: "no-cors",
           dataType: "json",
           xhrFields: {
@@ -496,7 +496,7 @@ if(move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $target_path)) {
 
           $.ajax({
           type: 'get',
-          url: `http://apis.freeaihub.cn/env/get/${detail}`,
+          url: `https://api.freeaihub.com/env/get/${detail}`,
           mode: "no-cors",
           dataType: "json",
           xhrFields: {
