@@ -1,3 +1,7 @@
+#pip3 install markdown -i https://pypi.tuna.tsinghua.edu.cn/simple/
+#or
+#pip install markdown -i https://pypi.tuna.tsinghua.edu.cn/simple/
+
 import os,json
 import markdown as md
 import codecs
