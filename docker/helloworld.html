@@ -14,7 +14,14 @@
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/css/prettify.css" type="text/css" media="all">
 
-    <title>Docker 跑通第一个Docker容器 - FreeAIHub</title>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+      
+    <title>Docker 运行第一个Docker容器 - FreeAIHub</title>
   </head>
   <body class="bg-light">
         <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar text-center">
@@ -52,7 +59,7 @@
 <li><a href=./setup.html>Docker 环境安装及配置</a></li>
 <li><a href=./arch.html>Docker 架构</a></li>
 <li><a href=./conception.html>Docker 核心概念</a></li>
-<li><a href=./helloworld.html>Docker 跑通第一个Docker容器</a></li>
+<li><a href=./helloworld.html>Docker 运行第一个Docker容器</a></li>
 <li><a href=./container.html>Docker 容器操作(container)</a></li>
 <li><a href=./container-daemon.html>Docker 容器以后台方式运行</a></li>
 <li><a href=./image.html>Docker 镜像操作(image)</a></li>
@@ -69,20 +76,28 @@
           </div>
           <div class="entry-content col-md-9 col-xl-5 py-md-3 pl-md-5 bd-content">
               
-            <h1>Docker 跑通第一个Docker容器</h1>
+            <h1>Docker 运行第一个Docker容器</h1>
 <p>Docker 允许你在容器内运行应用程序， 使用 <strong>docker run</strong> 命令来在容器内运行一个应用程序。</p>
 <h3>使用容器输出Hello world</h3>
-<pre><code class="bash">docker run --rm --name c0 ubuntu:20.04 echo &quot;Hello world&quot;
+<p>为了节省时间，让我们直接从本地导入ubuntu镜像</p>
+<pre><code class="bash">docker load &lt; /share/images/ubuntu.20.04.tar
+</code></pre>
+
+<p>然后使用该镜像运行容器，并使其输出Hello World!</p>
+<pre><code class="bash">docker run --rm --name c1 --hostname c0 ubuntu:20.04 echo &quot;Hello World!&quot;
 </code></pre>
 
 <p>各个参数解析：</p>
 <ul>
 <li><strong>docker:</strong> Docker 的二进制执行文件。</li>
 <li><strong>run:</strong> 与前面的 docker 组合来运行一个容器。</li>
+<li><strong>rm:</strong>代表该容器一旦执行结束即被删除</li>
+<li><strong>name</strong>:指定容器名</li>
+<li><strong>hostanme</strong>:指定主机名</li>
 <li><strong>ubuntu:20.04</strong> 指定要运行的镜像，Docker 首先从本地主机上查找镜像是否存在，如果不存在，Docker 就会从镜像仓库 Docker Hub 下载公共镜像。其中<code>ubuntu</code>是镜像名,<code>20.04</code>是该镜像的版本号。镜像名与版本号之间使用<code>:</code>进行分割。如果省略了版本号只写镜像名，则镜像版本号自动填充为<code>latest</code>，意为最新版。但强烈建议，务必指定镜像的版本号，防止出现版本冲突，环境依赖等问题。</li>
-<li>echo "Hello world":** 在启动的容器里执行的命令</li>
+<li><strong>echo</strong>：容器中的可执行命令 "Hello World！"是该命令的参数</li>
 </ul>
-<p>以上命令完整的意思可以解释为：Docker 以 ubuntu20.04 镜像创建一个新容器，然后在容器里执行 bin/echo "Hello world"，然后输出结果。</p>
+<p>以上命令完整的意思可以解释为：Docker 以 ubuntu20.04 镜像创建一个新容器，然后在容器里执行echo命令，输出 "Hello world"。</p>
 <h2>运行交互式的容器</h2>
 <p>我们通过 docker 的两个参数 -i -t，让 docker 运行的容器实现<strong>"对话"</strong>的能力：</p>
 <pre><code class="bash">docker run -i -t --name c1 --hostname c1 ubuntu:20.04 bash
@@ -95,8 +110,8 @@
 <li><code>--name</code>:是指新建容器的名称</li>
 <li><code>--hostname</code>:是指新建容器的主机名</li>
 </ul>
-<p>注意第二行 <code>root@c1:/#</code>，此时我们已进入一个 ubuntu 20.04系统的容器</p>
-<p>我们尝试在容器中运行命令 cat /etc/issue查看当前系统的版本信息</p>
+<p>注意看 <code>root@c1:/#</code>，此时我们已进入一个 ubuntu 20.04镜像，hostname为c1,容器名也为c1的容器里了</p>
+<p>我们尝试在容器中运行命令 cat /etc/issue查看当前系统的版本信息,会输出 <code>Ubuntu 20.04 LTS \n \l</code></p>
 <pre><code class="bash">cat /etc/issue
 </code></pre>
 
@@ -106,24 +121,22 @@
 
 <p>注意看命令行提示符变成 <code>root@{host0.hostname}:/#</code>，这表明我们已经退出了c1这个容器，返回到当前系统环境中。</p>
 <h2>停止容器</h2>
-<p>我们使用 <strong>docker stop</strong> 命令来停止容器:</p>
-<p>通过 <strong>docker ps</strong> 查看，容器已经停止工作:</p>
-<pre><code class="bash">docker ps
+<p>我们通过 <strong>docker ps -a</strong>命令查看，所有正在运行中的容器</p>
+<pre><code class="bash">docker ps -a #检查所有容器，无论它是否正在运行
 </code></pre>
 
-<p>可以看到容器已经不在了。</p>
-<p>也可以用下面的命令来停止:</p>
-<pre><code class="bash">docker stop c2
-docker ps -a #检查所有窗口，无论是否在运行
+<p>我们可以看到c1已经退出了。</p>
+<p>我们可以使用 <strong>docker stop</strong> 命令来停止正在运行中的容器</p>
+<pre><code class="bash">docker stop c1
 </code></pre>
 
 <h2>删除已经停止的容器</h2>
-<pre><code class="bash">docker rm c2
-docker ps -a #检查所有窗口，无论是否在运行
+<pre><code class="bash">docker rm c1
+docker ps -a #检查是否还有c1这个容器
 </code></pre>
             
           </div>
-          <backend type='c'></backend>
+          <backend type='v'></backend>
           <div class="d-none d-xl-block col-xl-5 bd-toc xterm-wrapper overflow-hidden">
              <!-- 导航 -->
             <ul class="nav nav-tabs nav-float" id="myTab">

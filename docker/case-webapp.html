@@ -14,6 +14,13 @@
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/css/prettify.css" type="text/css" media="all">
 
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+      
     <title>Docker Web应用实例 - FreeAIHub</title>
   </head>
   <body class="bg-light">
@@ -52,7 +59,7 @@
 <li><a href=./setup.html>Docker 环境安装及配置</a></li>
 <li><a href=./arch.html>Docker 架构</a></li>
 <li><a href=./conception.html>Docker 核心概念</a></li>
-<li><a href=./helloworld.html>Docker 跑通第一个Docker容器</a></li>
+<li><a href=./helloworld.html>Docker 运行第一个Docker容器</a></li>
 <li><a href=./container.html>Docker 容器操作(container)</a></li>
 <li><a href=./container-daemon.html>Docker 容器以后台方式运行</a></li>
 <li><a href=./image.html>Docker 镜像操作(image)</a></li>
@@ -72,14 +79,14 @@
             <h1>Docker Web应用实例</h1>
 <p>我们尝试使用 docker 构建一个 web 应用程序。</p>
 <p>我们将在docker容器中运行一个 Python Flask 应用来运行一个web应用。</p>
-<pre><code class="bash">docker pull training/webapp  # 载入镜像
-docker run -d -P --name casewebapp training/webapp python app.py
+<pre><code class="bash">docker load &lt; /share/images/training.webapp.tar  # 载入镜像
+docker run -d -p 5000:5000 --name casewebapp training/webapp python app.py
 </code></pre>
 
 <p>参数说明:</p>
 <ul>
 <li><strong>-d:</strong>让容器在后台运行。</li>
-<li><strong>-P:</strong>将容器内部使用的网络端口映射到我们使用的主机上。</li>
+<li><strong>-p:</strong>将容器内部使用的网络端口映射到我们使用的主机上。</li>
 <li><strong>--name</strong>:创建容器名为<code>casewebapp</code></li>
 </ul>
 <h2>查看 WEB 应用容器</h2>
@@ -89,20 +96,19 @@ docker run -d -P --name casewebapp training/webapp python app.py
 
 <p>注意，这里多了端口信息。</p>
 <pre><code>PORTS
-0.0.0.0:32769-&gt;5000/tcp
+0.0.0.0:5000-&gt;5000/tcp
 </code></pre>
 
-<p>Docker 开放了 5000 端口（默认 Python Flask 端口）映射到主机端口 32769 上。</p>
-<p>这时我们可以通过浏览器访问WEB应用</p>
-<p>我们也可以通过 -p 参数来设置不一样的端口：</p>
-<pre><code class="bash">docker run -d -p 5000:5000 training/webapp python app.py
+<p>Docker 开放了 5000 端口（默认 Python Flask 端口）映射到主机端口 5000上。</p>
+<p>这时，我们就可以通过访问本地主机的 5000 端口，从而访问到容器<code>casewebapp</code>的5000端口。</p>
+<p>验证</p>
+<pre><code>curl localhost:5000
 </code></pre>
 
 <p><strong>docker ps</strong>查看正在运行的容器</p>
 <pre><code class="bash">docker ps
 </code></pre>
 
-<p>容器内部的 5000 端口映射到我们本地主机的 5000 端口上。</p>
 <h2>网络端口的快捷方式</h2>
 <p>通过 <strong>docker ps</strong> 命令可以查看到容器的端口映射，<strong>docker</strong> 还提供了另一个快捷方式 <strong>docker port</strong>，使用 <strong>docker port</strong> 可以查看指定 （ID 或者名字）容器的某个确定端口映射到宿主机的端口号。</p>
 <p>上面我们创建的 web 应用容器名字为 <strong>casewebapp</strong>。</p>
@@ -147,11 +153,11 @@ docker run -d -P --name casewebapp training/webapp python app.py
 </code></pre>
 
 <p>删除容器时，容器必须是停止状态，否则会报如下类似错误</p>
-<pre><code>Error response from daemon: You cannot remove a running container 
+<pre><code class="response">Error response from daemon: You cannot remove a running container 
 </code></pre>
             
           </div>
-          <backend type='c'></backend>
+          <backend type='v'></backend>
           <div class="d-none d-xl-block col-xl-5 bd-toc xterm-wrapper overflow-hidden">
              <!-- 导航 -->
             <ul class="nav nav-tabs nav-float" id="myTab">

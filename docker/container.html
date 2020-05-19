@@ -14,6 +14,13 @@
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/css/prettify.css" type="text/css" media="all">
 
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+      
     <title>Docker 容器操作(container) - FreeAIHub</title>
   </head>
   <body class="bg-light">
@@ -52,7 +59,7 @@
 <li><a href=./setup.html>Docker 环境安装及配置</a></li>
 <li><a href=./arch.html>Docker 架构</a></li>
 <li><a href=./conception.html>Docker 核心概念</a></li>
-<li><a href=./helloworld.html>Docker 跑通第一个Docker容器</a></li>
+<li><a href=./helloworld.html>Docker 运行第一个Docker容器</a></li>
 <li><a href=./container.html>Docker 容器操作(container)</a></li>
 <li><a href=./container-daemon.html>Docker 容器以后台方式运行</a></li>
 <li><a href=./image.html>Docker 镜像操作(image)</a></li>
@@ -82,20 +89,20 @@
 
 <h2>容器使用</h2>
 <h3>获取镜像</h3>
-<p>如果我们本地没有ubuntu:16.04镜像，我们可以使用 docker pull 命令来载入 ubuntu 镜像：</p>
-<pre><code class="bash">docker pull ubuntu:16.04
+<p>如果我们本地没有ubuntu:20.04镜像，我们可以使用 docker pull 命令来载入 ubuntu 镜像：</p>
+<pre><code class="bash">docker pull ubuntu:20.04
 </code></pre>
 
 <h3>启动容器</h3>
 <p>以下命令使用 ubuntu 镜像启动一个容器，参数为以命令行模式进入该容器：</p>
-<pre><code class="bash">docker run -it --name c1 ubuntu /bin/bash
+<pre><code class="bash">docker run -it --name c20 ubuntu:20.04 /bin/bash
 </code></pre>
 
 <p>参数说明：</p>
 <ul>
 <li><strong>-i</strong>: 交互式操作。</li>
 <li><strong>-t</strong>: 终端。</li>
-<li><strong>ubuntu</strong>: ubuntu 镜像。</li>
+<li><strong>ubuntu:16.04</strong>: ubuntu 镜像，版本为16.04</li>
 <li><strong>/bin/bash</strong>：放在镜像名后的是命令，这里我们希望有个交互式 Shell，因此用的是 /bin/bash。</li>
 </ul>
 <p>要退出终端，直接输入 <strong>exit</strong>:</p>
@@ -104,11 +111,11 @@
 
 <h3>停止运行的容器</h3>
 <p>停止容器的命令如下：</p>
-<pre><code class="bash">docker stop c2 #c2为容器名或容器ID都可以
+<pre><code class="bash">docker stop c20 #c20为容器名或容器ID都可以
 </code></pre>
 
 <p>停止的容器可以通过 docker restart 重启：</p>
-<pre><code class="bash">docker restart c2 #c2为容器名或容器ID都可以
+<pre><code class="bash">docker restart c20 #c20为容器名或容器ID都可以
 </code></pre>
 
 <h3>启动已停止运行的容器</h3>
@@ -117,7 +124,7 @@
 </code></pre>
 
 <p>使用 docker start 启动一个已停止的容器：</p>
-<pre><code class="bash">docker start c2
+<pre><code class="bash">docker start c20
 </code></pre>
 
 <p>在使用 <strong>-d</strong> 参数时，容器启动后会进入后台。此时想要进入容器，可以通过以下指令进入：</p>
@@ -127,13 +134,13 @@
 </ul>
 <p><strong>attach 命令</strong></p>
 <p>下面演示了使用 docker attach 命令。</p>
-<pre><code>docker attach c3 
+<pre><code class="bash">docker attach c20
 </code></pre>
 
 <p><strong>注意：</strong> 如果从这个容器退出，会导致容器的停止。</p>
 <p><strong>exec 命令</strong></p>
 <p>下面演示了使用 docker exec 命令。</p>
-<pre><code>docker exec -it c3 /bin/bash
+<pre><code class="bash">docker exec -it c20 /bin/bash
 </code></pre>
 
 <p><strong>注意：</strong> 如果从这个容器退出，不会导致容器的停止，这就是为什么推荐大家使用 <strong>docker exec</strong> 的原因。</p>
@@ -141,32 +148,33 @@
 <h3>导出和导入容器</h3>
 <p><strong>导出容器</strong></p>
 <p>如果要导出本地某个容器，可以使用 <strong>docker export</strong> 命令。</p>
-<pre><code class="bash">docker export c3 &gt; c3.tar
+<pre><code class="bash">docker export c20 &gt; ~/c20.tar
 </code></pre>
 
-<p>导出容器 c3快照到本地文件 c3.tar。这样将导出容器快照到本地文件。</p>
+<p>导出容器 c20快照到本地文件 c20.tar。这样将导出容器快照到本地文件。</p>
 <p><strong>导入容器快照</strong></p>
-<p>可以使用 docker import 从容器快照文件中再导入为镜像，以下实例将快照文件 ubuntu.tar 导入到镜像 test/ubuntu:v1:</p>
-<pre><code class="bash">cat c3.tar | docker import - test/ubuntu:v1
-</code></pre>
-
-<p>此外，也可以通过指定 URL 或者某个目录来导入，例如：</p>
-<pre><code class="bash">docker import http://example.com/exampleimage.tgz example/imagerepo
+<p>可以使用 docker import 从容器快照文件中再导入为镜像，以下实例将快照文件 redis.tar 导入到镜像 redis:latest:</p>
+<pre><code class="bash">docker import /share/images/redis.tar redis:latest
+docker images #验证
 </code></pre>
 
 <h3>删除容器</h3>
 <p>删除容器使用 <strong>docker rm</strong> 命令：</p>
-<pre><code class="bash">docker rm -f c3
-#参数 -f 为强制删除
+<pre><code class="bash">docker rm -f c20
 #要删除一个容器，其必须在停止的状态
+#参数 -f 代表为强制删除
 </code></pre>
 
 <p>下面的命令可以清理掉所有处于终止状态的容器。</p>
 <pre><code class="bash">docker container prune
 </code></pre>
+
+<pre><code class="response">WARNING! This will remove all stopped containers.
+Are you sure you want to continue? [y/N]
+</code></pre>
             
           </div>
-          <backend type='c'></backend>
+          <backend type='v'></backend>
           <div class="d-none d-xl-block col-xl-5 bd-toc xterm-wrapper overflow-hidden">
              <!-- 导航 -->
             <ul class="nav nav-tabs nav-float" id="myTab">

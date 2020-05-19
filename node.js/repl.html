@@ -14,7 +14,14 @@
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/css/prettify.css" type="text/css" media="all">
 
-    <title>node.js Web模块 - FreeAIHub</title>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+      
+    <title>node.js 交互式解释器REPL - FreeAIHub</title>
   </head>
   <body class="bg-light">
         <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar text-center">
@@ -71,115 +78,79 @@
           </div>
           <div class="entry-content col-md-9 col-xl-5 py-md-3 pl-md-5 bd-content">
               
-            <h1>node.js Web模块</h1>
-<h2>什么是Web服务器?</h2>
-<p>Web服务器是处理由HTTP客户端发送的，如web浏览器的HTTP请求的软件应用程序，并返回响应于客户端网页. Web服务器通常伴随着图片，样式表和脚本的HTML文档。</p>
-<p>大多数Web服务器支持服务器端脚本使用脚本语言或重定向到其执行从数据库中获取数据的特定任务的应用程序服务器，执行复杂的逻辑等。然后通过Web服务器发送结果到HTTP客户端。</p>
-<p>Apache web服务器是最常用的网络服务器中的一个。它是一个开源项目。</p>
-<h2>Web应用程序体系结构</h2>
-<p>Web应用程序通常分为四个层次：</p>
-<p><img alt="Web Architecture" src="./images/weblayers.jpg" /></p>
+            <h1>node.js 交互式解释器REPL</h1>
+<p>Node.js REPL(Read Eval Print Loop:交互式解释器) 表示一个电脑的环境，类似 Window 系统的终端或 Unix/Linux shell，我们可以在终端中输入命令，并接收系统的响应。</p>
+<p>REPL 的交互式的编程环境可以实时的验证你所编写的代码，非常适合于验证 Node.js 和 JavaScript 的相关 API。</p>
+<p>Node 自带了交互式解释器，可以执行以下任务：</p>
 <ul>
-<li><strong>Client</strong> - 此层由Web浏览器，移动浏览器或应用程序，可以使HTTP请求到万维网服务器。</li>
-<li><strong>Server</strong> - 这一层包括可拦截的要求由客户通过Web服务器响应。</li>
-<li><strong>Business</strong> - 此层利用Web服务器执行所需的处理的应用程序服务器。这层交互以经由数据的基础上或一些外部程序数据层。</li>
-<li><strong>Data</strong> - 此层由数据库或任何的数据来源。</li>
+<li><strong>读取</strong> - 读取用户输入，解析输入了Javascript 数据结构并存储在内存中。</li>
+<li><strong>执行</strong> - 执行输入的数据结构</li>
+<li><strong>打印</strong> - 输出结果</li>
+<li><strong>循环</strong> - 循环操作以上步骤直到用户两次按下 <strong>ctrl-c</strong> 按钮退出。</li>
 </ul>
-<h2>使用Node创建Web服务器</h2>
-<p>Node.js提供了可以用于创建任何HTTP服务器的客户端的HTTP模块。以下是HTTP服务器的最低限度的结构，它会在80端口侦听。</p>
-<p>文件名:webserver.js</p>
-<pre><code class="js">var http = require('http');
-var fs = require('fs');
-var url = require('url');
-
-
-// Create a server
-http.createServer( function (request, response) {  
-   // Parse the request containing file name
-   var pathname = url.parse(request.url).pathname;
-
-   // Print the name of the file for which request is made.
-   console.log(&quot;Request for &quot; + pathname + &quot; received.&quot;);
-
-   // Read the requested file content from file system
-   fs.readFile(pathname.substr(1), function (err, data) {
-      if (err) {
-         console.log(err);
-         // HTTP Status: 404 : NOT FOUND
-         // Content Type: text/plain
-         response.writeHead(404, {'Content-Type': 'text/html'});
-      }else{    
-         //Page found     
-         // HTTP Status: 200 : OK
-         // Content Type: text/plain
-         response.writeHead(200, {'Content-Type': 'text/html'});    
-
-         // Write the content of the file to response body
-         response.write(data.toString());       
-      }
-      // Send the response body 
-      response.end();
-   });   
-}).listen(8081);
-
-// Console will print the message
-console.log('Server running at http://0.0.0.0:80/');
+<p><strong>Node 的交互式解释器可以很好的调试 Javascript 代码。</strong></p>
+<h2>开始学习 REPL</h2>
+<p>环境准备</p>
+<p>我们可以输入以下命令来启动 Node 的终端后，我们就可以在 <code>&gt;</code>后输入简单的表达式，并按下回车键来计算结果。</p>
+<pre><code class="bash">node
 </code></pre>
 
-<p>接下来，让我们创建以下名为index.html的HTML文件在创建server.js的同一目录下</p>
-<p>文件名:index.html</p>
-<pre><code class="html">&lt;html&gt;
-&lt;head&gt;
-&lt;title&gt;Sample Page&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-Hello node.js!
-&lt;/body&gt;
-&lt;/html&gt;
+<h3>简单的表达式运算</h3>
+<p>接下来让我们在 Node.js REPL 的命令行窗口中执行简单的数学运算：</p>
+<pre><code class="javascript">1 + 20
 </code></pre>
 
-<p><strong>现在运行这个node.js web服务</strong></p>
-<pre><code>node /share/lesson/node.js/webserver.js
+<pre><code class="javascript">21*2
 </code></pre>
 
-<p><strong>从web端请求Node.js服务器</strong></p>
-<p>在浏览器中打开后端的web访问地址。{动态地址}</p>
-<p><strong>同时在服务端查看日志输出了什么</strong></p>
-<h2>使用Node创建Web客户端</h2>
-<p>Web客户端可以使用HTTP模块创建。让我们来看看下面的例子。</p>
-<p>请修改以下文件中的host，改为您当前后端的web访问地址。</p>
-<p>文件名:client.js</p>
-<pre><code class="js">var http = require('http');
-
-// Options to be used by request 
-var options = {
-   host: '需要修改',
-   port: '80',
-   path: '/index.html'  
-};
-
-// Callback function is used to deal with response
-var callback = function(response){
-   // Continuously update stream with data
-   var body = '';
-   response.on('data', function(data) {
-      body += data;
-   });
-
-   response.on('end', function() {
-      // Data received completely.
-      console.log(body);
-   });
-}
-// Make a request to the server
-var req = http.request(options, callback);
-req.end();
+<pre><code class="javascript">42/4
 </code></pre>
 
-<pre><code class="bash">node /share/lesson/node.js/client.js
+<h3>使用变量</h3>
+<p>你可以将数据存储在变量中，并在你需要的使用它。</p>
+<p>变量声明需要使用 <strong>var</strong> 关键字，如果没有使用 var 关键字变量会直接打印出来。</p>
+<p>使用 <strong>var</strong> 关键字的变量可以使用 console.log() 来输出变量。</p>
+<pre><code class="js">x = 10
+var y = 10
+x + y
+console.log(&quot;Hello, Node.js&quot;)
 </code></pre>
 
-<p><strong>然后在服务端查看日志输出了什么</strong></p>
+<h3>多行表达式</h3>
+<p>Node REPL 支持输入多行表达式，这就有点类似 JavaScript。接下来让我们来执行一个 do-while 循环：</p>
+<pre><code class="js">var x = 0
+undefined
+do {
+x++;
+console.log(&quot;x: &quot; + x);
+} while ( x &lt; 100 );
+</code></pre>
+
+<p>其中<code>...</code> 三个点的符号是系统自动生成的，回车换行后即可。Node 会自动检测是否为连续的表达式。</p>
+<h3>下划线(_)变量</h3>
+<p>你可以使用下划线(_)获取表达式的运算结果：</p>
+<pre><code class="js">var x = 10
+var y = 20
+x + y
+var sum = _
+console.log(sum)
+</code></pre>
+
+<h2>退出 REPL</h2>
+<p>前面我们已经提到按下两次 <strong>ctrl + c</strong> 建就能退出 REPL:</p>
+<h2>REPL 命令</h2>
+<ul>
+<li><strong>ctrl + c</strong> - 退出当前终端。</li>
+<li><strong>ctrl + c 按下两次</strong> - 退出 Node REPL。</li>
+<li><strong>ctrl + d</strong> - 退出 Node REPL.</li>
+<li><strong>向上/向下 键</strong> - 查看输入的历史命令</li>
+<li><strong>tab 键</strong> - 列出当前命令</li>
+<li><strong>.help</strong> - 列出使用命令</li>
+<li><strong>.break</strong> - 退出多行表达式</li>
+<li><strong>.clear</strong> - 退出多行表达式</li>
+<li><strong>.save *filename*</strong> - 保存当前的 Node REPL 会话到指定文件</li>
+<li><strong>.load *filename*</strong> - 载入当前 Node REPL 会话的文件内容。</li>
+</ul>
             
           </div>
           <backend type='k'></backend>

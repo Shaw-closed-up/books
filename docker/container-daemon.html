@@ -14,6 +14,13 @@
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/css/prettify.css" type="text/css" media="all">
 
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+      
     <title>Docker 容器以后台方式运行 - FreeAIHub</title>
   </head>
   <body class="bg-light">
@@ -52,7 +59,7 @@
 <li><a href=./setup.html>Docker 环境安装及配置</a></li>
 <li><a href=./arch.html>Docker 架构</a></li>
 <li><a href=./conception.html>Docker 核心概念</a></li>
-<li><a href=./helloworld.html>Docker 跑通第一个Docker容器</a></li>
+<li><a href=./helloworld.html>Docker 运行第一个Docker容器</a></li>
 <li><a href=./container.html>Docker 容器操作(container)</a></li>
 <li><a href=./container-daemon.html>Docker 容器以后台方式运行</a></li>
 <li><a href=./image.html>Docker 镜像操作(image)</a></li>
@@ -70,14 +77,11 @@
           <div class="entry-content col-md-9 col-xl-5 py-md-3 pl-md-5 bd-content">
               
             <h1>Docker 容器以后台方式运行</h1>
+<h2>以后台方式运行容器</h2>
 <p>在大部分的场景下，我们希望 docker 的服务是在后台运行的，我们可以过 <strong>-d</strong> 指定容器的运行模式。</p>
-<pre><code class="bash">docker run -itd --name c3 ubuntu:20.04 /bin/bash
-</code></pre>
-
 <p><strong>注：</strong>加了 <strong>-d</strong> 参数默认不会进入容器，想要进入容器需要使用指令 <strong>docker exec</strong>（下面会介绍到）。</p>
-<h3>进入容器</h3>
 <p>使用以下命令创建一个以进程方式运行的容器</p>
-<pre><code class="bash">docker run -d --name c2 ubuntu:20.04 /bin/sh -c &quot;while true; do echo hello world; sleep 1; done&quot;
+<pre><code class="bash">docker run -d --name c30 ubuntu:20.04 /bin/sh -c &quot;while true; do echo hello world！; sleep 3; done&quot;
 </code></pre>
 
 <p>在输出中，我们没有看到期望的 "hello world"，而是一串长字符</p>
@@ -104,15 +108,18 @@
 </ul>
 <p><strong>PORTS:</strong> 容器的端口信息和使用的连接类型（tcp\udp）。</p>
 <p><strong>NAMES:</strong> 自动分配的容器名称。</p>
-<p>在宿主主机内使用 <strong>docker logs</strong> 命令，查看容器内的标准输出：</p>
-<pre><code class="bash">docker logs c2
-docker logs c2
+<p>在宿主主机内使用 多次使用<strong>docker logs</strong> 命令，查看容器内的标准输出：</p>
+<pre><code class="bash">docker logs c30
 </code></pre>
 
-<h2></h2>
+<h2>进入后台运行中的容器</h2>
+<pre><code class="bash">docker exec -it c30 bash
+</code></pre>
+
+<p>这样我们就可以进入到已经在后台中运行的容器，执行各类操作了。</p>
             
           </div>
-          <backend type='c'></backend>
+          <backend type='v'></backend>
           <div class="d-none d-xl-block col-xl-5 bd-toc xterm-wrapper overflow-hidden">
              <!-- 导航 -->
             <ul class="nav nav-tabs nav-float" id="myTab">

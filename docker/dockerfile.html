@@ -14,6 +14,13 @@
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/css/prettify.css" type="text/css" media="all">
 
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+      
     <title>Docker 构建镜像(dockerfile) - FreeAIHub</title>
   </head>
   <body class="bg-light">
@@ -52,7 +59,7 @@
 <li><a href=./setup.html>Docker 环境安装及配置</a></li>
 <li><a href=./arch.html>Docker 架构</a></li>
 <li><a href=./conception.html>Docker 核心概念</a></li>
-<li><a href=./helloworld.html>Docker 跑通第一个Docker容器</a></li>
+<li><a href=./helloworld.html>Docker 运行第一个Docker容器</a></li>
 <li><a href=./container.html>Docker 容器操作(container)</a></li>
 <li><a href=./container-daemon.html>Docker 容器以后台方式运行</a></li>
 <li><a href=./image.html>Docker 镜像操作(image)</a></li>
@@ -77,19 +84,21 @@
 <pre><code class="bash">cd ~
 cat &gt; Dockerfile &lt;&lt; EOF 
 FROM ubuntu:20.04
-RUN /bin/echo 'root:123456' |chpasswd
 RUN echo 'me' &gt; /root/me
+RUN useradd me
 EXPOSE  22
 EXPOSE  80
 CMD /usr/sbin/sshd -D
 EOF
+
 </code></pre>
 
 <p>每一个指令都会在镜像上创建一个新的层，每一个指令的前缀都必须是大写的。</p>
 <p>第一条FROM，指定使用哪个镜像源</p>
 <p>RUN 指令告诉docker 在镜像内执行命令，安装了什么。。。</p>
 <p>然后，我们使用 Dockerfile 文件，通过<code>docker build</code>命令来构建一个镜像。</p>
-<pre><code class="bash">docker build -t ubuntu:20.04.me .
+<pre><code class="bash">cd ~
+docker build -f Dockerfile -t ubuntu:20.04.me .
 </code></pre>
 
 <p>参数说明：</p>
@@ -97,7 +106,7 @@ EOF
 <li><strong>-t</strong> ：指定要创建的目标镜像名</li>
 <li><strong>.</strong> ：Dockerfile 文件所在目录，可以指定Dockerfile 的绝对路径</li>
 </ul>
-<p>使用docker images 查看创建的镜像已经在列表中存在,镜像ID为860c279d2fec</p>
+<p>使用docker images 查看创建的镜像已经在列表中存在,镜像ID为fc9bfdf0f66e</p>
 <pre><code class="bash">docker images 
 </code></pre>
 
@@ -106,20 +115,22 @@ EOF
 </code></pre>
 
 <pre><code class="bash">cat /root/me
+#切换用户为me
+su me
 </code></pre>
 
-<p>从上面看到新镜像已经包含我们在构建镜像时创建的文件<code>/root/me</code></p>
+<p>从上面看到新镜像已经包含我们在构建镜像时创建的文件<code>/root/me</code>,并可以成功进行用户切换。说明构建文件工作正常。</p>
 <h2>Dockerfile 指令详解</h2>
 <h3>COPY</h3>
 <p>复制指令，从上下文目录中复制文件或者目录到容器里指定路径。</p>
 <p>格式：</p>
-<pre><code>COPY [--chown=&lt;user&gt;:&lt;group&gt;] &lt;源路径1&gt;...  &lt;目标路径&gt;
+<pre><code class="bash">COPY [--chown=&lt;user&gt;:&lt;group&gt;] &lt;源路径1&gt;...  &lt;目标路径&gt;
 COPY [--chown=&lt;user&gt;:&lt;group&gt;] [&quot;&lt;源路径1&gt;&quot;,...  &quot;&lt;目标路径&gt;&quot;]
 </code></pre>
 
 <p><strong>[--chown=:]</strong>：可选参数，用户改变复制到容器内文件的拥有者和属组。</p>
 <p><strong>&lt;源路径&gt;</strong>：源文件或者源目录，这里可以是通配符表达式，其通配符规则要满足 Go 的 filepath.Match 规则。例如：</p>
-<pre><code>COPY hom* /mydir/
+<pre><code class="bash">COPY hom* /mydir/
 COPY hom?.txt /mydir/
 </code></pre>
 
@@ -139,7 +150,7 @@ COPY hom?.txt /mydir/
 <p><strong>作用</strong>：为启动的容器指定默认要运行的程序，程序运行结束，容器也就结束。CMD 指令指定的程序可被 docker run 命令行参数中指定要运行的程序所覆盖。</p>
 <p><strong>注意</strong>：如果 Dockerfile 中如果存在多个 CMD 指令，仅最后一个生效。</p>
 <p>格式：</p>
-<pre><code>CMD &lt;shell 命令&gt; 
+<pre><code class="bash">CMD &lt;shell 命令&gt; 
 CMD [&quot;&lt;可执行文件或命令&gt;&quot;,&quot;&lt;param1&gt;&quot;,&quot;&lt;param2&gt;&quot;,...] 
 CMD [&quot;&lt;param1&gt;&quot;,&quot;&lt;param2&gt;&quot;,...]  # 该写法是为 ENTRYPOINT 指令指定的程序提供默认参数
 </code></pre>
@@ -151,43 +162,43 @@ CMD [&quot;&lt;param1&gt;&quot;,&quot;&lt;param2&gt;&quot;,...]  # 该写法是�
 <p><strong>优点</strong>：在执行 docker run 的时候可以指定 ENTRYPOINT 运行所需的参数。</p>
 <p><strong>注意</strong>：如果 Dockerfile 中如果存在多个 ENTRYPOINT 指令，仅最后一个生效。</p>
 <p>格式：</p>
-<pre><code>ENTRYPOINT [&quot;&lt;executeable&gt;&quot;,&quot;&lt;param1&gt;&quot;,&quot;&lt;param2&gt;&quot;,...]
+<pre><code class="bash">ENTRYPOINT [&quot;&lt;executeable&gt;&quot;,&quot;&lt;param1&gt;&quot;,&quot;&lt;param2&gt;&quot;,...]
 </code></pre>
 
 <p>可以搭配 CMD 命令使用：一般是变参才会使用 CMD ，这里的 CMD 等于是在给 ENTRYPOINT 传参，以下示例会提到。</p>
 <p>示例：</p>
 <p>假设已通过 Dockerfile 构建了 nginx:test 镜像：</p>
-<pre><code>FROM nginx
+<pre><code class="bash">FROM nginx
 
 ENTRYPOINT [&quot;nginx&quot;, &quot;-c&quot;] # 定参
 CMD [&quot;/etc/nginx/nginx.conf&quot;] # 变参 
 </code></pre>
 
 <p>1、不传参运行</p>
-<pre><code>docker run  nginx:test
+<pre><code class="bash">docker run  nginx:test
 </code></pre>
 
 <p>容器内会默认运行以下命令，启动主进程。</p>
-<pre><code>nginx -c /etc/nginx/nginx.conf
+<pre><code class="bash">nginx -c /etc/nginx/nginx.conf
 </code></pre>
 
 <p>2、传参运行</p>
-<pre><code>docker run  nginx:test -c /etc/nginx/new.conf
+<pre><code class="bash">docker run  nginx:test -c /etc/nginx/new.conf
 </code></pre>
 
 <p>容器内会默认运行以下命令，启动主进程(/etc/nginx/new.conf:假设容器内已有此文件)</p>
-<pre><code>nginx -c /etc/nginx/new.conf
+<pre><code class="bash">nginx -c /etc/nginx/new.conf
 </code></pre>
 
 <h3>ENV</h3>
 <p>设置环境变量，定义了环境变量，那么在后续的指令中，就可以使用这个环境变量。</p>
 <p>格式：</p>
-<pre><code>ENV &lt;key&gt; &lt;value&gt;
+<pre><code class="bash">ENV &lt;key&gt; &lt;value&gt;
 ENV &lt;key1&gt;=&lt;value1&gt; &lt;key2&gt;=&lt;value2&gt;...
 </code></pre>
 
 <p>以下示例设置 NODE_VERSION = 7.2.0 ， 在后续的指令中可以通过 $NODE_VERSION 引用：</p>
-<pre><code>ENV NODE_VERSION 7.2.0
+<pre><code class="bash">ENV NODE_VERSION 7.2.0
 
 RUN curl -SLO &quot;https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz&quot; \
   &amp;&amp; curl -SLO &quot;https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc&quot;
@@ -197,7 +208,7 @@ RUN curl -SLO &quot;https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-l
 <p>构建参数，与 ENV 作用一至。不过作用域不一样。ARG 设置的环境变量仅对 Dockerfile 内有效，也就是说只有 docker build 的过程中有效，构建好的镜像内不存在此环境变量。</p>
 <p>构建命令 docker build 中可以用 --build-arg &lt;参数名&gt;=&lt;值&gt; 来覆盖。</p>
 <p>格式：</p>
-<pre><code>ARG &lt;参数名&gt;[=&lt;默认值&gt;]
+<pre><code class="bash">ARG &lt;参数名&gt;[=&lt;默认值&gt;]
 </code></pre>
 
 <h3>VOLUME</h3>
@@ -208,7 +219,7 @@ RUN curl -SLO &quot;https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-l
 <li>避免容器不断变大。</li>
 </ul>
 <p>格式：</p>
-<pre><code>VOLUME [&quot;&lt;路径1&gt;&quot;, &quot;&lt;路径2&gt;&quot;...]
+<pre><code class="bash">VOLUME [&quot;&lt;路径1&gt;&quot;, &quot;&lt;路径2&gt;&quot;...]
 VOLUME &lt;路径&gt;
 </code></pre>
 
@@ -221,24 +232,24 @@ VOLUME &lt;路径&gt;
 <li>在运行时使用随机端口映射时，也就是 docker run -P 时，会自动随机映射 EXPOSE 的端口。</li>
 </ul>
 <p>格式：</p>
-<pre><code>EXPOSE &lt;端口1&gt; [&lt;端口2&gt;...]
+<pre><code class="bash">EXPOSE &lt;端口1&gt; [&lt;端口2&gt;...]
 </code></pre>
 
 <h3>WORKDIR</h3>
 <p>指定工作目录。用 WORKDIR 指定的工作目录，会在构建镜像的每一层中都存在。（WORKDIR 指定的工作目录，必须是提前创建好的）。</p>
 <p>docker build 构建镜像过程中的，每一个 RUN 命令都是新建的一层。只有通过 WORKDIR 创建的目录才会一直存在。</p>
 <p>格式：</p>
-<pre><code>WORKDIR &lt;工作目录路径&gt;
+<pre><code class="bash">WORKDIR &lt;工作目录路径&gt;
 </code></pre>
 
 <h3>USER</h3>
 <p>用于指定执行后续命令的用户和用户组，这边只是切换后续命令执行的用户（用户和用户组必须提前已经存在）。</p>
 <p>格式：</p>
-<pre><code>USER &lt;用户名&gt;[:&lt;用户组&gt;]
+<pre><code class="bash">USER &lt;用户名&gt;[:&lt;用户组&gt;]
 </code></pre>
             
           </div>
-          <backend type='c'></backend>
+          <backend type='v'></backend>
           <div class="d-none d-xl-block col-xl-5 bd-toc xterm-wrapper overflow-hidden">
              <!-- 导航 -->
             <ul class="nav nav-tabs nav-float" id="myTab">

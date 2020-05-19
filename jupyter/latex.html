@@ -14,6 +14,13 @@
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/css/prettify.css" type="text/css" media="all">
 
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+      
     <title>Jupyter Latex - FreeAIHub</title>
   </head>
   <body class="bg-light">
@@ -71,93 +78,211 @@
 <h2>如何使用</h2>
 <p>LaTeX实现的原理类似于HTML，Notebook中的Markdown格式解释器中内置Latex渲染器，可以将由\$与\$包裹的内容进行渲染并产生最终效果。</p>
 <h2>语法及公式</h2>
-<p>上下标<code>_ ^ , _{}^{}</code>：</p>
-<p><code>$$ y = x_i^{a_1^2} $$</code></p>
+<p>上下标</p>
+<pre><code class="markdown">$$x_1^2 , x_{n}^{1}$$
+</code></pre>
+
+<p>$$
+x_1^2 , x_{n}^{1}
+$$</p>
+<pre><code class="markdown">$$ y = x_i^{a_1^2} $$
+</code></pre>
+
+<p>$$
+y = x_i^{a_1^2}
+$$</p>
 <p>公式中插入文本<code>\mbox{}</code>：</p>
-<p><code>$$ y = x^2 \; \mbox{(二次函数)} $$</code></p>
+<pre><code class="markdown">$$ y = x^2 \; \mbox{(二次函数)} $$
+</code></pre>
+
+<p>$$
+y = x^2 \; \mbox{(二次函数)} 
+$$</p>
 <p>bigcap:</p>
-<pre><code>$$\bigcap_{i=1}^{n} \bigcup_{i=1}^n  \binom{5}{3}$$
+<pre><code class="markdown">$$
+\bigcap_{i=1}^{n} \bigcup_{i=1}^n  \binom{5}{3}
+$$
 </code></pre>
 
+<p>$$
+\bigcap_{i=1}^{n} \bigcup_{i=1}^n  \binom{5}{3}
+$$</p>
 <p>量词:</p>
-<pre><code>$$\forall$$全称量词,表示任意的，$$\exists$$存在量词,表示存在/至少一个
+<pre><code class="markdown">$$\forall$$全称量词,表示任意的
+$$\exists$$存在量词,表示存在/至少一个   
 </code></pre>
+
+<p>$\forall$全称量词,表示任意的，$\exists$存在量词,表示存在/至少一个   </p>
 <p>偏导符号， 正比符号，无穷符号及极限</p>
-<pre><code>$$\partial$$ 偏导符号
-$$\propto$$ 正比符号，
-$$\mathop{\lim}_{n \to \infty }f(x)$$无穷符号及极限
+<pre><code class="markdown">$\partial$ 偏导符号
+$\propto$ 正比符号，
+$\mathop{\lim}_{n \to \infty }f(x)$无穷符号及极限
 </code></pre>
+
+<p>$\partial$ 偏导符号
+$\propto$ 正比符号，
+$\mathop{\lim}_{n \to \infty }f(x)$无穷符号及极限</p>
 <p>公式中插入空格<code>\,  \;  \quad  \qquad</code>间隔依次变宽：</p>
-<pre><code>$$ ab $$ $$ a\,b $$ $$ a\;b $$ $$ a\quad b $$ $$ a\qquad b $$
+<pre><code class="markdown">$$ ab $$ $$ a\,b $$ $$ a\;b $$ $$ a\quad b $$ $$ a\qquad b $$
 </code></pre>
 
+<p>$$ ab $$ $$ a\,b $$ $$ a\;b $$ $$ a\quad b $$ $$ a\qquad b $$</p>
 <p>字母上方横线<code>\overline{}, \bar{}</code>：</p>
-<p><code>$$ \overline{xyz} \mbox{ 或 } \bar{x} $$</code></p>
+<pre><code class="markdown">$$ \overline{xyz} \mbox{ 或 } \bar{x} $$
+</code></pre>
+
+<p>$$
+\overline{xyz} \mbox{ 或 } \bar{x} 
+$$</p>
 <p>字母下方横线<code>\underline{}</code>：</p>
-<p><code>$$ \underline{ABC} $$</code></p>
+<pre><code class="markdown">$$ \underline{ABC} $$
+</code></pre>
+
+<p>$$
+\underline{ABC}
+$$</p>
 <p>字母上方波浪线<code>\tilde{}, \widetilde{}</code>：</p>
-<pre><code>$$ \tilde{A} \mbox{ 或 } \widetilde{ABC} $$
+<pre><code class="markdown">$$ \tilde{A} \mbox{ 或 } \widetilde{ABC} $$
 </code></pre>
+
+<p>$$
+\tilde{A} \mbox{ 或 } \widetilde{ABC}
+$$</p>
 <p>字母上方尖号^<code>\hat{}, \widehat{}</code>：</p>
-<pre><code>$$ \hat{A} \mbox{ 或 } \widehat{ABC} $$
+<pre><code class="markdown">$$ \hat{A} \mbox{ 或 } \widehat{ABC} $$
 </code></pre>
+
+<p>$$
+\hat{A} \mbox{ 或 } \widehat{ABC}
+$$</p>
 <p>字母上方箭头<code>\vec{}, \overleftarrow{}, \overrightarrow{}</code>：</p>
-<pre><code>$$ \vec{ab} \mbox{ 或 } \overleftarrow{ab} \mbox{ 或 } \overrightarrow{ab} $$
+<pre><code class="markdown">$$ \vec{ab} \mbox{ 或 } \overleftarrow{ab} \mbox{ 或 } \overrightarrow{ab} $$
 </code></pre>
-<p>字母上方花括号<code>\overbrace{}</code>，或下方花括号<code>\underbrace{}</code>：
-    $$ \overbrace{1+2+3} \mbox{ 或 } \underbrace{1+2+3} $$</p>
+
+<p>$$
+\vec{ab} \mbox{ 或 } \overleftarrow{ab} \mbox{ 或 } \overrightarrow{ab}
+$$</p>
+<p>字母上方花括号<code>\overbrace{}</code>，或下方花括号<code>\underbrace{}</code>：</p>
+<pre><code class="markdown">$$ \overbrace{1+2+3} \mbox{ 或 } \underbrace{1+2+3} $$
+</code></pre>
+
+<p>$$
+\overbrace{1+2+3} \mbox{ 或 } \underbrace{1+2+3}
+$$</p>
 <p>字母上方点号<code>\dot{}, \ddot{}</code>：</p>
-<pre><code>$$ \dot{a} \mbox{ 或 } \ddot{a} $$
+<pre><code class="markdown">$$ \dot{a} \mbox{ 或 } \ddot{a} $$
 </code></pre>
+
+<p>$$
+\dot{a} \mbox{ 或 } \ddot{a}
+$$</p>
 <p>省略号<code>\dots, \cdots</code></p>
-<pre><code>$$ 1,2,\dots  \qquad  1,2,\cdots $$  
+<pre><code class="markdown">$$ 1,2,\dots  \qquad  1,2,\cdots $$  
 </code></pre>
 
+<p>$$
+1,2,\dots  \qquad  1,2,\cdots
+$$</p>
 <p>积分<code>\int_{}^{}</code>：</p>
-<pre><code>$$ \int_{-\infty}^{+\infty} f(x) \mathrm{d}x $$
+<pre><code class="markdown">$$ \int_{-\infty}^{+\infty} f(x) \mathrm{d}x $$
 </code></pre>
 
+<p>$$
+\int_{-\infty}^{+\infty} f(x) \mathrm{d}x
+$$</p>
 <p>双重积分<code>\iint</code>：</p>
-<pre><code>$$ \iint_{-\infty}^{+\infty} f(x,y) \mathrm{d}x \mathrm{d}y $$
+<pre><code class="markdown">$$ \iint_{-\infty}^{+\infty} f(x,y) \mathrm{d}x \mathrm{d}y $$
 </code></pre>
 
-<p>行内积分：</p>
-<pre><code>$\int_{-\infty}^{+\infty} f(x) \mathrm{d}x$
-</code></pre>
-
+<p>$$
+\iint_{-\infty}^{+\infty} f(x,y) \mathrm{d}x \mathrm{d}y
+$$</p>
 <p>行内积分limits模式:<code>\int\limits_{}^{}</code>：</p>
-<p><code>$$\int\limits_{-\infty}^{+\infty} f(x) \mathrm{d}x$$</code></p>
+<pre><code class="markdown">$$\int\limits_{-\infty}^{+\infty} f(x) \mathrm{d}x$$
+</code></pre>
+
+<p>$$
+\int\limits_{-\infty}^{+\infty} f(x) \mathrm{d}x
+$$</p>
 <p>行内积分display模式:<code>\displaystyle \int_{}^{}</code></p>
-<p><code>$$\displaystyle \int_{-\infty}^{+\infty} f(x) \mathrm{d}x$$</code></p>
+<pre><code class="markdown">$$\displaystyle \int_{-\infty}^{+\infty} f(x) \mathrm{d}x$$
+</code></pre>
+
+<p>$$
+\displaystyle \int_{-\infty}^{+\infty} f(x) \mathrm{d}x
+$$</p>
 <p>圆圈积分<code>\oint</code>：</p>
-<p><code>$$ \oint_{-\infty}^{+\infty} $$</code></p>
+<pre><code class="markdown">$$ \oint_{-\infty}^{+\infty} $$
+</code></pre>
+
+<p>$$
+\oint_{-\infty}^{+\infty} 
+$$</p>
 <p>求和<code>\sum_{}^{}</code>：</p>
-<pre><code>$$ \sum_{i=1}^{n} i^2 $$
+<pre><code class="markdown">$$ \sum_{i=1}^{n} i^2 $$
 </code></pre>
 
+<p>$$
+\sum_{i=1}^{n} i^2 
+$$</p>
 <p>行内求和：</p>
-<pre><code>$\sum_{i=1}^{n} i^2$_
+<pre><code class="markdown">$$\sum_{i=1}^{n} i^2$$
 </code></pre>
 
+<p>$$
+\sum_{i=1}^{n} i^2
+$$</p>
 <p>行内求和limits模式<code>\sum\limits_{}^{}</code>：</p>
-<p><code>$\sum\limits_{i=1}^{n} i^2$</code></p>
+<pre><code class="markdown">$\sum\limits_{i=1}^{n} i^2$
+</code></pre>
+
+<p>$$
+\sum\limits_{i=1}^{n} i^2
+$$</p>
 <p>行内求和display模式</p>
-<p><code>$$`\displaystyle \sum_{}^{}`:$\displaystyle \sum_{i=1}^{n} i^2$$</code></p>
+<pre><code class="markdown">$$\displaystyle \sum_{i=1}^{n} i^2$$
+</code></pre>
+
+<p>$$
+\displaystyle \sum_{i=1}^{n} i^2
+$$</p>
 <p>求乘积<code>\prod_{}^{}</code>：</p>
-<p><code>$$ \prod_{i=1}^{n} a_i $$</code></p>
+<pre><code class="markdown">$$ \prod_{i=1}^{n} a_i $$
+</code></pre>
+
+<p>$$
+\prod_{i=1}^{n} a_i
+$$</p>
 <p>分数<code>\frac{up}{down}</code>：</p>
 <pre><code>$$ x_1,x_2 = \frac{b^2 \pm 4ac}{2a} $$
 </code></pre>
 
 <p>根号<code>\sqrt</code>：</p>
-<pre><code>$$ r = \sqrt{x^2+y^2} $$
+<pre><code class="markdown">$$ r = \sqrt{x^2+y^2} $$
 </code></pre>
 
-<p>多次根号<code>\sqrt[n]</code>：</p>
-<pre><code>$$ x^{2/3} = \sqrt[3]{x^2} $$
+<p>$$
+r = \sqrt{x^2+y^2} 
+$$
+多次根号<code>\sqrt[n]</code>：</p>
+<pre><code class="markdown">$$ x^{2/3} = \sqrt[3]{x^2} $$
 </code></pre>
 
+<p>$$
+x^{2/3} = \sqrt[3]{x^2}
+$$</p>
 <p>矩阵：</p>
+<pre><code class="markdown">$$
+A_{m,n} =
+ \begin{pmatrix}
+  a_{1,1} &amp; a_{1,2} &amp; \cdots &amp; a_{1,n} \\
+  a_{2,1} &amp; a_{2,2} &amp; \cdots &amp; a_{2,n} \\
+  \vdots  &amp; \vdots  &amp; \ddots &amp; \vdots  \\
+  a_{m,1} &amp; a_{m,2} &amp; \cdots &amp; a_{m,n}
+ \end{pmatrix}
+$$
+</code></pre>
+
 <p>$$
 A_{m,n} =
  \begin{pmatrix}
@@ -167,32 +292,28 @@ A_{m,n} =
   a_{m,1} &amp; a_{m,2} &amp; \cdots &amp; a_{m,n}
  \end{pmatrix}
 $$</p>
-<h2>公式编号及引用：</h2>
-<p>使用<code>\tag</code>指令指定公式的具体编号，并使用<code>\label</code>指令埋下锚点。如</p>
-<pre><code>$$ y=ax+b \tag{1.1}\label{eq:test} $$
+<p>公式编号及引用：
+使用<code>\tag</code>指令指定公式的具体编号，并使用<code>\label</code>指令埋下锚点。如</p>
+<pre><code class="markdown">$$ y=ax+b \tag{1.1}\label{eq:test} $$
 </code></pre>
 
-<p>引用编号：使用<code>\eqref</code>指令引用前面埋下的锚点，<code>\eqref{eq:test}</code>将显示为：</p>
-<pre><code>$$ \eqref{eq:test} $$
-</code></pre>
-
-<h2>方程组</h2>
-<p>左侧花括号</p>
 <p>$$
-  \begin{equation}
-  % \begin{equation<em>} 加'</em>'去掉公式编号
-  \left{
-  \begin{aligned}     %请使用'aligned'或'align<em>'
-  2x + y &amp;= 1  \     %加'&amp;'指定对齐位置
-  2x + 2y &amp;= 2
-  \end{aligned}
-  \right.
-  \end{equation}
-  % \end{equation</em>}   加'<em>'去掉公式编号
-$$
-  % 注意：在 markdown 环境下，某些特殊字符，如'\', '</em>'等，会首先被 markdown 语法转义，然后再被 Latex 转义。
-  % 因此有时候 '{'需要写作'\{'，'*'需要写作'*'，'\'需要写作'\\'等，视不同的解释环境而定</p>
-<pre><code>$$
+y=ax+b \tag{1.1}\label{eq:test}
+$$</p>
+<p>引用编号：使用<code>\eqref</code>指令引用前面埋下的锚点，<code>\eqref{eq:test}</code>将显示为：</p>
+<pre><code class="markdown">$$ \eqref{eq:test} $$
+</code></pre>
+
+<p>$$
+\eqref{eq:test}
+$$</p>
+<p>方程组</p>
+<p>左侧花括号</p>
+<blockquote>
+<p>注意：在 markdown 环境下，某些特殊字符，如'\', '*'等，会首先被 markdown 语法转义，然后再被 Latex 转义。
+因此有时候 '{'需要写作'\{'，'*'需要写作'*'，'\'需要写作'\\'等，视不同的解释环境而定</p>
+</blockquote>
+<pre><code class="markdown">$$
 \begin{equation}
 \left\\{
 \begin{aligned}
@@ -204,40 +325,82 @@ $$
 $$
 </code></pre>
 
+<p>$$
+\begin{equation}
+\left\{
+\begin{aligned}
+2x + y &amp;= 1 \\
+2x + 2y &amp;= 2
+\end{aligned}
+\right.
+\end{equation}
+$$</p>
 <p><strong>注</strong>：如果各个方程需要在某个字符处对齐（如等号对齐），只需在所有要对齐的字符前加上 <code>&amp;</code> 符号。如果不需要公式编号，只需在宏包名称后加上 <code>*</code> 号。</p>
-<p><code>%%markdown
-$$
+<pre><code class="markdown">$$
 f(x) =
 \begin{cases}
 x^2 \qquad &amp; a \gt 0 \\
 e^x \qquad &amp; a \le 0
 \end{cases}
-$$</code></p>
-<pre><code>%%markdown
-$$ f(x) = \begin{cases}
+$$
+</code></pre>
+
+<p>$$
+f(x) =
+\begin{cases}
+x^2 \qquad &amp; a \gt 0 \
+e^x \qquad &amp; a \le 0
+\end{cases}
+$$</p>
+<pre><code class="markdown">$$
+f(x) = \begin{cases}
 x^2 \qquad &amp; a \gt 0 \\\\
 e^x \qquad &amp; a \le 0
-\end{cases} $$
+\end{cases}
+$$
+</code></pre>
 
-$$ \begin{aligned}
+<p>$$
+f(x) = \begin{cases}
+x^2 \qquad &amp; a \gt 0 \\
+e^x \qquad &amp; a \le 0
+\end{cases}
+$$</p>
+<pre><code class="markdown">$$
+\begin{aligned}
 a &amp;= 1 \\\\
 bcd &amp;= 2
-\end{aligned} $$
+\end{aligned}
+$$
 </code></pre>
 
-<pre><code>%%markdown
-$y=x^2$
+<p>$$
+\begin{aligned}
+a &amp;= 1 \\
+bcd &amp;= 2
+\end{aligned}
+$$</p>
+<pre><code class="markdown">$$y=x^2$$
 
-$e^{i\pi} + 1 = 0$
+$$e^{i\pi} + 1 = 0$$
 
-$e^x=\sum_{i=0}^\infty \frac{1}{i!}x^i$
+$$e^x=\sum_{i=0}^\infty \frac{1}{i!}x^i$$
 
+$$\frac{n!}{k!(n-k)!} = {n \choose k}$$
+</code></pre>
 
-$
+<p>$$
+y=x^2
+$$
+$$
+e^{i\pi} + 1 = 0
+$$
+$$
+e^x=\sum_{i=0}^\infty \frac{1}{i!}x^i
+$$
+$$
 \frac{n!}{k!(n-k)!} = {n \choose k}
-$
-</code></pre>
-
+$$</p>
 <h2>希腊字母</h2>
 <table>
 <thead>
@@ -251,69 +414,69 @@ $
 <tbody>
 <tr>
 <td align="left">α A</td>
-<td align="left">\alpha A</td>
+<td align="left">\alpha  $\alpha$</td>
 <td align="left">μ N</td>
-<td align="left">\mu N</td>
+<td align="left">\mu $\mu$</td>
 </tr>
 <tr>
 <td align="left">β B</td>
-<td align="left">\beta B</td>
+<td align="left">\beta  $\beta$</td>
 <td align="left">ξ Ξ</td>
-<td align="left">\xi \Xi</td>
+<td align="left">\xi \Xi $\xi \Xi$</td>
 </tr>
 <tr>
 <td align="left">γ Γ</td>
-<td align="left">\gamma \Gamma</td>
+<td align="left">\gamma \Gamma $\gamma \Gamma$</td>
 <td align="left">o O</td>
-<td align="left">o O</td>
+<td align="left">o O $$</td>
 </tr>
 <tr>
 <td align="left">δ Δ</td>
-<td align="left">\delta \ Delta</td>
+<td align="left">\delta \ Delta $\delta \ Delta$</td>
 <td align="left">π Π</td>
-<td align="left">\pi \Pi</td>
+<td align="left">\pi \Pi $\pi \Pi$</td>
 </tr>
 <tr>
-<td align="left">ϵ ε E</td>
-<td align="left">\epsilon \varepsilon E</td>
-<td align="left">ρ ϱ P</td>
-<td align="left">\rho \varrho P</td>
+<td align="left">ε E</td>
+<td align="left">\epsilon \varepsilon  $\epsilon \varepsilon$</td>
+<td align="left">\epsilon \varepsilonρ ϱ P</td>
+<td align="left">\rho \varrho $\epsilon \varepsilonρ$</td>
 </tr>
 <tr>
 <td align="left">ζ Z</td>
-<td align="left">\zeta Z</td>
+<td align="left">\zeta $\zeta$</td>
 <td align="left">σ Σ</td>
-<td align="left">\sigma \Sigma</td>
+<td align="left">\sigma \Sigma $\sigma \Sigma$</td>
 </tr>
 <tr>
 <td align="left">η H</td>
-<td align="left">\eta H</td>
+<td align="left">\eta $\eta$</td>
 <td align="left">τ T</td>
-<td align="left">\tau T</td>
+<td align="left">\tau $\tau$</td>
 </tr>
 <tr>
 <td align="left">θ ϑ Θ</td>
-<td align="left">\theta \vartheta \Theta</td>
+<td align="left">\theta \vartheta \Theta $\theta \vartheta \Theta$</td>
 <td align="left">υ Υ</td>
-<td align="left">\upsilon \Upsilon</td>
+<td align="left">\upsilon \Upsilon $\upsilon \Upsilon$</td>
 </tr>
 <tr>
 <td align="left">ι I</td>
-<td align="left">\iota I</td>
+<td align="left">\iota $\iota$</td>
 <td align="left">ϕ φ Φ</td>
-<td align="left">\phi \varphi \Phi</td>
+<td align="left">\phi \varphi \Phi $\phi \varphi \Phi$</td>
 </tr>
 <tr>
 <td align="left">κ K</td>
-<td align="left">\kappa K</td>
+<td align="left">\kappa $\kappa$</td>
 <td align="left">χ X</td>
-<td align="left">\chi X</td>
+<td align="left">\chi $\chi$</td>
 </tr>
 <tr>
 <td align="left">λ Λ</td>
-<td align="left">\lambda \Lambda</td>
+<td align="left">\lambda \Lambda $\lambda \Lambda$</td>
 <td align="left">ψ Ψ</td>
-<td align="left">\psi \Psi</td>
+<td align="left">\psi \Psi $\psi \Psi$</td>
 </tr>
 </tbody>
 </table>
@@ -656,23 +819,33 @@ $
 </tbody>
 </table>
 <h2>不同的数字字母字体</h2>
-<pre><code>mathbb:$$\mathbb{ABCDEFGHIJKLMNOPQRSTUVWXYZ,abcdefghijklmnopqrstuvwxyz}$$ 
-</code></pre>
-
-<pre><code>mathscr:$$\mathscr{ABCDEFGHIJKLMNOPQRSTUVWXYZ,abcdefghijklmnopqrstuvwxyz}$$  
-</code></pre>
-
-<pre><code>mathcal:$$\mathcal{ABCDEFGHIJKLMNOPQRSTUVWXYZ,abcdefghijklmnopqrstuvwxyz}$$ 
-</code></pre>
-
-<pre><code>mathbf:$$\mathbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ,abcdefghijklmnopqrstuvwxyz}$$
-</code></pre>
-
-<h2>斜体与取消默认</h2>
-<pre><code>默认倾斜：$$ x_{z}$$ 
-
-取消默认倾斜：$$\rm x_{z}$$
-</code></pre>
+<h3>mathbb:</h3>
+<p>$$
+\mathbb{ABCDEFGHIJKLMNOPQRSTUVWXYZ,abcdefghijklmnopqrstuvwxyz}
+$$</p>
+<h3>mathscr:</h3>
+<p>$$
+\mathscr{ABCDEFGHIJKLMNOPQRSTUVWXYZ}
+$$</p>
+<p>$$
+\mathscr{abcdefghijklmnopqrstuvwxyz}
+$$</p>
+<h3>mathcal:</h3>
+<p>$$
+\mathcal{ABCDEFGHIJKLMNOPQRSTUVWXYZ}
+$$</p>
+<p>$$
+\mathcal{abcdefghijklmnopqrstuvwxyz}
+$$</p>
+<h3>mathbf:</h3>
+<p>$$
+\mathbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ}
+$$
+$$
+\mathbf{abcdefghijklmnopqrstuvwxyz}
+$$</p>
+<p>默认倾斜：$$x_{z}$$</p>
+<p>取消默认倾斜：$$\rm x_{z}$$</p>
             
           </div>
           <backend type='k'></backend>

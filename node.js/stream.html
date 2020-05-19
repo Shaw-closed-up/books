@@ -14,7 +14,14 @@
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/css/prettify.css" type="text/css" media="all">
 
-    <title>node.js 环境安装配置 - FreeAIHub</title>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+      
+    <title>Node.js 流(Stream) - FreeAIHub</title>
   </head>
   <body class="bg-light">
         <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar text-center">
@@ -71,48 +78,156 @@
           </div>
           <div class="entry-content col-md-9 col-xl-5 py-md-3 pl-md-5 bd-content">
               
-            <h1>node.js 环境安装配置</h1>
-<h2>云课程环境安装</h2>
-<pre><code class="bash">#更新apt源并安装npm,nodejs
-apt update &amp;&amp; apt-get install npm nodejs -y
-
-#验证
-node -v
+            <h1>Node.js 流(Stream)</h1>
+<h2>什么是流Stream?</h2>
+<p>流是可以从一个源读取或写入数据到连续的目标对象。在Node.js，有四种类型的数据流。</p>
+<ul>
+<li><strong>Readable</strong> - 其是用于读操作。</li>
+<li><strong>Writable</strong> - 用在写操作。</li>
+<li><strong>Duplex</strong> - 其可以用于读取和写入操作。</li>
+<li><strong>Transform</strong> - 输出基于输入的地方进行计算的一种双相流。</li>
+</ul>
+<p>​   每种类型的流是一个EventEmitter实例，并抛出的时代不同的实例几个事件。例如，一些常用的事件是：</p>
+<ul>
+<li><strong>data</strong> - 当有数据可读取此事件。</li>
+<li><strong>end</strong> - 当没有更多的数据读取此事件被触发。</li>
+<li><strong>error</strong> - 当有任何错误或接收数据写入此事件。</li>
+<li><strong>finish</strong> - 当所有数据已刷新到底层系统触发此事件</li>
+</ul>
+<p>​   本教程将让您了解关于数据流的常用操作。</p>
+<h2>从流中读取</h2>
+<p>文件名:input2.txt</p>
+<pre><code>To go in is giving yourself learning content to teach the world in simple and easy way!!!!!
 </code></pre>
 
-<p>当有提示时，即证明您已经在您当前的云环境中安装成功，您就可以开始进行本课程下一步的学习了。</p>
-<p>注：当云环境的生命周期失效后，需要重新进行安装。</p>
-<h2>在您本地环境安装</h2>
-<h3>Linux/Mac系统源码安装</h3>
-<p>以下部分我们将介绍在Ubuntu Linux下安装 Node.js 。 其他的Linux系统，如Centos等类似如下安装步骤。</p>
-<p>在 Github 上获取 Node.js 源码：</p>
-<pre><code class="bash">git clone https://github.com/joyent/node.git
+<p>文件名:streamread.js</p>
+<pre><code class="js">var fs = require(&quot;fs&quot;);
+var data = '';
+
+// Create a readable stream
+var readerStream = fs.createReadStream('input2.txt');
+
+// Set the encoding to be utf8. 
+readerStream.setEncoding('UTF8');
+
+// Handle stream events --&gt; data, end, and error
+readerStream.on('data', function(chunk) {
+   data += chunk;
+});
+
+readerStream.on('end',function(){
+   console.log(data);
+});
+
+readerStream.on('error', function(err){
+   console.log(err.stack);
+});
+
+console.log(&quot;Program Ended&quot;);
 </code></pre>
 
-<p>在完成下载后，将源码包名改为 'node'。</p>
-<pre><code class="bash">mv joyent node
+<p>康康</p>
+<pre><code class="bash">node /share/lesson/node.js/stream.js
 </code></pre>
 
-<p>修改目录权限：</p>
-<pre><code class="bash">chmod 755 -R node
+<h2>写入流</h2>
+<p>文件名:streamwrite.js</p>
+<pre><code>var fs = require(&quot;fs&quot;);
+var data = 'Simply Easy Learning';
+
+// Create a writable stream
+var writerStream = fs.createWriteStream('output.txt');
+
+// Write the data to stream with encoding to be utf8
+writerStream.write(data,'UTF8');
+
+// Mark the end of file
+writerStream.end();
+
+// Handle stream events --&gt; finish, and error
+writerStream.on('finish', function() {
+    console.log(&quot;Write completed.&quot;);
+});
+
+writerStream.on('error', function(err){
+   console.log(err.stack);
+});
+
+console.log(&quot;Program Ended&quot;);
 </code></pre>
 
-<pre><code class="bash">#创建编译文件。
-./node/configure
+<p>康康</p>
+<pre><code class="bash">node /share/lesson/node.js/stream.js
 </code></pre>
 
-<pre><code class="bash">make
+<p>验证输出,现在打开在当前目录中创建output.txt文件，验证output.txt文件中有以下内容。</p>
+<pre><code>!cat output.txt
 </code></pre>
 
-<pre><code class="bash">make install
+<h2>管道流</h2>
+<p>管道是我们提供一个流的输出作为输入到另一个流的机制。它通常被用于从一个流中获取数据，并通过该流输出到另一个流。没有对管道的操作没有限制。现在，我们将展示一个管道从一个文件中读取和写入到另一个文件的例子。</p>
+<p>创建一个js文件名为main.js里面有如下代码：</p>
+<p>文件名:streampipe.js</p>
+<pre><code class="js">var fs = require(&quot;fs&quot;);
+
+// Create a readable stream
+var readerStream = fs.createReadStream('input.txt');
+
+// Create a writable stream
+var writerStream = fs.createWriteStream('output.txt');
+
+// Pipe the read and write operations
+// read input.txt and write data to output.txt
+readerStream.pipe(writerStream);
+
+console.log(&quot;Program Ended&quot;);
 </code></pre>
 
-<p>最后我们输入'node --version' 命令来查看Node.js是否安装成功。</p>
-<pre><code class="bash">node --version
+<p>康康</p>
+<pre><code class="bash">node /share/lesson/node.js/streampipe.js
 </code></pre>
 
-<h3>Windows</h3>
-<p>不推荐在Windows上使用</p>
+<p>在当前目录打开所创建的output.txt文件，并验证output.txt文件中有以下内容。</p>
+<pre><code class="bash">!cat output.txt
+</code></pre>
+
+<h2>链式流</h2>
+<p>链式是一个机制，一个流的输出连接到另一个流，并创建一个链多流操作。它通常用于管道的操作。现在，我们将使用管道和链接先压缩文件，然后解压缩。</p>
+<p><strong>示例</strong></p>
+<p>文件名:streamgzip.js</p>
+<pre><code class="js">var fs = require(&quot;fs&quot;);
+var zlib = require('zlib');
+
+// Compress the file input.txt to input.txt.gz
+fs.createReadStream('input.txt')
+  .pipe(zlib.createGzip())
+  .pipe(fs.createWriteStream('input.txt.gz'));
+
+console.log(&quot;File Compressed.&quot;);
+</code></pre>
+
+<p>康康</p>
+<pre><code class="bash">node /share/lesson/node.js/streamgzip.js
+</code></pre>
+
+<p>你会发现，input.txt文件已经被压缩，并在当前目录下创建的文件input.txt.gz。</p>
+<p><strong>示例</strong></p>
+<p>现在，让我们尝试使用下面的代码进行解压缩同一个文件。</p>
+<p>文件名:streamgzip1.js</p>
+<pre><code class="js">var fs = require(&quot;fs&quot;);
+var zlib = require('zlib');
+
+// Decompress the file input.txt.gz to input.txt
+fs.createReadStream('input.txt.gz')
+  .pipe(zlib.createGunzip())
+  .pipe(fs.createWriteStream('input.txt'));
+
+console.log(&quot;File Decompressed.&quot;);
+</code></pre>
+
+<p>康康</p>
+<pre><code class="bash">node /share/lesson/node.js/streamgzip.js
+</code></pre>
             
           </div>
           <backend type='k'></backend>

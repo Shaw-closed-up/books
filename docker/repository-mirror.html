@@ -14,6 +14,13 @@
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/css/prettify.css" type="text/css" media="all">
 
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+      
     <title>Docker 镜像加速 - FreeAIHub</title>
   </head>
   <body class="bg-light">
@@ -52,7 +59,7 @@
 <li><a href=./setup.html>Docker 环境安装及配置</a></li>
 <li><a href=./arch.html>Docker 架构</a></li>
 <li><a href=./conception.html>Docker 核心概念</a></li>
-<li><a href=./helloworld.html>Docker 跑通第一个Docker容器</a></li>
+<li><a href=./helloworld.html>Docker 运行第一个Docker容器</a></li>
 <li><a href=./container.html>Docker 容器操作(container)</a></li>
 <li><a href=./container-daemon.html>Docker 容器以后台方式运行</a></li>
 <li><a href=./image.html>Docker 镜像操作(image)</a></li>
@@ -75,17 +82,14 @@
 <ul>
 <li>网易：<strong>https://hub-mirror.c.163.com/</strong></li>
 <li>阿里云：<strong>https://&lt;你的ID&gt;.mirror.aliyuncs.com</strong></li>
-<li>七牛云加速器：<strong>https://reg-mirror.qiniu.com</strong></li>
 </ul>
 <p>当配置某一个加速器地址之后，若发现拉取不到镜像，请切换到另一个加速器地址。</p>
 <p>国内各大云服务商均提供了 Docker 镜像加速服务，建议根据运行 Docker 的云平台选择对应的镜像加速服务。</p>
-<h3>获取阿里云镜像加速地址</h3>
-<p>阿里云镜像获取地址：https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors，登陆后，左侧菜单选中镜像加速器就可以看到你的专属地址了：</p>
-<p><img alt="img" src="./images/repository-mirror-aliyun.png" /></p>
-<p>之前还有 Docker 官方加速器 <strong>https://registry.docker-cn.com</strong> ，现在好像已经不能使用了，我们可以多添加几个国内的镜像，如果有不能使用的，会切换到可以使用个的镜像来拉取。</p>
-<h3>Ubuntu16.04+、Debian8+、CentOS7</h3>
-<p>对于使用 systemd 的系统，请在<code>/etc/docker/daemon.json</code>中写入如下内容（如果文件不存在请新建该文件）：</p>
-<pre><code>{&quot;registry-mirrors&quot;:[&quot;https://reg-mirror.qiniu.com/&quot;]}
+<h3>系统的设置</h3>
+<p>对于使用 systemd 的系统，请在<code>/etc/docker/daemon.json</code>中写入如下内容（如果文件不存在请新建该文件）：这里使用网易的加速器。</p>
+<pre><code class="bash">cat &gt; /etc/docker/daemon.json &lt;&lt;EOF
+{&quot;registry-mirrors&quot;:[&quot;https://hub-mirror.c.163.com/&quot;]}
+EOF
 </code></pre>
 
 <p>之后重新启动服务：</p>
@@ -93,19 +97,17 @@
 sudo systemctl restart docker
 </code></pre>
 
-<h3>Windows 10</h3>
-<p>对于使用 Windows 10 的系统，在系统右下角托盘 Docker 图标内右键菜单选择 Settings，打开配置窗口后左侧导航菜单选择 Daemon。在 Registrymirrors 一栏中填写加速器地址 <strong>https://registry.docker-cn.com</strong> ，之后点击 Apply 保存后 Docker 就会重启并应用配置的镜像地址了。</p>
-<p><img alt="img" src="./images/repository-mirror-win10.png" /></p>
-<h3>Mac OS X</h3>
-<p>对于使用 Mac OS X 的用户，在任务栏点击 Docker for mac 应用图标-&gt; Perferences...-&gt; Daemon-&gt; Registrymirrors。在列表中填写加速器地址 <strong>https://reg-mirror.qiniu.com</strong> 。修改完成之后，点击 Apply&amp;Restart 按钮，Docker 就会重启并应用配置的镜像地址了。</p>
-<p><img alt="img" src="./images/repository-mirror-mac.png" /></p>
 <h3>检查加速器是否生效</h3>
 <p>检查加速器是否生效配置加速器之后，如果拉取镜像仍然十分缓慢，请手动检查加速器配置是否生效，在命令行执行 <strong>docker info</strong>，如果从结果中看到了如下内容，说明配置成功。</p>
-<pre><code class="bash">docker info | grep Registry
+<pre><code class="bash">docker info | grep 163
 </code></pre>
+
+<h3>获取阿里云镜像加速地址</h3>
+<p>阿里云镜像获取地址：https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors，登陆后，左侧菜单选中镜像加速器就可以看到你的专属地址了：</p>
+<p><img alt="img" src="./images/repository-mirror-aliyun.png" /></p>
             
           </div>
-          <backend type='c'></backend>
+          <backend type='v'></backend>
           <div class="d-none d-xl-block col-xl-5 bd-toc xterm-wrapper overflow-hidden">
              <!-- 导航 -->
             <ul class="nav nav-tabs nav-float" id="myTab">

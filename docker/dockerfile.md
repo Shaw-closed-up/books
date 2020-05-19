@@ -12,12 +12,13 @@ Dockerfile 是一个用来构建镜像的文本文件，文本内容包含了一
 cd ~
 cat > Dockerfile << EOF 
 FROM ubuntu:20.04
-RUN /bin/echo 'root:123456' |chpasswd
 RUN echo 'me' > /root/me
+RUN useradd me
 EXPOSE  22
 EXPOSE  80
 CMD /usr/sbin/sshd -D
 EOF
+
 ```
 
 每一个指令都会在镜像上创建一个新的层，每一个指令的前缀都必须是大写的。
@@ -29,7 +30,8 @@ RUN 指令告诉docker 在镜像内执行命令，安装了什么。。。
 然后，我们使用 Dockerfile 文件，通过`docker build`命令来构建一个镜像。
 
 ```bash
-docker build -t ubuntu:20.04.me .
+cd ~
+docker build -f Dockerfile -t ubuntu:20.04.me .
 ```
 
 参数说明：
@@ -37,7 +39,7 @@ docker build -t ubuntu:20.04.me .
 - **-t** ：指定要创建的目标镜像名
 - **.** ：Dockerfile 文件所在目录，可以指定Dockerfile 的绝对路径
 
-使用docker images 查看创建的镜像已经在列表中存在,镜像ID为860c279d2fec
+使用docker images 查看创建的镜像已经在列表中存在,镜像ID为fc9bfdf0f66e
 
 ```bash
 docker images 
@@ -51,9 +53,11 @@ docker run -it ubuntu:20.04.me  /bin/bash
 
 ```bash
 cat /root/me
+#切换用户为me
+su me
 ```
 
-从上面看到新镜像已经包含我们在构建镜像时创建的文件`/root/me`
+从上面看到新镜像已经包含我们在构建镜像时创建的文件`/root/me`,并可以成功进行用户切换。说明构建文件工作正常。
 
 ## Dockerfile 指令详解
 
@@ -63,7 +67,7 @@ cat /root/me
 
 格式：
 
-```
+```bash
 COPY [--chown=<user>:<group>] <源路径1>...  <目标路径>
 COPY [--chown=<user>:<group>] ["<源路径1>",...  "<目标路径>"]
 ```
@@ -72,7 +76,7 @@ COPY [--chown=<user>:<group>] ["<源路径1>",...  "<目标路径>"]
 
 **<源路径>**：源文件或者源目录，这里可以是通配符表达式，其通配符规则要满足 Go 的 filepath.Match 规则。例如：
 
-```
+```bash
 COPY hom* /mydir/
 COPY hom?.txt /mydir/
 ```
@@ -99,7 +103,7 @@ ADD 指令和 COPY 的使用格式一致（同样需求下，官方推荐使用 
 
 格式：
 
-```
+```bash
 CMD <shell 命令> 
 CMD ["<可执行文件或命令>","<param1>","<param2>",...] 
 CMD ["<param1>","<param2>",...]  # 该写法是为 ENTRYPOINT 指令指定的程序提供默认参数
@@ -119,7 +123,7 @@ CMD ["<param1>","<param2>",...]  # 该写法是为 ENTRYPOINT 指令指定的程
 
 格式：
 
-```
+```bash
 ENTRYPOINT ["<executeable>","<param1>","<param2>",...]
 ```
 
@@ -129,7 +133,7 @@ ENTRYPOINT ["<executeable>","<param1>","<param2>",...]
 
 假设已通过 Dockerfile 构建了 nginx:test 镜像：
 
-```
+```bash
 FROM nginx
 
 ENTRYPOINT ["nginx", "-c"] # 定参
@@ -138,25 +142,25 @@ CMD ["/etc/nginx/nginx.conf"] # 变参
 
 1、不传参运行
 
-```
+```bash
 docker run  nginx:test
 ```
 
 容器内会默认运行以下命令，启动主进程。
 
-```
+```bash
 nginx -c /etc/nginx/nginx.conf
 ```
 
 2、传参运行
 
-```
+```bash
 docker run  nginx:test -c /etc/nginx/new.conf
 ```
 
 容器内会默认运行以下命令，启动主进程(/etc/nginx/new.conf:假设容器内已有此文件)
 
-```
+```bash
 nginx -c /etc/nginx/new.conf
 ```
 
@@ -166,14 +170,14 @@ nginx -c /etc/nginx/new.conf
 
 格式：
 
-```
+```bash
 ENV <key> <value>
 ENV <key1>=<value1> <key2>=<value2>...
 ```
 
 以下示例设置 NODE_VERSION = 7.2.0 ， 在后续的指令中可以通过 $NODE_VERSION 引用：
 
-```
+```bash
 ENV NODE_VERSION 7.2.0
 
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
@@ -188,7 +192,7 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
 
 格式：
 
-```
+```bash
 ARG <参数名>[=<默认值>]
 ```
 
@@ -203,7 +207,7 @@ ARG <参数名>[=<默认值>]
 
 格式：
 
-```
+```bash
 VOLUME ["<路径1>", "<路径2>"...]
 VOLUME <路径>
 ```
@@ -221,7 +225,7 @@ VOLUME <路径>
 
 格式：
 
-```
+```bash
 EXPOSE <端口1> [<端口2>...]
 ```
 
@@ -233,7 +237,7 @@ docker build 构建镜像过程中的，每一个 RUN 命令都是新建的一�
 
 格式：
 
-```
+```bash
 WORKDIR <工作目录路径>
 ```
 
@@ -243,6 +247,6 @@ WORKDIR <工作目录路径>
 
 格式：
 
-```
+```bash
 USER <用户名>[:<用户组>]
 ```

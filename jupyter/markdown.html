@@ -14,7 +14,14 @@
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/css/prettify.css" type="text/css" media="all">
 
-    <title><h2>Jupyter Markdown单元格</h2> - FreeAIHub</title>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+      
+    <title>Jupyter Markdown单元格 - FreeAIHub</title>
   </head>
   <body class="bg-light">
         <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar text-center">
@@ -65,12 +72,12 @@
           </div>
           <div class="entry-content col-md-9 col-xl-5 py-md-3 pl-md-5 bd-content">
               
-            <h2>Jupyter Markdown单元格</h2>
+            <h1>Jupyter Markdown单元格</h1>
 <h2>环境配置</h2>
 <p><a href="./setup.html">环境安装</a></p>
 <h3>标题分级</h3>
 <p><strong>Markdown语言</strong></p>
-<pre><code>通过#符号来分级
+<pre><code class="markdown">通过#符号来分级
 # 一级标题
 ## 二级标题
 ### 三级标题
@@ -93,7 +100,7 @@
 </ul>
 <h3>引用文本</h3>
 <p><strong>Markdown语言</strong></p>
-<pre><code>&gt; 这段文字以&gt;开头，将会高亮，
+<pre><code class="markdown">&gt; 这段文字以&gt;开头，将会高亮，
 </code></pre>
 
 <p><strong>效果：</strong></p>
@@ -102,21 +109,21 @@
 </blockquote>
 <h3>添加图片</h3>
 <p><strong>Markdown语言</strong></p>
-<pre><code>![Jupyter-Logo](./images/logo.png)
+<pre><code class="markdown">![Jupyter-Logo](./images/logo.png)
 </code></pre>
 
 <p><strong>效果：</strong></p>
 <p><img alt="Jupyter-Logo" src="./images/logo.png" /></p>
 <h3>文本超链接</h3>
 <p><strong>Markdown语言</strong></p>
-<pre><code>[Jupyter 官网](https://link.jupyter.org)
+<pre><code class="markdown">[Jupyter 官网](https://link.jupyter.org)
 </code></pre>
 
 <p><strong>效果：</strong></p>
 <p><a href="https://link.jupyter.org">Jupyter 官网</a></p>
 <h3>图片超链接</h3>
 <p><strong>Markdown语言</strong></p>
-<pre><code>[http://www.jupyter.org](./images/logo.png)
+<pre><code class="markdown">[http://www.jupyter.org](./images/logo.png)
 </code></pre>
 
 <p><strong>效果：</strong></p>
@@ -125,7 +132,7 @@
 <h3>无序列表</h3>
 <p>用<code>+</code>或<code>-</code>后边加空格来表示</p>
 <p><strong>Markdown语言</strong></p>
-<pre><code>- A
+<pre><code class="markdown">- A
 - B
 - C
 </code></pre>
@@ -138,7 +145,7 @@
 </ul>
 <h3>分割线</h3>
 <p><strong>Markdown语言</strong></p>
-<pre><code>-----
+<pre><code class="markdown">-----
 *****
 </code></pre>
 
@@ -147,24 +154,23 @@
 <hr />
 <h3>强调</h3>
 <p><strong>Markdown语言</strong></p>
-<pre><code>斜体：`*斜体部分*`来达到斜体效果
-黑体：`**黑体加粗部分**`来达到黑体加粗效果
+<pre><code class="markdown">斜体：*斜体部分*来达到斜体效果，黑体：**黑体加粗部分**来达到黑体加粗效果
 </code></pre>
 
 <p><strong>效果：</strong></p>
-<p>斜体：<code>*斜体部分*</code>
-黑体：<code>**黑体加粗部分**</code></p>
+<p>斜体：<em>斜体部分</em>，黑体：<strong>黑体加粗部分</strong></p>
 <h3>插入代码</h3>
 <p>插入一段代码需要三个反向逗号<code>```</code>进行包裹</p>
 <p><strong>Markdown语言</strong></p>
-<pre><code>```python
+<pre><code class="markdown">​```python
 %matplotlib inline 
 import matplotlib.pyplot as plt 
 import numpy as np 
 x = np.arange(20)
 y = x**2
-```
+​```
 </code></pre>
+
 <p><strong>效果：</strong></p>
 <pre><code class="python">%matplotlib inline 
 import matplotlib.pyplot as plt 
@@ -176,7 +182,7 @@ y = x**2
 <p>注意:不同类别的语言的代码应进行指定方能正常高亮显示。</p>
 <h3>插入表格</h3>
 <p><strong>Markdown语言</strong></p>
-<pre><code>| 左对齐标题 | 右对齐标题 | 居中对齐标题 |
+<pre><code class="markdown">| 左对齐标题 | 右对齐标题 | 居中对齐标题 |
 | :------| ------: | :------: |
 | 短文本 | 中等文本 | 稍微长一点的文本 |
 | 稍微长一点的文本 | 短文本 | 中等文本 |

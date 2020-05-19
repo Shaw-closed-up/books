@@ -14,6 +14,13 @@
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/css/prettify.css" type="text/css" media="all">
 
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+      
     <title>Docker 镜像操作(image) - FreeAIHub</title>
   </head>
   <body class="bg-light">
@@ -52,7 +59,7 @@
 <li><a href=./setup.html>Docker 环境安装及配置</a></li>
 <li><a href=./arch.html>Docker 架构</a></li>
 <li><a href=./conception.html>Docker 核心概念</a></li>
-<li><a href=./helloworld.html>Docker 跑通第一个Docker容器</a></li>
+<li><a href=./helloworld.html>Docker 运行第一个Docker容器</a></li>
 <li><a href=./container.html>Docker 容器操作(container)</a></li>
 <li><a href=./container-daemon.html>Docker 容器以后台方式运行</a></li>
 <li><a href=./image.html>Docker 镜像操作(image)</a></li>
@@ -90,7 +97,7 @@
 <li><strong>SIZE：</strong>镜像大小</li>
 </ul>
 <p>同一仓库源可以有多个 TAG，代表这个仓库源的不同个版本，如 ubuntu 仓库源里，有 15.10、14.04 等多个不同的版本，我们使用 REPOSITORY:TAG 来定义不同的镜像。</p>
-<p>所以，我们如果要使用版本为15.10的ubuntu系统镜像来运行容器时，命令如下：</p>
+<p>所以，我们如果要使用版本为20.04的ubuntu系统镜像来运行容器时，命令如下：</p>
 <pre><code class="bash">docker run -it ubuntu:20.04 /bin/bash 
 </code></pre>
 
@@ -108,7 +115,7 @@
 <p>如果你不指定一个镜像的版本标签，例如你只使用 ubuntu，docker 将默认使用 ubuntu:latest 镜像。</p>
 <h2>获取一个新的镜像</h2>
 <p>当我们在本地主机上使用一个不存在的镜像时 Docker 就会自动下载这个镜像。如果我们想预先下载这个镜像，我们可以使用 docker pull 命令来下载它。</p>
-<pre><code class="bash">docker pull ubuntu:18.10
+<pre><code class="bash">docker pull busybox
 </code></pre>
 
 <p>下载完成后，我们可以直接使用这个镜像来运行容器。</p>
@@ -140,32 +147,32 @@
 </ul>
 <h3>更新镜像</h3>
 <p>更新镜像之前，我们需要使用镜像来创建一个容器。</p>
-<pre><code class="bash">docker run -t -i --name i3 ubuntu:20.04 /bin/bash
+<pre><code class="bash">docker run -t -i --name i1 ubuntu:20.04 /bin/bash
 </code></pre>
 
 <p>在运行的容器内使用 <strong>apt-get update</strong> 命令进行更新。</p>
 <p>在完成操作之后，输入 exit 命令来退出这个容器。</p>
-<p>此时 ID 为 i3的容器，是按我们的需求更改的容器。我们可以通过命令 docker commit 来提交容器副本。</p>
-<pre><code class="bash">docker commit i3 ubuntu:20.04.1
+<p>此时 ID 为 i1的容器，是按我们的需求更改的容器。我们可以通过命令 docker commit 来提交容器副本。</p>
+<pre><code class="bash">docker commit i1 ubuntu:20.04.i1
 </code></pre>
 
 <p>各个参数说明：</p>
 <ul>
-<li><strong>i3：</strong>容器名</li>
+<li><strong>i1：</strong>容器名</li>
 <li><strong>ubuntu:</strong> 指定要创建的目标镜像名</li>
-<li>`20.04.1·指定要创建的目标镜像版本号</li>
+<li><strong>20.04.i1</strong>:指定要创建的目标镜像版本号</li>
 </ul>
-<p>我们可以使用 <strong>docker images</strong> 命令来查看我们的新镜像 <strong>runoob/ubuntu:v2</strong>：</p>
+<p>我们可以使用 <strong>docker images</strong> 命令来查看我们的新镜像<strong>ubuntu:20.04.i1</strong></p>
 <pre><code class="bash">docker images
 </code></pre>
 
-<p>使用我们的新镜像 <strong>runoob/ubuntu</strong> 来启动一个容器</p>
-<pre><code class="bash">docker run -t -i ubuntu:20.04.1 /bin/bash  
+<p>使用我们的新镜像 <strong>ubuntu:20.04.i1</strong> 来启动一个容器,这时apt源就已经更新了</p>
+<pre><code class="bash">docker run -t -i ubuntu:20.04.i1 /bin/bash  
 </code></pre>
 
 <h3>设置镜像标签</h3>
 <p>我们可以使用 docker tag 命令，为镜像添加一个新的标签。</p>
-<pre><code class="bash">docker tag ubuntu:20.04 ubuntu:20.04.1
+<pre><code class="bash">docker tag ubuntu:20.04 ubuntu:20.04.test
 </code></pre>
 
 <p>docker tag 镜像ID/镜像名，镜像源名(repository name)和新的标签名(tag)</p>
@@ -174,12 +181,13 @@
 </code></pre>
 
 <h2>删除镜像</h2>
-<p>镜像删除使用 <strong>docker rmi</strong> 命令，比如我们删除 hello-world 镜像：</p>
-<pre><code class="bash">ocker rmi httpd
+<p>镜像删除使用 <strong>docker rmi</strong> 命令，比如我们删除 ubuntu:20.04.i1  镜像。</p>
+<p>注意：删除镜像时，要求不能存在以此镜像产生的容器。如有存在的话，是会报错。</p>
+<pre><code class="bash">docker rmi ubuntu:20.04.i1 
 </code></pre>
             
           </div>
-          <backend type='c'></backend>
+          <backend type='v'></backend>
           <div class="d-none d-xl-block col-xl-5 bd-toc xterm-wrapper overflow-hidden">
              <!-- 导航 -->
             <ul class="nav nav-tabs nav-float" id="myTab">

@@ -5,14 +5,14 @@
 我们将在docker容器中运行一个 Python Flask 应用来运行一个web应用。
 
 ```bash
-docker pull training/webapp  # 载入镜像
-docker run -d -P --name casewebapp training/webapp python app.py
+docker load < /share/images/training.webapp.tar  # 载入镜像
+docker run -d -p 5000:5000 --name casewebapp training/webapp python app.py
 ```
 
 参数说明:
 
 - **-d:**让容器在后台运行。
-- **-P:**将容器内部使用的网络端口映射到我们使用的主机上。
+- **-p:**将容器内部使用的网络端口映射到我们使用的主机上。
 - **--name**:创建容器名为`casewebapp`
 
 ## 查看 WEB 应用容器
@@ -27,17 +27,17 @@ docker ps
 
 ```
 PORTS
-0.0.0.0:32769->5000/tcp
+0.0.0.0:5000->5000/tcp
 ```
 
-Docker 开放了 5000 端口（默认 Python Flask 端口）映射到主机端口 32769 上。
+Docker 开放了 5000 端口（默认 Python Flask 端口）映射到主机端口 5000上。
 
-这时我们可以通过浏览器访问WEB应用
+这时，我们就可以通过访问本地主机的 5000 端口，从而访问到容器`casewebapp`的5000端口。
 
-我们也可以通过 -p 参数来设置不一样的端口：
+验证
 
-```bash
-docker run -d -p 5000:5000 training/webapp python app.py
+```
+curl localhost:5000
 ```
 
 **docker ps**查看正在运行的容器
@@ -45,8 +45,6 @@ docker run -d -p 5000:5000 training/webapp python app.py
 ```bash
 docker ps
 ```
-
-容器内部的 5000 端口映射到我们本地主机的 5000 端口上。
 
 ## 网络端口的快捷方式
 
@@ -120,6 +118,6 @@ docker rm casewebapp
 
 删除容器时，容器必须是停止状态，否则会报如下类似错误
 
-```
+```response
 Error response from daemon: You cannot remove a running container 
 ```

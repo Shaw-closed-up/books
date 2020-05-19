@@ -20,10 +20,10 @@ docker stats --help
 
 ### 获取镜像
 
-如果我们本地没有ubuntu:16.04镜像，我们可以使用 docker pull 命令来载入 ubuntu 镜像：
+如果我们本地没有ubuntu:20.04镜像，我们可以使用 docker pull 命令来载入 ubuntu 镜像：
 
 ```bash
-docker pull ubuntu:16.04
+docker pull ubuntu:20.04
 ```
 
 ### 启动容器
@@ -31,14 +31,14 @@ docker pull ubuntu:16.04
 以下命令使用 ubuntu 镜像启动一个容器，参数为以命令行模式进入该容器：
 
 ```bash
-docker run -it --name c1 ubuntu /bin/bash
+docker run -it --name c20 ubuntu:20.04 /bin/bash
 ```
 
 参数说明：
 
 - **-i**: 交互式操作。
 - **-t**: 终端。
-- **ubuntu**: ubuntu 镜像。
+- **ubuntu:16.04**: ubuntu 镜像，版本为16.04
 - **/bin/bash**：放在镜像名后的是命令，这里我们希望有个交互式 Shell，因此用的是 /bin/bash。
 
 要退出终端，直接输入 **exit**:
@@ -52,13 +52,13 @@ exit
 停止容器的命令如下：
 
 ```bash
-docker stop c2 #c2为容器名或容器ID都可以
+docker stop c20 #c20为容器名或容器ID都可以
 ```
 
 停止的容器可以通过 docker restart 重启：
 
 ```bash
-docker restart c2 #c2为容器名或容器ID都可以
+docker restart c20 #c20为容器名或容器ID都可以
 ```
 
 ### 启动已停止运行的容器
@@ -72,7 +72,7 @@ docker ps -a
 使用 docker start 启动一个已停止的容器：
 
 ```bash
-docker start c2
+docker start c20
 ```
 
 在使用 **-d** 参数时，容器启动后会进入后台。此时想要进入容器，可以通过以下指令进入：
@@ -84,8 +84,8 @@ docker start c2
 
 下面演示了使用 docker attach 命令。
 
-```
-docker attach c3 
+```bash
+docker attach c20
 ```
 
 **注意：** 如果从这个容器退出，会导致容器的停止。
@@ -94,8 +94,8 @@ docker attach c3
 
 下面演示了使用 docker exec 命令。
 
-```
-docker exec -it c3 /bin/bash
+```bash
+docker exec -it c20 /bin/bash
 ```
 
 **注意：** 如果从这个容器退出，不会导致容器的停止，这就是为什么推荐大家使用 **docker exec** 的原因。
@@ -109,24 +109,18 @@ docker exec -it c3 /bin/bash
 如果要导出本地某个容器，可以使用 **docker export** 命令。
 
 ```bash
-docker export c3 > c3.tar
+docker export c20 > ~/c20.tar
 ```
 
-导出容器 c3快照到本地文件 c3.tar。这样将导出容器快照到本地文件。
+导出容器 c20快照到本地文件 c20.tar。这样将导出容器快照到本地文件。
 
 **导入容器快照**
 
-可以使用 docker import 从容器快照文件中再导入为镜像，以下实例将快照文件 ubuntu.tar 导入到镜像 test/ubuntu:v1:
+可以使用 docker import 从容器快照文件中再导入为镜像，以下实例将快照文件 redis.tar 导入到镜像 redis:latest:
 
 ```bash
-cat c3.tar | docker import - test/ubuntu:v1
-```
-
-
-此外，也可以通过指定 URL 或者某个目录来导入，例如：
-
-```bash
-docker import http://example.com/exampleimage.tgz example/imagerepo
+docker import /share/images/redis.tar redis:latest
+docker images #验证
 ```
 
 ### 删除容器
@@ -134,9 +128,9 @@ docker import http://example.com/exampleimage.tgz example/imagerepo
 删除容器使用 **docker rm** 命令：
 
 ```bash
-docker rm -f c3
-#参数 -f 为强制删除
+docker rm -f c20
 #要删除一个容器，其必须在停止的状态
+#参数 -f 代表为强制删除
 ```
 
 下面的命令可以清理掉所有处于终止状态的容器。
@@ -144,3 +138,9 @@ docker rm -f c3
 ```bash
 docker container prune
 ```
+
+```response
+WARNING! This will remove all stopped containers.
+Are you sure you want to continue? [y/N]
+```
+

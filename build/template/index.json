@@ -121,7 +121,7 @@
                 },
 			    {
                     "id": "B15",
-                    "name": "lua",
+                    "name": "Lua",
                     "disable": 0,
 					"des": "新一代的轻量级的脚本语言，用于Web开发及游戏",
                     "img": "/images/lua.png",

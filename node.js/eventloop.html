@@ -14,7 +14,14 @@
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/css/prettify.css" type="text/css" media="all">
 
-    <title>node.js 缓冲器(buffer) - FreeAIHub</title>
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+      
+    <title>node.js 事件循环(event loop) - FreeAIHub</title>
   </head>
   <body class="bg-light">
         <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar text-center">
@@ -71,242 +78,87 @@
           </div>
           <div class="entry-content col-md-9 col-xl-5 py-md-3 pl-md-5 bd-content">
               
-            <h1>node.js 缓冲器(buffer)</h1>
-<p>纯JavaScript是Unicode友好的，但对二进制数据不是很好。当与TCP流或文件系统打交道时，有必要处理字节流。 Node提供缓冲器类，它提供实例来存储原始数据相似的一个整数数组，但对应于在V8堆外的原始存储器的分配。</p>
-<p>Buffer类是一个全局类，可以在应用程序，导入缓冲模块进行访问。</p>
-<h2>创建缓冲区</h2>
-<p>Node缓冲器可以以各种方式来构造。</p>
-<h3>方法 1</h3>
-<p>以下是创建10个字节的汉缓冲的语法：</p>
-<pre><code class="js">var buf = new Buffer(10);
+            <h1>node.js 事件循环(event loop)</h1>
+<p>node.js单线程应用程序，但它通过事件和回调概念，支持并发。 由于node.js每一个API是异步的，作为一个单独的线程，它使用异步函数调用，以保持并发性。node.js使用观察者模式。node线程保持一个事件循环，每当任何任务得到完成，它触发这标志着该事件侦听器函数执行相应的事件。</p>
+<h2>事件驱动编程</h2>
+<p>node.js大量使用事件，这也是为何node.js是相当快相对于其他类似的技术。当node.js启动其服务器，它可以简单地启动它的变量，声明的函数，然后简单地等待发生的事件。</p>
+<p><img alt="img" src="./images/event_loop.jpg" /></p>
+<p>在事件驱动的应用中，通常主循环监听事件，然后触发回调函数时被检测到这些事件之一。</p>
+<p>尽管事件似乎类似于回调。不同之处在于如下事实，当异步函数返回其结果的回调函数被调用的地方作为对观察者模式的事件处理。 监听事件的功能作为观察员。每当一个事件被触发，它的监听函数就开始执行。node.js具有多个内置通过事件模块和用于将事件绑定和事件侦听，如下EventEmitter类可用事件：</p>
+<pre><code class="js">// Import events module
+var events = require('events');
+// Create an eventEmitter object
+var eventEmitter = new events.EventEmitter();
 </code></pre>
 
-<h3>方法 2</h3>
-<p>下面是用来从给定数组创建一个缓冲区的语法：</p>
-<pre><code class="js">var buf = new Buffer([10, 20, 30, 40, 50]);
+<p>以下为事件处理程序绑定使用事件的语法：</p>
+<pre><code class="js">// Bind event and even handler as follows
+eventEmitter.on('eventName', eventHandler);
 </code></pre>
 
-<h3>方法 3</h3>
-<p>下面是用来从给定的字符串和可选的编码类型创建缓冲区的语法：</p>
-<pre><code class="js">var buf = new Buffer(&quot;Simply Easy Learning&quot;, &quot;utf-8&quot;);
+<p>我们可以通过编程触发一个事件，如下所示：</p>
+<pre><code class="js">// Fire an event 
+eventEmitter.emit('eventName');
 </code></pre>
 
-<p>虽然“UTF8”是默认的编码，但你可以使用其它的编码： "ascii", "utf8", "utf16le", "ucs2", "base64" 或 "hex".</p>
-<h2>写到缓冲器</h2>
-<h3>语法</h3>
-<p>以下被写入到一个节点缓冲器的方法的语法：</p>
-<pre><code class="js">buf.write(string[, offset][, length][, encoding])
-</code></pre>
+<h2>例子</h2>
+<p>文件名:eventloop.js</p>
+<pre><code class="js">// Import events module
+var events = require('events');
+// Create an eventEmitter object
+var eventEmitter = new events.EventEmitter();
 
-<h3>参数</h3>
-<p>下面是使用的参数的说明：</p>
-<ul>
-<li><strong>string</strong> - 这是要被写入的数据串缓冲区。</li>
-<li><strong>offset</strong> - 这是缓冲区开始的索引。默认值为0。</li>
-<li><strong>length</strong> - 这是要写入的字节的数目。默认是 buffer.length</li>
-<li><strong>encoding</strong> - 编码使用。 “UTF8”是默认的编码</li>
-</ul>
-<h3>返回值</h3>
-<p>这个方法返回写入的字节数。如果没有足够的空间在缓冲，以适应整个字符串，它将写该字符串的一部分。</p>
-<h3>示例</h3>
-<p>文件名:bufferwrite.js</p>
-<pre><code class="js">buf = new Buffer(256);
-len = buf.write(&quot;Simply Easy Learning&quot;);
+// Create an event handler as follows
+var connectHandler = function connected() {
+   console.log('connection succesful.');
 
-console.log(&quot;Octets written : &quot;+  len);
-</code></pre>
-
-<p>康康</p>
-<pre><code class="bash">node /share/lesson/node.js/bufferwrite.js
-</code></pre>
-
-<h2>从缓冲器读取</h2>
-<h3>语法</h3>
-<p>下面是从节点缓冲器的数据的方法读取的语法：</p>
-<pre><code class="js">buf.toString([encoding][, start][, end])
-</code></pre>
-
-<h3>参数</h3>
-<p>下面是使用的参数的说明：</p>
-<ul>
-<li><strong>encoding</strong> - 编码使用。 “UTF8”是默认的编码</li>
-<li><strong>start</strong> - 开始读取的索引，默认为0。</li>
-<li><strong>end</strong> - 最终读数结束的索引，默认值是整个缓冲区。</li>
-</ul>
-<h3>返回值</h3>
-<p>此方法解码并返回来自使用指定的字符集编码的编码缓冲器的数据的字符串。</p>
-<h3>示例</h3>
-<p>文件名:buffertostring.js</p>
-<pre><code class="js">buf = new Buffer(256);
-len = buf.write(&quot;Simply Easy Learning&quot;);
-
-console.log(&quot;Octets written : &quot;+  len);
-buf = new Buffer(26);
-for (var i = 0 ; i &lt; 26 ; i++) {
-  buf[i] = i + 97;
+   // Fire the data_received event 
+   eventEmitter.emit('data_received');
 }
 
-console.log( buf.toString('ascii'));       // outputs: abcdefghijklmnopqrstuvwxyz
-console.log( buf.toString('ascii',0,5));   // outputs: abcde
-console.log( buf.toString('utf8',0,5));    // outputs: abcde
-console.log( buf.toString(undefined,0,5)); // encoding defaults to 'utf8', outputs abcde
+// Bind the connection event with the handler
+eventEmitter.on('connection', connectHandler);
+
+// Bind the data_received event with the anonymous function
+eventEmitter.on('data_received', function(){
+   console.log('data received succesfully.');
+});
+
+// Fire the connection event 
+eventEmitter.emit('connection');
+
+console.log(&quot;Program Ended.&quot;);
 </code></pre>
 
 <p>康康</p>
-<pre><code class="bash">node /share/lesson/node.js/buffertostring.js
+<pre><code class="bash">node /share/lesson/node.js/eventloop.js
 </code></pre>
 
-<h2>转换缓冲到JSON</h2>
-<h3>语法</h3>
-<p>以下是转换节点缓存到JSON对象方法的语法：</p>
-<pre><code class="js">buf.toJSON()
-</code></pre>
-
-<h3>返回值</h3>
-<p>此方法返回缓冲区JSON-表示。</p>
+<h2>Node应用程序是如何工作的？</h2>
+<p>在Node应用程序，任何异步函数接受回调作为最后的参数和回调函数接受错误的第一个参数。我们再看一下前面的例子了。</p>
 <h3>示例</h3>
-<p>文件名:buffertojson.js</p>
-<pre><code class="js">var buf = new Buffer('Simply Easy Learning');
-var json = buf.toJSON(buf);
+<p>在当前目录准备实验用文本文件，文件名:input.txt</p>
+<pre><code class="bash">echo To go in is giving yourself learning content to teach the world in simple and easy way!!!!! &gt; input.txt
+</code></pre>
 
-console.log(json);
+<p>文件名:nodeworks.js</p>
+<pre><code class="js">var fs = require(&quot;fs&quot;);
+
+fs.readFile('input.txt', function (err, data) {
+   if (err){
+      console.log(err.stack);
+      return;
+   }
+   console.log(data.toString());
+});
+console.log(&quot;Program Ended&quot;);
 </code></pre>
 
 <p>康康</p>
-<pre><code class="bash">node /share/lesson/node.js/buffertojson.js
+<pre><code class="bash">node /share/lesson/node.js/nodeworks.js
 </code></pre>
 
-<h2>接续缓冲器</h2>
-<h3>语法</h3>
-<p>以下是连接Node缓存到单个节点缓存方法的语法：</p>
-<pre><code class="js">Buffer.concat(list[, totalLength])
-</code></pre>
-
-<h3>参数</h3>
-<p>下面是使用的参数的说明：</p>
-<ul>
-<li><strong>list</strong> -要连接缓冲区的数组对象列表</li>
-<li><strong>totalLength</strong> - 这是缓冲器连接在一起时的总长度</li>
-</ul>
-<h3>返回值</h3>
-<p>该方法返回一个缓冲区实例。</p>
-<h3>示例</h3>
-<p>文件名:buffercontact.js</p>
-<pre><code class="js">var buffer1 = new Buffer('To Go In Is ');
-var buffer2 = new Buffer('Simply Easy Learning');
-var buffer3 = Buffer.concat([buffer1,buffer2]);
-console.log(&quot;buffer3 content: &quot; + buffer3.toString());
-</code></pre>
-
-<p>康康</p>
-<pre><code class="bash">node /share/lesson/node.js/buffercontact.js
-</code></pre>
-
-<h2>比较缓冲器</h2>
-<h3>语法</h3>
-<p>下面是比较两个Node缓冲器的方法的语法：</p>
-<pre><code class="js">buf.compare(otherBuffer);
-</code></pre>
-
-<h3>参数</h3>
-<p>下面是使用参数的说明：</p>
-<ul>
-<li><strong>otherBuffer</strong> - 这是将与被比较的其它缓冲 buf</li>
-</ul>
-<h3>返回值</h3>
-<p>返回一个数字，表示否到来之前或之后或和otherBuffer排序顺序一样。</p>
-<h3>示例</h3>
-<p>文件名:buffercompare.js</p>
-<pre><code class="js">var buffer1 = new Buffer('ABC');
-var buffer2 = new Buffer('ABCD');
-var result = buffer1.compare(buffer2);
-
-if(result &lt; 0) {
-   console.log(buffer1 +&quot; comes before &quot; + buffer2);
-}else if(result == 0){
-   console.log(buffer1 +&quot; is same as &quot; + buffer2);
-}else {
-   console.log(buffer1 +&quot; comes after &quot; + buffer2);
-}
-</code></pre>
-
-<p>康康</p>
-<pre><code class="bash">node /share/lesson/node.js/buffercompare.js
-</code></pre>
-
-<h2>复制缓冲区</h2>
-<h3>语法</h3>
-<p>以下是复制节点缓冲器的方法的语法：</p>
-<pre><code class="js">buf.copy(targetBuffer[, targetStart][, sourceStart][, sourceEnd])
-</code></pre>
-
-<h3>参数</h3>
-<p>下面是使用的参数的说明：</p>
-<ul>
-<li><strong>targetBuffer</strong> - 缓冲区对象的缓冲区将被复制。</li>
-<li><strong>targetStart</strong> - 数量，可选，默认：0</li>
-<li><strong>sourceStart</strong> - 数量，可选，默认：0</li>
-<li><strong>sourceEnd</strong> - 数量，可选，默认：buffer.length</li>
-</ul>
-<h3>返回值</h3>
-<p>没有返回值。拷贝数据从该缓冲器的一区域中，即使在目标内存区域与源重叠的目标缓冲器的区域。如果不确定targetStart，那么sourceStart参数默认为0，sourceEnd默认为buffer.length。</p>
-<h3>示例</h3>
-<p>文件名:buffercopy.js</p>
-<pre><code class="js">var buffer1 = new Buffer('ABC');
-//copy a buffer
-var buffer2 = new Buffer(3);
-buffer1.copy(buffer2);
-console.log(&quot;buffer2 content: &quot; + buffer2.toString());
-</code></pre>
-
-<p>康康</p>
-<pre><code class="bash">node /share/lesson/node.js/buffercopy.js
-</code></pre>
-
-<h2>切片式缓冲器</h2>
-<h3>语法</h3>
-<p>以下是获得一个节点缓冲器的子缓冲器的方法的语法：</p>
-<pre><code class="js">buf.slice([start][, end])
-</code></pre>
-
-<h3>参数</h3>
-<p>下面是使用的参数的说明：</p>
-<ul>
-<li>start - 数量，可选，默认：0</li>
-<li>end - 数量可选，默认：buffer.length</li>
-</ul>
-<h3>返回值</h3>
-<p>返回一个新的缓冲区，它引用相同的内存如old，并 start 切片（默认为0）和 end（默认为buffer.length）索引。负索引则从缓冲区末尾开始。</p>
-<h3>示例</h3>
-<p>文件名:bufferslice.js</p>
-<pre><code class="js">var buffer1 = new Buffer('node.js');
-//slicing a buffer
-var buffer2 = buffer1.slice(0,7);
-console.log(&quot;buffer2 content: &quot; + buffer2.toString());
-</code></pre>
-
-<p>康康</p>
-<pre><code class="bash">node /share/lesson/node.js/bufferslice.js
-</code></pre>
-
-<h2>缓冲区长度</h2>
-<h3>语法</h3>
-<p>以下是得到以字节为单位的节点缓冲器的大小的方法的语法：</p>
-<pre><code class="js">buf.length;
-</code></pre>
-
-<h3>返回值</h3>
-<p>返回缓冲器的字节的大小。</p>
-<h3>示例</h3>
-<p>文件名:bufferlen.js</p>
-<pre><code class="js">var buffer = new Buffer('node.js');
-//length of the buffer
-console.log(&quot;buffer length: &quot; + buffer.length);
-</code></pre>
-
-<p>康康</p>
-<pre><code class="bash">node /share/lesson/node.js/bufferlen.js
-</code></pre>
+<p>这里fs.readFile()是一个异步函数，其目的是要读取文件。如果在文件的读出发生了错误，则er对象将包含相应的错误，否则数据将包含该文件的内容。readFile传递err和数据，回调函数后，文件读取操作完成，并最终打印的内容。</p>
             
           </div>
           <backend type='k'></backend>

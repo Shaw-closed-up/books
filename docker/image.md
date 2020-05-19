@@ -25,7 +25,7 @@ docker images
 
 同一仓库源可以有多个 TAG，代表这个仓库源的不同个版本，如 ubuntu 仓库源里，有 15.10、14.04 等多个不同的版本，我们使用 REPOSITORY:TAG 来定义不同的镜像。
 
-所以，我们如果要使用版本为15.10的ubuntu系统镜像来运行容器时，命令如下：
+所以，我们如果要使用版本为20.04的ubuntu系统镜像来运行容器时，命令如下：
 
 ```bash
 docker run -it ubuntu:20.04 /bin/bash 
@@ -51,7 +51,7 @@ docker run -t -i ubuntu:20.04 /bin/bash
 当我们在本地主机上使用一个不存在的镜像时 Docker 就会自动下载这个镜像。如果我们想预先下载这个镜像，我们可以使用 docker pull 命令来下载它。
 
 ```bash
-docker pull ubuntu:18.10
+docker pull busybox
 ```
 
 下载完成后，我们可以直接使用这个镜像来运行容器。
@@ -102,35 +102,35 @@ docker run httpd
 更新镜像之前，我们需要使用镜像来创建一个容器。
 
 ```bash
-docker run -t -i --name i3 ubuntu:20.04 /bin/bash
+docker run -t -i --name i1 ubuntu:20.04 /bin/bash
 ```
 
 在运行的容器内使用 **apt-get update** 命令进行更新。
 
 在完成操作之后，输入 exit 命令来退出这个容器。
 
-此时 ID 为 i3的容器，是按我们的需求更改的容器。我们可以通过命令 docker commit 来提交容器副本。
+此时 ID 为 i1的容器，是按我们的需求更改的容器。我们可以通过命令 docker commit 来提交容器副本。
 
 ```bash
-docker commit i3 ubuntu:20.04.1
+docker commit i1 ubuntu:20.04.i1
 ```
 
 各个参数说明：
 
-- **i3：**容器名
+- **i1：**容器名
 - **ubuntu:** 指定要创建的目标镜像名
-- `20.04.1·指定要创建的目标镜像版本号
+- **20.04.i1**:指定要创建的目标镜像版本号
 
-我们可以使用 **docker images** 命令来查看我们的新镜像 **runoob/ubuntu:v2**：
+我们可以使用 **docker images** 命令来查看我们的新镜像**ubuntu:20.04.i1**
 
 ```bash
 docker images
 ```
 
-使用我们的新镜像 **runoob/ubuntu** 来启动一个容器
+使用我们的新镜像 **ubuntu:20.04.i1** 来启动一个容器,这时apt源就已经更新了
 
 ```bash
-docker run -t -i ubuntu:20.04.1 /bin/bash  
+docker run -t -i ubuntu:20.04.i1 /bin/bash  
 ```
 
 ### 设置镜像标签
@@ -138,7 +138,7 @@ docker run -t -i ubuntu:20.04.1 /bin/bash
 我们可以使用 docker tag 命令，为镜像添加一个新的标签。
 
 ```bash
-docker tag ubuntu:20.04 ubuntu:20.04.1
+docker tag ubuntu:20.04 ubuntu:20.04.test
 ```
 
 docker tag 镜像ID/镜像名，镜像源名(repository name)和新的标签名(tag)
@@ -151,8 +151,11 @@ docker images
 
 ## 删除镜像
 
-镜像删除使用 **docker rmi** 命令，比如我们删除 hello-world 镜像：
+镜像删除使用 **docker rmi** 命令，比如我们删除 ubuntu:20.04.i1  镜像。
+
+注意：删除镜像时，要求不能存在以此镜像产生的容器。如有存在的话，是会报错。
 
 ```bash
-ocker rmi httpd
+docker rmi ubuntu:20.04.i1 
 ```
+

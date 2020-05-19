@@ -1,4 +1,4 @@
-## Jupyter Markdown单元格
+# Jupyter Markdown单元格
 
 ## 环境配置
 
@@ -8,7 +8,7 @@
 
 **Markdown语言**
 
-```
+```markdown
 通过#符号来分级
 # 一级标题
 ## 二级标题
@@ -36,7 +36,7 @@
 ### 引用文本
 
 **Markdown语言**
-```
+```markdown
 > 这段文字以>开头，将会高亮，
 ```
 **效果：**
@@ -46,7 +46,7 @@
 ### 添加图片
 **Markdown语言**
 
-```
+```markdown
 ![Jupyter-Logo](./images/logo.png)
 ```
 
@@ -60,7 +60,7 @@
 
 **Markdown语言**
 
-```
+```markdown
 [Jupyter 官网](https://link.jupyter.org)
 ```
 
@@ -72,7 +72,7 @@
 
 **Markdown语言**
 
-```
+```markdown
 [http://www.jupyter.org](./images/logo.png)
 ```
 
@@ -88,7 +88,7 @@
 
 **Markdown语言**
 
-```
+```markdown
 - A
 - B
 - C
@@ -104,7 +104,7 @@
 
 **Markdown语言**
 
-```
+```markdown
 -----
 *****
 ```
@@ -118,28 +118,27 @@
 
 **Markdown语言**
 
-```
-斜体：`*斜体部分*`来达到斜体效果
-黑体：`**黑体加粗部分**`来达到黑体加粗效果
+```markdown
+斜体：*斜体部分*来达到斜体效果，黑体：**黑体加粗部分**来达到黑体加粗效果
 ```
 
 **效果：**
 
-斜体：`*斜体部分*`
-黑体：`**黑体加粗部分**`
+斜体：*斜体部分*，黑体：**黑体加粗部分**
 
 ### 插入代码
-插入一段代码需要三个反向逗号` ``` `进行包裹
+插入一段代码需要三个反引号` ``` `进行包裹
 
 **Markdown语言**
-
-    ```python
-    %matplotlib inline 
-    import matplotlib.pyplot as plt 
-    import numpy as np 
-    x = np.arange(20)
-    y = x**2
-    ```
+```markdown
+​```python
+%matplotlib inline 
+import matplotlib.pyplot as plt 
+import numpy as np 
+x = np.arange(20)
+y = x**2
+​```
+```
 **效果：**
 
 ```python
@@ -156,7 +155,7 @@ y = x**2
 
 **Markdown语言**
 
-```
+```markdown
 | 左对齐标题 | 右对齐标题 | 居中对齐标题 |
 | :------| ------: | :------: |
 | 短文本 | 中等文本 | 稍微长一点的文本 |

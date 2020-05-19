@@ -14,6 +14,13 @@
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
     <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/css/prettify.css" type="text/css" media="all">
 
+    <script>
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+      
     <title>如何学习本课程 - FreeAIHub</title>
   </head>
   <body class="bg-light">
@@ -52,7 +59,7 @@
 <li><a href=./setup.html>Docker 环境安装及配置</a></li>
 <li><a href=./arch.html>Docker 架构</a></li>
 <li><a href=./conception.html>Docker 核心概念</a></li>
-<li><a href=./helloworld.html>Docker 跑通第一个Docker容器</a></li>
+<li><a href=./helloworld.html>Docker 运行第一个Docker容器</a></li>
 <li><a href=./container.html>Docker 容器操作(container)</a></li>
 <li><a href=./container-daemon.html>Docker 容器以后台方式运行</a></li>
 <li><a href=./image.html>Docker 镜像操作(image)</a></li>
@@ -73,13 +80,13 @@
 <h2>课程简介</h2>
 <ul>
 <li>课程名称：《动手学Docker容器技术》</li>
-<li>课程编号：B43</li>
+<li>课程编号：B45</li>
 <li>所需基础：<a href="/linux">Linux</a></li>
 <li>学习周期：4周（以每天投入2小时左右时间进行学习估算）</li>
 <li>学习形式：在线互动<a href="/aboutus/help.html">课程使用帮助</a></li>
-<li>面向群体：本课程是计算机科学的基础课程，主要帮助初学者和专业人士学习并打牢数据结构知识和应用。</li>
+<li>面向群体：希望了解虚拟化技术，云计算基础的同学。</li>
 <li>考核标准：能理解课程内容，并独立完成课程中的示例和作业</li>
-<li>学习成果：掌握并可手写常用的数据结构及算法</li>
+<li>学习成果：对容器化技术有了解，可进行镜像的相关操作，运行，部署容器作为服务。</li>
 </ul>
 <h2>相关参考书籍及资源</h2>
 <h3>本课程专用微信学习交流群</h3>
@@ -113,7 +120,7 @@
 </table>
             
           </div>
-          <backend type='c'></backend>
+          <backend type='v'></backend>
           <div class="d-none d-xl-block col-xl-5 bd-toc xterm-wrapper overflow-hidden">
              <!-- 导航 -->
             <ul class="nav nav-tabs nav-float" id="myTab">
