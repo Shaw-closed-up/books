@@ -133,7 +133,7 @@ docker import http://example.com/exampleimage.tgz example/imagerepo
 
 删除容器使用 **docker rm** 命令：
 
-```
+```bash
 docker rm -f c3
 #参数 -f 为强制删除
 #要删除一个容器，其必须在停止的状态

@@ -2,7 +2,11 @@
 
 Docker 允许你在容器内运行应用程序， 使用 **docker run** 命令来在容器内运行一个应用程序。
 
-输出Hello world
+### 使用容器输出Hello world
+
+
+
+
 
 ```bash
 docker run --rm --name c0 ubuntu:20.04 echo "Hello world"
@@ -46,7 +50,7 @@ cat /etc/issue
 exit
 ```
 
-注意看命令行提示符变成类似 `root@fah-xxxxxx:/#`，这表明我们已经退出了c1这个容器，返回到当前系统环境中。
+注意看命令行提示符变成 `root@{host0.hostname}:/#`，这表明我们已经退出了c1这个容器，返回到当前系统环境中。
 
 ## 停止容器
 

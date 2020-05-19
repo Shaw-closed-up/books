@@ -50,11 +50,11 @@
                 <ul class="nav bd-sidenav pb-6">
                   <li><a href=./intro.html>Docker 简介</a></li>
 <li><a href=./setup.html>Docker 环境安装及配置</a></li>
-<li><a href=./helloworld.html>Docker 跑通第一个Docker容器</a></li>
 <li><a href=./arch.html>Docker 架构</a></li>
 <li><a href=./conception.html>Docker 核心概念</a></li>
-<li><a href=./container-daemon.html>Docker 容器以后台方式运行</a></li>
+<li><a href=./helloworld.html>Docker 跑通第一个Docker容器</a></li>
 <li><a href=./container.html>Docker 容器操作(container)</a></li>
+<li><a href=./container-daemon.html>Docker 容器以后台方式运行</a></li>
 <li><a href=./image.html>Docker 镜像操作(image)</a></li>
 <li><a href=./dockerfile.html>Docker 构建镜像(dockerfile)</a></li>
 <li><a href=./repository-mirror.html>Docker 镜像加速</a></li>
@@ -71,7 +71,7 @@
               
             <h1>Docker 跑通第一个Docker容器</h1>
 <p>Docker 允许你在容器内运行应用程序， 使用 <strong>docker run</strong> 命令来在容器内运行一个应用程序。</p>
-<p>输出Hello world</p>
+<h3>使用容器输出Hello world</h3>
 <pre><code class="bash">docker run --rm --name c0 ubuntu:20.04 echo &quot;Hello world&quot;
 </code></pre>
 
@@ -104,7 +104,7 @@
 <pre><code class="bash">exit
 </code></pre>
 
-<p>注意看命令行提示符变成类似 <code>root@fah-xxxxxx:/#</code>，这表明我们已经退出了c1这个容器，返回到当前系统环境中。</p>
+<p>注意看命令行提示符变成 <code>root@{host0.hostname}:/#</code>，这表明我们已经退出了c1这个容器，返回到当前系统环境中。</p>
 <h2>停止容器</h2>
 <p>我们使用 <strong>docker stop</strong> 命令来停止容器:</p>
 <p>通过 <strong>docker ps</strong> 查看，容器已经停止工作:</p>

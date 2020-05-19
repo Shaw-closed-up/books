@@ -1,33 +1,54 @@
-cp /share/mysql-5.7.19-linux-glibc2.12-x86_64.tar.gz .
+# MySQL 主从复制 从机配置
+
+在右侧实验区，打开从机{host1.hostname}的ssh界面，在从机上进行如下操作
+
+```bash
+cd /usr/local/
+cp /share/tar/mysql-5.7.19-linux-glibc2.12-x86_64.tar.gz .
 tar xvf mysql-5.7.19-linux-glibc2.12-x86_64.tar.gz
 rm mysql-5.7.19-linux-glibc2.12-x86_64.tar.gz
-mv mysql-5.7.19-linux-glibc2.12-x86_64 /opt/mysql
+mv mysql-5.7.19-linux-glibc2.12-x86_64 /usr/local/mysql
+```
 
+配置MySQL用户
+
+```bash
 groupadd mysql
 useradd -r -g mysql mysql
-chown -R mysql  /opt/mysql
-chgrp -R mysql /opt/mysql
+chown -R mysql  /usr/local/mysql
+chgrp -R mysql /usr/local/mysql
+```
 
+配置相关目录及权限
+
+```bash
 mkdir -p /data/mysql
 chown -R mysql:mysql /data/mysql
 chmod -R 755 /data/mysql
-mkdir -p /opt/mysql/mysqld
-chown -R mysql:mysql /opt/mysql/mysqld
-chmod -R 755 /opt/mysql/mysqld
+mkdir -p /usr/local/mysql/mysqld
+chown -R mysql:mysql /usr/local/mysql/mysqld
+chmod -R 755 /usr/local/mysql/mysqld
+```
 
+配置相关环境变量
 
-
-ln -fs /opt/mysql/bin/mysql /usr/local/bin/mysql
-cp /opt/mysql/support-files/mysql.server /etc/init.d/mysqld
-MYSQL_HOME=/opt/mysql/bin
+```bash
+ln -fs /usr/local/mysql/bin/mysql /usr/local/bin/mysql
+cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld
+MYSQL_HOME=/usr/local/mysql/bin
 PATH=$MYSQL_HOME/bin:$PATH
 export MYSQL_HOME
+```
 
+安装必要的支持
 
+```bash
+apt update && apt install libaio1 numactl -y
+```
 
-apt install libaio1 numactl -y
+生成master上的MySQL配置文件
 
-
+```bash
 cat >/etc/my.cnf << EOF
 [mysqld]
 server_id=12
@@ -35,11 +56,11 @@ log-bin=mysql-bin
 #binlog-do-db=test
 sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
 explicit_defaults_for_timestamp=true
-basedir = /opt/mysql
+basedir = /usr/local/mysql/
 datadir = /data/mysql
 port = 3306
-socket = /opt/mysql/mysqld/mysql.sock
-pid-file = /opt/mysql/mysqld/mysql.pid
+socket = /usr/local/mysql/mysqld/mysql.sock
+pid-file = /usr/local/mysql/mysql.pid
 character-set-server=utf8
 back_log = 300
 max_connections = 3000
@@ -84,54 +105,63 @@ interactive-timeout
 open-files-limit = 8192
 [client]
 port = 3306
-socket = /opt/mysql/mysqld/mysql.sock
+socket = /usr/local/mysql/mysqld/mysql.sock
 default-character-set = utf8
 EOF
+```
 
+开始初始化MYSQL配置文件
 
-/opt/mysql/bin/mysqld --user=mysql --basedir=/opt/mysql --datadir=/data/mysql --initialize
+```bash
+/usr/local/mysql/bin/mysqld --user=mysql --basedir=/usr/local/mysql --datadir=/data/mysql --initialize
+```
+
+注意：
+
+一定要**记住临时密码，出现在初始化过程中的[Note] A temporary password is generated for root@localhost**后边。
+
+启动并查看MySQL服务状态
+
+```bash
 /etc/init.d/mysqld start
-#service mysqld status
+service mysqld status
+```
 
+登陆MySQL，使用上边初始化时产生的临时密码
 
-#记住临时密码[Note] A temporary password is generated for root@localhost: -ITo)V9kmzf?
+```bash
 mysql -uroot -p
+```
 
+重新设置密码
+
+```mysql
 set password=password('abcabc');
+```
 
+设置主机信息
 
-master:
-GRANT REPLICATION SLAVE,FILE ON *.* TO 'mstest'@'fah-cb25dbcea-slave.fah-cb25dbcea' IDENTIFIED BY '123456';
+```mysql
+CHANGE MASTER TO MASTER_HOST='{host0.ip}',MASTER_PORT=3306,MASTER_USER='mstest',MASTER_PASSWORD='123456',MASTER_LOG_FILE='mysql-bin.000002',MASTER_LOG_POS=154;
+```
 
-show master status;
-show variables like 'log%';
-#清空所有binlog日志
-reset master;
-show binary logs;
+启动复制
 
-#只查看第一个binlog文件的内容
-show binlog events;
-#查看指定binlog文件的内容
-show binlog events in 'mysql-bin.000002';
-#查看当前正在写入的binlog文件
-#获取binlog文件列表
-show binary logs;
-show master status\G
-
-
-
-slave:
-CHANGE MASTER TO MASTER_HOST='fah-cb90922b4-master.fah-cb90922b4.svc.cluster.local',MASTER_PORT=3306,MASTER_USER='mstest',MASTER_PASSWORD='123456',MASTER_LOG_FILE='mysql-bin.000002',MASTER_LOG_POS=154;
-
-
-#fah-cb90922b4-master.fah-cb90922b4.svc.cluster.local
+```mysql
 start slave;
+```
+
+查看从机复制状态
+```mysql
 show slave status\G;
+```
 
-#Slave_SQL_Running_State: Slave has read all relay log; waiting for more updates
-#Slave_IO_State: Waiting for master to send event
+```txt
+Slave_SQL_Running_State: Slave has read all relay log; waiting for more updates
+Slave_IO_State: Waiting for master to send event
+```
 
-
+```txt
 *************************** 1. row ***************************
                Slave_IO_State: Waiting for master to send event
                   Master_Host: 172.44.112.11
@@ -191,3 +221,5 @@ Master_SSL_Verify_Server_Cert: No
                  Channel_Name: 
            Master_TLS_Version: 
 1 row in set (0.00 sec)
+```
+

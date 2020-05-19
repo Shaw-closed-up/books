@@ -18,7 +18,7 @@
                     "id": "B00",
                     "disable": 0,
 					"des": "自由，免费的操作系统",
-                    "img": "python-logo.jpg",
+                    "img": "/images/linux.png",
                     "link": "/linux/"
 				},
 				{
@@ -26,7 +26,7 @@
                     "id": "B01",
                     "disable": 0,
 					"des": "卓越的版本控制工具",
-                    "img": "python-logo.jpg",
+                    "img": "/images/git.png",
                     "link": "/git/"
 				},
 				{
@@ -34,24 +34,32 @@
                     "id": "B02",
                     "disable": 1,
 					"des": "面向未来的的交互式编程",
-                    "img": "python-logo.jpg",
+                    "img": "/images/jupyter.png",
                     "link": "/jupyter/"
                 },
                 {
                     "name": "Vim",
                     "id": "B03",
                     "disable": 1,
-					"des": "最方便的终端编辑器",
-                    "img": "python-logo.jpg",
+					"des": "命令行界面下的编辑器",
+                    "img": "/images/vim.png",
                     "link": "/vim/"
 				},
                 {
                     "name": "Shell",
                     "id": "B04",
                     "disable": 1,
-					"des": "自动化脚本",
-                    "img": "python-logo.jpg",
+					"des": "提升工作效率系统脚本语言",
+                    "img": "/images/shell.png",
                     "link": "/shell/"
+				},
+                {
+                    "name": "Docker",
+                    "id": "B05",
+                    "disable": 1,
+					"des": "容器技术-云计算的未来",
+                    "img": "/images/docker.png",
+                    "link": "/docker/"
 				}
 			]
         },
@@ -67,24 +75,24 @@
                     "id": "B10",
                     "name": "C语言",
                     "disable": 0,
-					"des": "计算机语言的入门的语言",
-                    "img": "python-logo.jpg",
+					"des": "通用的计算机语言",
+                    "img": "/images/c.png",
                     "link": "/c/"
                 },
 			    {
                     "id": "B11",
                     "name": "C++",
                     "disable": 0,
-					"des": "极性性能的编程语言",
-                    "img": "python-logo.jpg",
+					"des": "性能极性的编程语言",
+                    "img": "/images/cpp.png",
                     "link": "/cpp/"
                 },
 				{
                     "id": "B12",
                     "name": "Java",
                     "disable": 1,
-					"des": "应用最为广泛的语言",
-                    "img": "python-logo.jpg",
+					"des": "一次编写，处处运行的语言",
+                    "img": "/images/java.png",
                     "link": "/java/"
 				},
 				{
@@ -92,7 +100,7 @@
                     "name": "Python",
                     "disable": 0,
 					"des": "风头正劲的胶水语言",
-                    "img": "python-logo.jpg",
+                    "img": "/images/python.png",
                     "link": "/python/"
 				},
 				{
@@ -100,7 +108,7 @@
                     "name": "Julia",
                     "disable": 0,
 					"des": "数据分析语言新贵",
-                    "img": "python-logo.jpg",
+                    "img": "/images/julia.png",
                     "link": "/julia/"
                 },
 			    {
@@ -108,16 +116,24 @@
                     "name": "Go",
                     "disable": 0,
 					"des": "云计算时代的编程语言",
-                    "img": "python-logo.jpg",
+                    "img": "/images/go.png",
                     "link": "/go/"
                 },
 			    {
                     "id": "B15",
                     "name": "lua",
                     "disable": 0,
-					"des": "lua",
-                    "img": "python-logo.jpg",
+					"des": "新一代的轻量级的脚本语言，用于Web开发及游戏",
+                    "img": "/images/lua.png",
                     "link": "/lua/"
+                },
+			    {
+                    "id": "B16",
+                    "name": "Scala",
+                    "disable": 0,
+					"des": "面向大数据领域的编程语言",
+                    "img": "/images/scala.png",
+                    "link": "/scala/"
                 }
             ]
         },
@@ -133,16 +149,16 @@
                         "id": "B20",
                         "name": "MySQL",
                         "disable": 0,
-                        "des": "开源，高效，稳定的数据库",
-                        "img": "python-logo.jpg",
+                        "des": "开源，高效，稳定的关系型数据库",
+                        "img": "/images/mysql.png",
                         "link": "/mysql/"
                     },
                     {
                         "id": "B21",
                         "name": "Redis",
                         "disable": 0,
-                        "des": "最快的内存数据库",
-                        "img": "python-logo.jpg",
+                        "des": "C语言编写的高性能键值内存数据库",
+                        "img": "/images/redis.png",
                         "link": "/redis/"
                     },
                     {
@@ -150,7 +166,7 @@
                         "name": "MongoDB",
                         "disable": 1,
                         "des": "文档型数据库的佼佼者",
-                        "img": "python-logo.jpg",
+                        "img": "/images/mongodb.png",
                         "link": "/mongodb/"
                     },
                     {
@@ -158,23 +174,15 @@
                         "name": "PostgreSQL",
                         "disable": 1,
                         "des": "高性能关系数据库PostgreSQL",
-                        "img": "python-logo.jpg",
+                        "img": "/images/postgresql.png",
                         "link": "/postgresql/"
                     },
                     {
                         "id": "B24",
-                        "name": "MongoDB",
-                        "disable": 1,
-                        "des": "文档型数据库的佼佼者",
-                        "img": "python-logo.jpg",
-                        "link": "/mongodb/"
-                    },     
-                    {
-                        "id": "B24",
                         "name": "Sqlite",
                         "disable": 1,
-                        "des": "轻量级SQL",
-                        "img": "python-logo.jpg",
+                        "des": "适用于移动端的轻量级关系性数据库",
+                        "img": "/images/sqlite.png",
                         "link": "/sqlite/"
                     }                
                 ]
@@ -189,43 +197,11 @@
             "lessons": [
                 {
                     "id": "B30",
-                    "name": "HTML",
-                    "disable": 1,
-                    "des": "学习Web技术就从HTML标签学起",
-                    "img": "python-logo.jpg",
-                    "link": "/html/"
-                },
-                {
-                    "id": "B31",
                     "name": "HTML5",
                     "disable": 1,
-                    "des": "最新一代的HTML标准",
-                    "img": "python-logo.jpg",
-                    "link": "/html5/"
-                },
-                {
-                    "id": "B32",
-                    "name": "CSS",
-                    "disable": 1,
-                    "des": "网页样式控制者",
-                    "img": "python-logo.jpg",
-                    "link": "/css/"
-                },
-                {
-                    "id": "B33",
-                    "name": "JavaScript",
-                    "disable": 1,
-                    "des": "让网页'活'起来",
-                    "img": "python-logo.jpg",
-                    "link": "/javascript/"
-                },
-                {
-                    "id": "B34",
-                    "name": "JQuery",
-                    "disable": 1,
-                    "des": "JQuery,一把锋利的刀",
-                    "img": "python-logo.jpg",
-                    "link": "/jquery/"
+                    "des": "学习Web技术就从HTML标签学起,最新一代的HTML标准",
+                    "img": "/images/html.png",
+                    "link": "/html/"
                 }
             ]
         },
@@ -242,7 +218,7 @@
                     "name": "nginx",
                     "disable": 1,
                     "des": "高性能的HTTP和反向代理web服务器",
-                    "img": "python-logo.jpg",
+                    "img": "/images/nginx.png",
                     "link": "/nginx/"
                 },
                 {
@@ -250,7 +226,7 @@
                     "name": "PHP",
                     "disable": 0,
                     "des": "世界上最好的语言",
-                    "img": "python-logo.jpg",
+                    "img": "/images/php.png",
                     "link": "/php/"
                 },
                 {
@@ -258,32 +234,50 @@
                     "name": "Django",
                     "disable": 1,
                     "des": "Python Web全能开发选手",
-                    "img": "python-logo.jpg",
+                    "img": "/images/django.png",
                     "link": "/django/"
                 },
                 {
                     "id": "B44",
                     "name": "Flask",
                     "disable": 1,
-                    "des": "轻量级的Python Web开发工具",
-                    "img": "python-logo.jpg",
+                    "des": "轻量级的Python Web开发框架",
+                    "img": "/images/flask.png",
                     "link": "/flask/"
                 },
                 {
                     "id": "B45",
                     "name": "Tornado",
                     "disable": 1,
-                    "des": "轻量级的Python Web开发工具",
-                    "img": "python-logo.jpg",
+                    "des": "支持高并发的高性能Web框架",
+                    "img": "/images/tornado.png",
                     "link": "/tornado/"
                 },
                 {
                     "id": "B46",
                     "name": "node.js",
                     "disable": 1,
-                    "des": "轻量级的Web开发工具",
-                    "img": "python-logo.jpg",
+                    "des": "基于js的轻量级的Web开发框架",
+                    "img": "/images/node.js.png",
                     "link": "/node.js/"
+                }
+            ]
+        },
+        "Test": {
+            "id": "B4",
+            "name": "软件测试",
+            "disable": 0,
+            "des": "",
+            "link": "/web-backend/",
+            "img": "Test.jpg",
+            "lessons":[
+                {
+                    "id": "B40",
+                    "name": "JMeter",
+                    "disable": 1,
+                    "des": "全功能软件测试框架",
+                    "img": "/images/jmeter.png",
+                    "link": "/jmeter/"
                 }
             ]
         },
@@ -300,7 +294,7 @@
                     "name": "Hadoop",
                     "disable": 1,
                     "des": "大数据技术分布式系统基础架构",
-                    "img": "python-logo.jpg",
+                    "img": "/images/hadoop.png",
                     "link": "/hadoop/"
                 },
                 {
@@ -308,7 +302,7 @@
                     "name": "Hive",
                     "disable": 1,
                     "des": "把SQL变为MapReduce！",
-                    "img": "python-logo.jpg",
+                    "img": "/images/hive.png",
                     "link": "/hive/"
                 },
                 {
@@ -316,7 +310,7 @@
                     "name": "Spark",
                     "disable": 1,
                     "des": "快如闪电的分布式大数据计算引擎",
-                    "img": "python-logo.jpg",
+                    "img": "/images/spark.png",
                     "link": "/spark/"
                 },
                 {
@@ -324,7 +318,7 @@
                     "name": "HBase",
                     "disable": 1,
                     "des": "基于HDFS的分布式数据库系统",
-                    "img": "python-logo.jpg",
+                    "img": "/images/hbase.png",
                     "link": "/hbase/"
                 }
             ]
@@ -342,23 +336,23 @@
                     "name": "Numpy",
                     "disable": 0,
                     "des": "高性能Python矩阵计算库",
-                    "img": "python-logo.jpg",
+                    "img": "/images/numpy.png",
                     "link": "/numpy/"
                 },
                 {
                     "id": "B61",
                     "name": "Pandas",
                     "disable": 0,
-                    "des": "不是熊猫的Python二维表格型数据处理利器",
-                    "img": "python-logo.jpg",
+                    "des": "Python二维表格型数据处理利器",
+                    "img": "/images/pandas.png",
                     "link": "/pandas/"
                 },
 			    {
                     "id": "B62",
                     "name": "R语言",
                     "disable": 0,
-					"des": "数据分析经典语言",
-                    "img": "python-logo.jpg",
+                    "des": "数据分析老牌语言，简单，易用",
+                    "img": "/images/r.png",
                     "link": "/r/"
                 },
                 {
@@ -366,16 +360,16 @@
                     "name": "Scipy",
                     "disable": 0,
                     "des": "Python的科学计算库",
-                    "img": "python-logo.jpg",
+                    "img": "/images/scipy.png",
                     "link": "/scipy/"
                 },
                 {
                     "id": "B64",
                     "name": "Seaborn",
                     "disable": 0,
-                    "des": "Python的科学计算库",
-                    "img": "python-logo.jpg",
-                    "link": "/Seaborn/"
+                    "des": "一款基于Matplotlib的Python绘图库",
+                    "img": "/images/seaborn.png",
+                    "link": "/seaborn/"
                 }
             ]
         },
@@ -384,7 +378,7 @@
             "name": "机器学习",
             "disable": 0,
             "des": "Machine Learning",
-            "img": "python-logo.jpg",
+            "img": "/images/machine-learning.png",
             "link": "/machine-learning/",
             "lessons": [
                 {
@@ -392,7 +386,7 @@
                     "name": "机器学习",
                     "disable": 1,
                     "des": "",
-                    "img": "python-logo.jpg",
+                    "img": "/images/machine-learning.png",
                     "link": "/ml/"
                 },
                 {
@@ -400,7 +394,7 @@
                     "name": "Scikit-learn",
                     "disable": 0,
                     "des": "sklearn-最易上手的机器学习中Python库",
-                    "img": "python-logo.jpg",
+                    "img": "/images/sklearn.png",
                     "link": "/sklearn/"
                 }
             ]
@@ -418,7 +412,7 @@
                     "name": "动手学深度学习-mxnet",
                     "disable": 0,
                     "des": "用Mxnet框架,来一步步边实践边学习深度学习!",
-                    "img": "python-logo.jpg",
+                    "img": "/images/mxnet.png",
                     "link": "/d2l-mxnet/"
                 },
                 {
@@ -426,7 +420,7 @@
                     "name": "动手学深度学习-pytorch",
                     "disable": 1,
                     "des": "用Pytorch框架,来一步步边实践边学习深度学习!",
-                    "img": "python-logo.jpg",
+                    "img": "/images/pytorch.png",
                     "link": "/d2l-pytorch/"
                 },
                 {
@@ -434,7 +428,7 @@
                     "name": "动手学Keras",
                     "disable": 1,
                     "des": "Keras,深度学习利器",
-                    "img": "python-logo.jpg",
+                    "img": "/images/keras.png",
                     "link": "/keras/"
                 }
             ]
