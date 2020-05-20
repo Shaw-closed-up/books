@@ -8,6 +8,7 @@ Git使用`git init`命令来初始化一个 Git 仓库，Git 的很多命令都�
 在执行完成`git init`命令后，Git 仓库会生成一个.git目录，该目录包含了资源的所有元数据，其他的项目目录保持不变
 
 ```shell
+cd ~
 git init #使用当前目录作为Git仓库
 mkdir repotest
 git init repotest #或者可以使用指定已存在的目录作为Git仓库

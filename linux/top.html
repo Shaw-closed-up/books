@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/freeaihub.ico" rel="icon" type="image/png">
-    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/xterm/xterm.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.freeaihub.com/asset/styles/freeaihub.ico" rel="icon" type="image/png">
+    <link href="https://cdn.freeaihub.com/asset/styles/xterm/xterm.css" rel="stylesheet" type="text/css"/>
 
-    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/css/docs.css" rel="stylesheet" type="text/css"/>
-    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.freeaihub.com/asset/styles/css/docs.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.freeaihub.com/asset/styles/css/style.css" rel="stylesheet" type="text/css"/>
 
-    <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/bootstrap/bootstrap.min.css" >
-    <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
-    <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/css/prettify.css" type="text/css" media="all">
+    <link rel="stylesheet" href="https://cdn.freeaihub.com/asset/styles/bootstrap/bootstrap.min.css" >
+    <link rel="stylesheet" href="https://cdn.freeaihub.com/asset/styles/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
+    <link rel="stylesheet" href="https://cdn.freeaihub.com/asset/styles/css/prettify.css" type="text/css" media="all">
 
     <script>
-    MathJax = {
-      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
-    };
+      MathJax = {
+        tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+      };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
       
@@ -55,8 +55,7 @@
               <div class="bd-toc-item active">
                 <a class="bd-toc-link" href="#">如何学习本课程</a>
                 <ul class="nav bd-sidenav pb-6">
-                  <li><a href="./index.html"> 如何学习本课程 </a></li>
-<li><a href="./intro.html"> Linux简介 </a></li>
+                  <li><a href="./intro.html"> Linux简介 </a></li>
 <li><a href="./setup.html"> Linux环境搭建及运行 </a></li>
 <li><a href="./dir.html"> Linux目录 </a></li>
 <li><a href="./file.html"> Linux文件 </a></li>
@@ -123,7 +122,8 @@ netstat -r # 显示路由表信息
 
 <h3>tcpdump</h3>
 <p><code>tcpdump</code>是最广泛使用的网络包分析器或者包监控程序之一，它用于捕捉或者过滤网络上指定接口上接收或者传输的TCP/IP包。格式：</p>
-<pre><code class="bash">tcpdump -i eth0 -c 3
+<pre><code class="bash">apt install tcpdump -y
+tcpdump -i eth0 -c 3
 </code></pre>
 
 <p>该命令不是系统自带的，可能需要自己搬运安装。命令执行效果如下：</p>
@@ -133,7 +133,7 @@ netstat -r # 显示路由表信息
 <pre><code class="bash">iostat -x -k 2 100 # 2表示刷新间隔，100表示刷新次数
 </code></pre>
 
-<h3>`iotop``</h3>
+<h3><code>iotop</code></h3>
 <p><code>iotop</code>命令是一个用来监视磁盘I/O使用状况的top类工具。iotop具有与top相似的UI，其中包括PID、用户、I/O、进程等相关信息。Linux下的IO统计工具如iostat，nmon等大多数是只能统计到per设备的读写情况，如果你想知道每个进程是如何使用IO的就比较麻烦，使用iotop命令可以很方便的查看。</p>
 <h2>全系统监控</h2>
 <p>上面分享的都是单个查看Linux系统磁盘、CPU、内存等指标的工具，如果我们想要迅速找出来主机的性能瓶颈所在，我们可以采用以下全能工具：</p>
@@ -151,7 +151,7 @@ glances
 
 <h3>dstat工具</h3>
 <p>dstat命令是一个用来替换vmstat、iostat、netstat、nfsstat和ifstat这些命令的工具，是一个全能系统信息统计工具。与sysstat相比，dstat拥有一个彩色的界面，在手动观察性能状况时，数据比较显眼容易观察；而且dstat支持即时刷新，譬如输入dstat 3即每三秒收集一次，但最新的数据都会每秒刷新显示。</p>
-<p>直接使用dstat，默认使用的是-cdngy参数，分别显示cpu、disk、net、page、system信息，默认是1s显示一条信息。可以在最后指定显示一条信息的时间间隔，如<code>dstat 5</code>是没5s显示一条，<code>dstat 5 10</code>表示没5s显示一条，一共显示10条。</p>
+<p>直接使用dstat，默认使用的是-cdngy参数，分别显示cpu、disk、net、page、system信息，默认是1s显示一条信息。可以在最后指定显示一条信息的时间间隔，如<code>dstat 5</code>是每5s显示一条，<code>dstat 5 10</code>表示没5s显示一条，一共显示10条。</p>
 <pre><code class="bash">apt install dstat -y
 dstat 5 10
 </code></pre>
@@ -160,7 +160,6 @@ dstat 5 10
 <h2>本节作业</h2>
 <h3>1. 创建文件，结果检查：</h3>
 <h3>2. 对文件进行操作</h3>
-<p>来源说明：https://www.freehao123.com/linux-cpu-io-xingnengpingjing/</p>
             
           </div>
           <backend type='k'></backend>
@@ -215,27 +214,27 @@ dstat 5 10
     <!-- JAVASCRIPT
     ================================================== -->
     <!-- Libs JS -->
-    <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/jquery.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <link rel="stylesheet" id="yarppRelatedCss-css" href="https://cdn.freeaihub.com/asset/css/related.css
 ?ver=4.9.14" type="text/css" media="all">
-    <script type='text/javascript' src='https://cdn.freeaihub.com/asset/js/prettify.js?ver=2.1'></script>
-    <script type='text/javascript' src='https://cdn.freeaihub.com/asset/js/power.js?ver=2.1'></script>
+    <script type='text/javascript' src='https://cdn.freeaihub.com/asset/js/prettify.js?ver=2.3'></script>
+    <script type='text/javascript' src='https://cdn.freeaihub.com/asset/js/power.js?ver=2.3'></script>
     <script type='text/javascript' src='https://cdn.freeaihub.com/asset/js/wp-embed.min.js?ver=4.9.14'></script>
     <!-- Theme JS -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script> -->
 
-    <script src="/static/xterm/xterm.js"></script>
-    <script src="/static/xterm/xterm-addon-fit.js"></script>
-    <script src="/static/xterm/xterm-addon-attach.js"></script>
+    <script src="https://cdn.freeaihub.com/static/xterm/xterm.js"></script>
+    <script src="https://cdn.freeaihub.com/static/xterm/xterm-addon-fit.js"></script>
+    <script src="https://cdn.freeaihub.com/static/xterm/xterm-addon-attach.js"></script>
     <!-- Promise polyfill for IE11 -->
-    <script src="/vendor/promise.js"></script>
+    <script src="https://cdn.freeaihub.com/vendor/promise.js"></script>
         
     <!-- ES2015/ES6 modules polyfill -->
-    <script nomodule src="/vendor/browser-es-module-loader/dist/browser-es-module-loader.js"></script>
+    <script nomodule src="https://cdn.freeaihub.com/vendor/browser-es-module-loader/dist/browser-es-module-loader.js"></script>
  
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    <!-- <script src="https://cdn.freeaihub.com/asset/js/js.cookie.min.js"></script> -->
      <script>
         var terminal; // 终端
         var sockId;  // 终端 id
@@ -328,89 +327,12 @@ dstat 5 10
           }
          })
 
-        // $.ajax({
-        //   type: 'get',
-        //   url: 'https://api.freeaihub.com/api/env/get/webssh',
-        //   mode: "no-cors",
-        //   dataType: "json",
-        //   xhrFields: {
-        //       withCredentials: true
-        //   },
-        //   crossDomain: true,  
-        //   success: async function(data) {
-        //     if(data.errno == 0){
-        //       let { ...json } =  data.data
-        //       let formdata = new FormData();
-        //       formdata.append("hostname", json.hostname);
-        //       formdata.append("username", json.username);
-        //       formdata.append("port", json.port);
-        //       formdata.append("password", json.password);
-        //       formdata.append("term", json.term);
-        //       let response = await fetch(
-        //         json.host,
-        //           {
-        //               method: 'POST',
-        //               body: formdata
-        //           }
-        //       )
-
-          
-
-        //       sockId = await response.json();
-            
-        //       let socketHost = json.ssh_host +=`/ws?id=${sockId.id}`;
-        //       console.log(socketHost)
-        //       socket = new WebSocket(socketHost);
-
-        //       socket.onopen = () => {
-        //         terminal.loadAddon(new AttachAddon.AttachAddon(socket));
-        //         terminal._initialized = true;
-        //       }
-
-        //       socket.onmessage= (term) => {
-        //         if(!terminal._initialized){
-        //             return
-        //         }
-        //         terminal._initialized = false;
-        //         socket.send(JSON.stringify({ resize: [term.cols, term.rows] }));
-        //       }
-
-        //     }
-
-        //   }
-        // })
-
      </script> 
-    <script>
-      function randomWord(randomFlag, min, max){
-        let str = "",
-            range = min,
-            arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-    
-        // 随机产生
-        if(randomFlag){
-            range = Math.round(Math.random() * (max-min)) + min;
-        }
-        for(let i=0; i<range; i++){
-            let pos = Math.round(Math.random() * (arr.length-1));
-            str += arr[pos];
-        }
-        return str;
-      }
-
-
-    let uuidCookie = randomWord(false, 16)  
-
-
-    if(Cookies.get('uuid') == null) {
-        Cookies.set('uuid', uuidCookie, { path: '/', domain: '.freeaihub.com'})
-    }
-    </script>
 
      <!-- actual script modules -->
     <script type="module" crossorigin="anonymous">
          // RFB holds the API to connect and communicate with a VNC server
-         import RFB from '/core/rfb.js';
+         import RFB from 'https://cdn.freeaihub.com/core/rfb.js';
  
          let rfb;
          let desktopName;

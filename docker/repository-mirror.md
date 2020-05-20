@@ -23,7 +23,7 @@ EOF
 
 之后重新启动服务：
 
-```
+```bash
 sudo systemctl daemon-reload
 sudo systemctl restart docker
 ```

@@ -26,9 +26,8 @@
 #### 练习
 
 ```shell
+mkdir ~/gittest && cd ~/gittest
 git init #使用当前目录作为Git仓库
-ls #查看工作区
-ls .git/index #查看暂存区
 ls .git  #查看版本库
 ```
 

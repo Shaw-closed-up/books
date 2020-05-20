@@ -6,15 +6,15 @@
 
 -a 选项意为"创建一个带注解的标签"。 不用 -a 选项也可以执行的，但它不会记录这标签是啥时候打的，谁打的，也不会让你添加个标签的注解。 我推荐一直创建带注解的标签。
 
-```shell
-git tag -a v1.0 
+```bash
+git tag -a v1.0
 ```
 
 当你执行`git tag -a`命令时，Git 会打开你的编辑器，让你写一句标签注解，就像你给提交写注解一样。
 
 现在，注意当我们执行`git log --decorate`时，我们可以看到我们的标签了：
 
-```shell
+```bash
 git log --oneline --decorate --graph
 ```
 
@@ -22,25 +22,25 @@ git log --oneline --decorate --graph
 
 例如，假设我们发布了提交 85fc7e7(上面实例最后一行)，但是那时候忘了给它打标签。 我们现在也可以：
 
-```shell
+```bash
 git tag -a v0.9 85fc7e7
 git log --oneline --decorate --graph
 ```
 
 如果我们要查看所有标签可以使用以下命令：
 
-```shell
+```bash
 git tag
 ```
 
 指定标签信息命令：
 
-```shell
+```bash
 git tag -a <tagname> -m "test标签"
 ```
 
 PGP签名标签命令：
 
-```shell
+```bash
 git tag -s <tagname> -m "test标签"
 ```

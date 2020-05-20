@@ -7,20 +7,20 @@
 切换分支命令: `git checkout (branchname)`
 
 
-## 在gb目录下创建仓库
+## 在gitbranch目录下创建仓库
 ```shell
-mkdir gb
-git init gb
+mkdir ~/gitbranch && cd ~/gitbranch
+git
 ```
 ## 对master分支进行操作
 ```shell
-cd gb
+cd ~/gitbranch
 touch master-test
 git add master-test
 git commit -m 'add file master-test'
 ```
 
-## 列出gb仓库下所有分支,并创建一个新的分支dev
+## 列出gitbranch仓库下所有分支,并创建一个新的分支dev
 ```shell
 git branch #查看当前所处分支
 git branch dev #创建新分支dev
@@ -42,7 +42,7 @@ git checkout master
 ls
 ```
 
-## 合并与
+## 合并
 当你切换分支的时候，Git 会用该分支的最后提交的快照替换你的工作目录的内容， 所以多个分支不需要多个目录。
 
 一旦某分支有了独立内容，你终究会希望将它合并回到你的主分支。 你可以使用以下命令将任何分支合并到当前分支中去：

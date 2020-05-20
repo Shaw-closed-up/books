@@ -7,7 +7,7 @@ Linux文件系统中的文件是数据的集合，文件系统不仅包含着文
 ### 创建文件
 `touch`命令可以创建空文件，或者改变文件的时间戳属性
 
-#### 练习：使用touhc命令
+#### 练习：使用touch命令
 ```bash
 touch a.txt #创建一个名为a.txt的空文件
 ls  #查看文件是否创建成功
@@ -35,7 +35,7 @@ cat /proc/version
 
 #### 练习
 ```bash
-cat <<END
+cat << END
 a
 bc
 END
@@ -44,24 +44,24 @@ END
 两个有意思的命令，tac: 文件翻转；rev每列反转
 #### 练习：
 ```bash
-cat <<END | tac
-> first
-> second
-> third
-> END
+cat << END | tac
+first
+second
+third
+END
 ```
 
 #### 练习：
 ```bash
-cat <<END | rev
-> abcde
-> xyz
-> END
+cat << END | rev
+abcde
+xyz
+END
 ```
 
 #### 练习：
 ```bash
-ll >> ll.txt
+ll >> ll.txt  #将命令屏幕输出结果保存至文件ll.txt
 cat ll.txt
 tac ll.txt
 head ll.txt

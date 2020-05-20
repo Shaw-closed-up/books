@@ -5,10 +5,10 @@
 <title>Freeaihub - 一站式自由学习</title>
 
 <!-- Stylesheets -->
-<link href="/static/css/bootstrap.css" rel="stylesheet">
-<link href="/static/css/index.css" rel="stylesheet">
+<link href="https://cdn.freeaihub.com/static/css/bootstrap.css" rel="stylesheet">
+<link href="https://cdn.freeaihub.com/static/css/index.css" rel="stylesheet">
 
-<link rel="icon" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.ico" type="image/x-icon">
+<link rel="icon" href="https://cdn.freeaihub.com/asset/images/freeaihub.ico" type="image/x-icon">
 <!-- Responsive -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -35,7 +35,7 @@
                     <div class="logo-box">
                         <div class="logo">
                             <a href="index.html">
-                                <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" alt="freeai logo">
+                                <img src="https://cdn.freeaihub.com/asset/images/freeaihub.svg" alt="freeai logo">
                             </a></div>
                     </div>
                     
@@ -80,7 +80,7 @@
     
     
     <!--Main Banner / Banner Two-->
-    <section class="main-banner banner-two" id="banner" style="background-image:url(static/images/background/banner-bg-2.png);">
+    <section class="main-banner banner-two" id="banner" style="background-image:url(https://cdn.freeaihub.com/static/images/background/banner-bg-2.png);">
     	<div class="auto-container">
         	<div class="row clearfix">
             	<!--Text Column-->
@@ -94,7 +94,7 @@
                 <!--Image Column-->
                 <div class="image-column col-md-7 col-sm-12 col-xs-12">
                 	<div class="inner text-right">
-                    	<figure class="image"><img src="static/images/resource/banner-image-2.png" alt=""></figure>
+                    	<figure class="image"><img src="https://cdn.freeaihub.com/static/images/resource/banner-image-2.png" alt=""></figure>
                     </div>
                 </div>
                 
@@ -221,13 +221,13 @@
 <div class="scroll-to-top scroll-to-target" data-target="html"><span class="fa fa-angle-double-up"></span></div>
 
 
-<script src="/static/js/jquery.js"></script> 
-<script src="/static/js/bootstrap.min.js"></script>
-<script src="/static/js/pagenav.js"></script>
-<script src="/static/js/jquery.scrollTo.js"></script>
+<script src="https://cdn.freeaihub.com/static/js/jquery.js"></script> 
+<script src="https://cdn.freeaihub.com/static/js/bootstrap.min.js"></script>
+<script src="https://cdn.freeaihub.com/static/js/pagenav.js"></script>
+<script src="https://cdn.freeaihub.com/static/js/jquery.scrollTo.js"></script>
 
 
-<script src="/static/js/script.js"></script>
+<script src="https://cdn.freeaihub.com/static/js/script.js"></script>
 
 
 </body>

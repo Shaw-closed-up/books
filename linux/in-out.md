@@ -18,6 +18,7 @@ Linux终端用1表示标准输出，2表示标准错误。
 ## 练习：
 下面我们通过创建一个脚本stdout_error.sh来练习
 ```bash
+cd ~
 cat > stdout_error.sh  << END
 echo "I am std output"
 unexisted_command
@@ -67,14 +68,10 @@ echo "1 2 3 A B C" | tr ' ' '\n'
 # - (短横线)表示上一个命令的输出，传递给diff
 # < 表示其后的命令的输出，也重定向给diff
 cat << END | diff - <(echo "1 2 3" | tr ' ' '\n')
-> 2
-> 3
-> 4
-> END
-0a1
-> 1
-3d3
-< 4
+2
+3
+4
+END
 ```
 
 ### 练习：
@@ -93,10 +90,6 @@ echo "1 2 3" | tr ' ' '\n' >secondfile
 
 # 然后比较
 diff firstfile secondfile 
-0a1
-> 1
-3d3
-< 4
 ```
 
 ## 练习：

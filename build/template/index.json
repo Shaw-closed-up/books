@@ -60,6 +60,22 @@
 					"des": "容器技术-云计算的未来",
                     "img": "/images/docker.png",
                     "link": "/docker/"
+				},
+                {
+                    "name": "数据结构与算法-C语言实现",
+                    "id": "B06",
+                    "disable": 1,
+					"des": "计算机科学的基础",
+                    "img": "/images/ds-in-c.png",
+                    "link": "/ds-in-c/"
+				},
+                {
+                    "name": "数据结构与算法-Python语言实现",
+                    "id": "B07",
+                    "disable": 1,
+					"des": "计算机科学的基础",
+                    "img": "/images/ds-in-python.png",
+                    "link": "/ds-in-python/"
 				}
 			]
         },
@@ -184,7 +200,15 @@
                         "des": "适用于移动端的轻量级关系性数据库",
                         "img": "/images/sqlite.png",
                         "link": "/sqlite/"
-                    }                
+                    },
+                    {
+                        "id": "B25",
+                        "name": "Neo4J",
+                        "disable": 1,
+                        "des": "应用广泛的图数据库",
+                        "img": "/images/neo4j.png",
+                        "link": "/neo4j/"
+                    }             
                 ]
         },
         "webDevelopmentBasics": {
@@ -260,6 +284,14 @@
                     "des": "基于js的轻量级的Web开发框架",
                     "img": "/images/node.js.png",
                     "link": "/node.js/"
+                },
+                {
+                    "id": "B47",
+                    "name": "elasticsearch",
+                    "disable": 1,
+                    "des": "全文搜索引擎",
+                    "img": "/images/elasticsearch.png",
+                    "link": "/elasticsearch/"
                 }
             ]
         },
@@ -278,6 +310,22 @@
                     "des": "全功能软件测试框架",
                     "img": "/images/jmeter.png",
                     "link": "/jmeter/"
+                },
+                {
+                    "id": "B41",
+                    "name": "PyQT",
+                    "disable": 1,
+                    "des": "快速开发用户界面程序",
+                    "img": "/images/pyqt.png",
+                    "link": "/pyqt/"
+                },
+                {
+                    "id": "B42",
+                    "name": "Turtle",
+                    "disable": 1,
+                    "des": "有趣又易学的Python绘图库",
+                    "img": "/images/turtle.png",
+                    "link": "/turtle/"
                 }
             ]
         },
@@ -351,7 +399,7 @@
                     "id": "B62",
                     "name": "R语言",
                     "disable": 0,
-                    "des": "数据分析老牌语言，简单，易用",
+                    "des": "经典数据分析语言，简单，易用，强大!",
                     "img": "/images/r.png",
                     "link": "/r/"
                 },

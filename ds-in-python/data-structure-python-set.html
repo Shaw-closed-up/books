@@ -1,30 +1,47 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/freeaihub.ico" rel="icon" type="image/png">
-    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/xterm/xterm.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
 
-    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/css/docs.css" rel="stylesheet" type="text/css"/>
-    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/css/style.css" rel="stylesheet" type="text/css"/>
-
-    <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/bootstrap/bootstrap.min.css" >
-    <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/font-awesome/css/font-awesome.min.css" type="text/css" media="all">
-    <link rel="stylesheet" href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/styles/css/prettify.css" type="text/css" media="all">
-
-    <script>
-    MathJax = {
-      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
-    };
-    </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-      
+    <!-- Theme CSS -->
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/theme.css" rel="stylesheet" type="text/css"/>
+    <link href="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/css/style.css" rel="stylesheet" type="text/css"/>
     <title>Python自带数据结构 集合(set) - FreeAIHub</title>
+  
+    <style>
+      #top_bar {
+          /* background-color: #6e84a3;
+          color: white;
+          font: bold 12px Helvetica;
+          padding: 6px 5px 4px 5px;
+          border-bottom: 1px outset; */
+      }
+      #status {
+          text-align: center;
+      }
+      #sendCtrlAltDelButton {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          border: 1px outset;
+          padding: 5px 5px 4px 5px;
+          cursor: pointer;
+      }
+
+      #screen {
+          /* flex: 1;
+          overflow: hidden; */
+      }
+
+  </style>
+
   </head>
-  <body class="bg-light">
-        <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar text-center">
+  <body class="bg-light" style="padding-top: 84px;">
+      <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar text-center">
       <a class="navbar-brand mr-0 mr-md-2" aria-label="引导程序" href="/">
         <img src="https://freeaihub.oss-cn-beijing.aliyuncs.com/asset/images/freeaihub.svg" width="60%" alt="freeai logo">
       </a>
@@ -40,21 +57,36 @@
 
 
 
+    <!-- BREADCRUMB
+    ================================================== -->
+    <nav class="d-lg-none bg-gray-800">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+          </div>
+          <div class="col-auto">
+            <!-- Toggler -->
+            <div class="navbar-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </nav>
+
     <!-- CONTENT
     ================================================== -->
     <section style="overflow: hidden;">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-3 col-xl-2 bd-sidebar">    
-            <form class="bd-search d-flex align-items-center justify-content-end">
-              <button class="btn bd-search-docs-toggle d-md-none p-0 ml-3 collapsed" type="button" data-toggle="collapse" data-target="#bd-docs-nav" aria-controls="bd-docs-nav" aria-expanded="false" aria-label="切换文档导航">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" role="img" focusable="false"><title>Menu</title><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg>
-              </button>
-            </form>
-            <div class="bd-links collapse" id="bd-docs-nav" aria-label="主导航">
-              <div class="bd-toc-item active">
-                <a class="bd-toc-link" href="#">如何学习本课程</a>
-                <ul class="nav bd-sidenav pb-6">
+
+          <div class="col-12 col-lg-2 col-xl-2 px-lg-0 border-bottom border-bottom-lg-0 border-right-lg border-gray-300 sidenav sidenav-left">     
+            <div class="collapse d-lg-block" id="sidenavCollapse">
+              <div class="px-lg-5">
+                <ul class="nav side-left">
                   <li><a href="./data-structure.html"> 数据结构  </a></li>
 <li><a href="./data-structure-python-array.html"> Python自带数据结构 数组(array)  </a></li>
 <li><a href="./data-structure-python-dict.html"> Python自带数据结构 字典(dict) </a></li>
@@ -81,16 +113,16 @@
 <li><a href="./algorithms-searching.html"> Python实现算法:搜索 </a></li>
 <li><a href="./algorithms-sorting.html"> Python实现算法:排序 </a></li>
 <li><a href="./algorithms-tree-traversal.html"> Python实现算法:树遍历 </a></li>
-                </ul>
+                </ul>  
 
               </div>
+            </div>
 
 
           </div>
-          </div>
-          <div class="entry-content col-md-9 col-xl-5 py-md-3 pl-md-5 bd-content">
-              
-            <h1>Python自带数据结构 集合(set)</h1>
+
+          <div class="entry-cellcontent col-10 col-lg-10 col-xl-10 offset-lg-2 offset-xl-2">
+          <h1>Python自带数据结构 集合(set)</h1>
 <p>在数学上，集合(Set)是不以任何特定顺序的数据项。 Python集合与此数学定义类似，但有以下附加条件。</p>
 <ul>
 <li>集合中的元素不能重复。</li>
@@ -166,396 +198,30 @@ SupersetRes = DaysB &gt;= DaysA
 print(SubsetRes)
 print(SupersetRes)
 </code></pre>
-            
           </div>
           <backend type='k'></backend>
-          <div class="d-none d-xl-block col-xl-5 bd-toc xterm-wrapper overflow-hidden">
-             <!-- 导航 -->
-            <ul class="nav nav-tabs nav-float" id="myTab">
-              <li class="nav-item">
-                <a class="nav-link"  href="#home">Terminal</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link " href="#profile">VNC</a>
-              </li>
-            </ul>
-            <div class="controls">
-              <div class="dropdown">
-                <a class=" dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Dropdown
-                </a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                  <button class="dropdown-item" type="button">Action</button>
-                  <button class="dropdown-item" type="button">Another action</button>
-                  <button class="dropdown-item" type="button">Something else here</button>
-                </div>
-              </div>
-            </div>
-            <!-- 带显示效果的内容 -->
-            <div class="tab-content" id="myTabContent">
-              <div class="tab-pane fade show active" id="home" >
-                <div id="term-content">
-                  <div id="terminal"></div>
-                </div>
-                 
-              </div>
-			
-            <div class="tab-pane fade position-relative" id="profile">	
-
-              <div id="top_bar">
-                  <div id="status">Loading</div>
-                  <!-- <div id="sendCtrlAltDelButton">Send CtrlAltDel</div> -->
-              </div>
-              <div id="screen">
-                  <!-- This is where the remote screen will appear -->
-              </div>
-			      </div>
-           
-        </div>
-          </div>
+          <code class=gatsby-kernelname data-language=python></code>
         </div> <!-- / .row -->
       </div>
+      
     </section>
-    
+
     <!-- JAVASCRIPT
     ================================================== -->
     <!-- Libs JS -->
     <script src="https://landkit.goodthemes.co/assets/libs/jquery/dist/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <link rel="stylesheet" id="yarppRelatedCss-css" href="https://cdn.freeaihub.com/asset/css/related.css
-?ver=4.9.14" type="text/css" media="all">
-    <script type='text/javascript' src='https://cdn.freeaihub.com/asset/js/prettify.js?ver=2.1'></script>
-    <script type='text/javascript' src='https://cdn.freeaihub.com/asset/js/power.js?ver=2.1'></script>
-    <script type='text/javascript' src='https://cdn.freeaihub.com/asset/js/wp-embed.min.js?ver=4.9.14'></script>
+    <script src="https://landkit.goodthemes.co/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- Theme JS -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-
-    <script src="/static/xterm/xterm.js"></script>
-    <script src="/static/xterm/xterm-addon-fit.js"></script>
-    <script src="/static/xterm/xterm-addon-attach.js"></script>
-    <!-- Promise polyfill for IE11 -->
-    <script src="/vendor/promise.js"></script>
-        
-    <!-- ES2015/ES6 modules polyfill -->
-    <script nomodule src="/vendor/browser-es-module-loader/dist/browser-es-module-loader.js"></script>
- 
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
-     <script>
-        var terminal; // 终端
-        var sockId;  // 终端 id
-        var socket; // websocket 服务
-
-        const isWindows = ['Windows', 'Win16', 'Win32', 'WinCE'].indexOf(navigator.platform) >= 0;
-        terminal = new Terminal({
-            windowsMode: isWindows,
-            convertEol: true,
-            fontFamily: `'Fira Mono', monospace`,
-            fontSize: 16,
-            fontWeight: 400,
-            rendererType: "canvas" // canvas 或者 dom
-        });
-        const fitAddon = new FitAddon.FitAddon();
-        terminal.loadAddon(fitAddon);
-
-        terminal.open(document.getElementById('terminal'));
-        terminal.element.style.padding = '20px';
-        fitAddon.fit();
-
-        terminal.onData(function(data) {
-            socket.send(JSON.stringify({'data': data}));
-            fitAddon.fit();
-        });
-
-        var detail = $('backend').attr('type')
-
-        window.addEventListener("resize", windowChangeXtrem, { capture: true });
-
-        function windowChangeXtrem() {
-          terminal.onResize((term) => {
-            socket.send(JSON.stringify({'resize': [term.cols, term.rows]}));
-          })
-
-          // 确保终端尺寸和容器尺寸一致
-          fitAddon.fit();
-        }
-
-
-        $.ajax({
-          type: 'get',
-          url: `https://api.freeaihub.com/env/get/${detail}`,
-          mode: "no-cors",
-          dataType: "json",
-          xhrFields: {
-               withCredentials: true
-          },
-          crossDomain: true,  
-          success: async function(data) {
-
-            let { host0 } = data.data
-
-            let formdata = new FormData();
-
-            formdata.append("hostname", host0.ssh_host);
-            formdata.append("username", host0.username);
-            formdata.append("port", host0.ssh_port);
-            formdata.append("password", host0.token);
-            formdata.append("term", host0.ssh_term);
-
-            let response = await fetch(
-              host0.ssh_login,
-                  {
-                      method: 'POST',
-                      body: formdata
-                  }
-            )
-
-                   sockId = await response.json();
-            
-              let socketHost = host0.ssh_ws +=`/ws?id=${sockId.id}`;
-
-              socket = new WebSocket(socketHost);
-
-              socket.onopen = () => {
-                terminal.loadAddon(new AttachAddon.AttachAddon(socket));
-                terminal._initialized = true;
-              }
-
-              socket.onmessage= (term) => {
-                if(!terminal._initialized){
-                    return
-                }
-                terminal._initialized = false;
-                socket.send(JSON.stringify({ resize: [term.cols, term.rows] }));
-              }
-
-            
-          }
-         })
-
-        // $.ajax({
-        //   type: 'get',
-        //   url: 'https://api.freeaihub.com/api/env/get/webssh',
-        //   mode: "no-cors",
-        //   dataType: "json",
-        //   xhrFields: {
-        //       withCredentials: true
-        //   },
-        //   crossDomain: true,  
-        //   success: async function(data) {
-        //     if(data.errno == 0){
-        //       let { ...json } =  data.data
-        //       let formdata = new FormData();
-        //       formdata.append("hostname", json.hostname);
-        //       formdata.append("username", json.username);
-        //       formdata.append("port", json.port);
-        //       formdata.append("password", json.password);
-        //       formdata.append("term", json.term);
-        //       let response = await fetch(
-        //         json.host,
-        //           {
-        //               method: 'POST',
-        //               body: formdata
-        //           }
-        //       )
-
+    <script src="https://landkit.goodthemes.co/assets/js/theme.min.js"></script>
+    <script src="https://cdn.freeaihub.com/asset/js/cell.js"></script>
           
-
-        //       sockId = await response.json();
-            
-        //       let socketHost = json.ssh_host +=`/ws?id=${sockId.id}`;
-        //       console.log(socketHost)
-        //       socket = new WebSocket(socketHost);
-
-        //       socket.onopen = () => {
-        //         terminal.loadAddon(new AttachAddon.AttachAddon(socket));
-        //         terminal._initialized = true;
-        //       }
-
-        //       socket.onmessage= (term) => {
-        //         if(!terminal._initialized){
-        //             return
-        //         }
-        //         terminal._initialized = false;
-        //         socket.send(JSON.stringify({ resize: [term.cols, term.rows] }));
-        //       }
-
-        //     }
-
-        //   }
-        // })
-
-     </script> 
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script>
-      function randomWord(randomFlag, min, max){
-        let str = "",
-            range = min,
-            arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-    
-        // 随机产生
-        if(randomFlag){
-            range = Math.round(Math.random() * (max-min)) + min;
-        }
-        for(let i=0; i<range; i++){
-            let pos = Math.round(Math.random() * (arr.length-1));
-            str += arr[pos];
-        }
-        return str;
-      }
-
-
-    let uuidCookie = randomWord(false, 16)  
-
-
-    if(Cookies.get('uuid') == null) {
-        Cookies.set('uuid', uuidCookie, { path: '/', domain: '.freeaihub.com'})
-    }
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    };
     </script>
-
-     <!-- actual script modules -->
-    <script type="module" crossorigin="anonymous">
-         // RFB holds the API to connect and communicate with a VNC server
-         import RFB from '/core/rfb.js';
- 
-         let rfb;
-         let desktopName;
- 
-         // When this function is called we have
-         // successfully connected to a server
-         function connectedToServer(e) {
-            //  status("Connected to " + desktopName);
-         }
- 
-         // This function is called when we are disconnected
-         function disconnectedFromServer(e) {
-             if (e.detail.clean) {
-                 status("Disconnected");
-             } else {
-                 status("Something went wrong, connection is closed");
-             }
-         }
- 
-         // When this function is called, the server requires
-         // credentials to authenticate
-         function credentialsAreRequired(e) {
-             const password = prompt("Password Required:");
-             rfb.sendCredentials({ password: password });
-         }
- 
-         // When this function is called we have received
-         // a desktop name from the server
-         function updateDesktopName(e) {
-             desktopName = e.detail.name;
-         }
- 
-         // Since most operating systems will catch Ctrl+Alt+Del
-         // before they get a chance to be intercepted by the browser,
-         // we provide a way to emulate this key sequence.
-         function sendCtrlAltDel() {
-             rfb.sendCtrlAltDel();
-             return false;
-         }
- 
-         // Show a status text in the top bar
-         function status(text) {
-             document.getElementById('status').textContent = text;
-         }
- 
-         // This function extracts the value of one variable from the
-         // query string. If the variable isn't defined in the URL
-         // it returns the default value instead.
-         function readQueryVariable(name, defaultValue) {
-             // A URL with a query parameter can look like this:
-             // https://www.example.com?myqueryparam=myvalue
-             //
-             // Note that we use location.href instead of location.search
-             // because Firefox < 53 has a bug w.r.t location.search
-             const re = new RegExp('.*[?&]' + name + '=([^&#]*)'),
-                   match = document.location.href.match(re);
- 
-             if (match) {
-                 // We have to decode the URL since want the cleartext value
-                 return decodeURIComponent(match[1]);
-             }
- 
-             return defaultValue;
-         }
- 
-        //  document.getElementById('sendCtrlAltDelButton')
-        //      .onclick = sendCtrlAltDel;
-         
-        $('#myTab a:first').tab('show');//初始化显示哪个tab 
-      
-        $('#myTab a').click(function (e) { 
-          e.preventDefault();//阻止a链接的跳转行为 
-          $(this).tab('show');//显示当前选中的链接及关联的content 
-        })  
-
-        $('#myTab a[href="#profile"]').on('click', function (e) {
-          var detail = $('backend').attr('type')
-
-          $.ajax({
-          type: 'get',
-          url: `https://api.freeaihub.com/env/get/${detail}`,
-          mode: "no-cors",
-          dataType: "json",
-          xhrFields: {
-               withCredentials: true
-          },
-          crossDomain: true, 
-
-
-          // $.ajax({
-          //  type: 'get',
-          //  url: 'https://api.freeaihub.com/api/env/get/vnc',
-          //  mode: "no-cors",
-          //  dataType: "json",
-          //  xhrFields: {
-          //      withCredentials: true
-          //  },
-          //  crossDomain: true,  
-           success: function(data) {
-             if(data.errno == 0){
-               let { host0 } =  data.data
-
-               vnc(host0)
-             }
-           }
-         })
-        });
-
-  
-
-
-         function vnc(obj){
-
-             // Build the websocket URL used to connect
-             let url;
-
-     
-             url = obj.novnc_url
-     
-
-             // Creating a new RFB object will start a new connection
-             rfb = new RFB(document.getElementById('screen'), url,
-                               { 
-                                 credentials: { password: obj.token },
-
-                                });
-     
-             // Add listeners to important events from the RFB module
-             rfb.addEventListener("connect",  connectedToServer);
-             rfb.addEventListener("disconnect", disconnectedFromServer);
-             rfb.addEventListener("credentialsrequired", credentialsAreRequired);
-             rfb.addEventListener("desktopname", updateDesktopName);
-          
-             // Set parameters that can be changed on an active connection
-             rfb.viewOnly = readQueryVariable('view_only', false);
-             rfb.scaleViewport = 'scale';
-
-         }
-        
-    </script>
-
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
   </body>
 </html>

@@ -233,9 +233,12 @@ $$
 
 分数`\frac{up}{down}`：
 
-```
+```markdown
 $$ x_1,x_2 = \frac{b^2 \pm 4ac}{2a} $$
 ```
+$$
+x_1,x_2 = \frac{b^2 \pm 4ac}{2a}
+$$
 
 根号`\sqrt`：
 
@@ -398,15 +401,15 @@ $$
 \frac{n!}{k!(n-k)!} = {n \choose k}
 $$
 
-
 ## 希腊字母   
+
 |希腊字母小写/大写|LaTeX形式|希腊字母小写/大写|LaTeX形式|
 |:---|:---|:---|:---|
 |α A|\alpha  $\alpha$	|μ N| \mu $\mu$ |
 |β B|\beta  $\beta$|ξ Ξ|\xi \Xi $\xi \Xi$|
-|γ Γ	|\gamma \Gamma $\gamma \Gamma$	|o O|o O $$|
-|δ Δ	|\delta \ Delta $\delta \ Delta$	|π Π| \pi \Pi $\pi \Pi$ |
-|ε E	|\epsilon \varepsilon  $\epsilon \varepsilon$	|\epsilon \varepsilonρ ϱ P	|\rho \varrho $\epsilon \varepsilonρ$|
+|γ Γ	|\gamma \Gamma  $\gamma   \Gamma$	|o O|o O $$|
+|δ Δ	|\delta \ Delta $\delta \Delta$	|π Π| \pi \Pi $\pi \Pi$ |
+|ε E	|\epsilon \varepsilon  $\epsilon \varepsilon$	|ϱ P	|\rho \varrho $\rho \varrho$|
 |ζ Z	|\zeta $\zeta$	|σ Σ| \sigma \Sigma $\sigma \Sigma$ |
 |η H	|\eta $\eta$	|τ T	|\tau $\tau$|
 |θ ϑ Θ	|\theta \vartheta \Theta $\theta \vartheta \Theta$|	υ Υ| \upsilon \Upsilon $\upsilon \Upsilon$ |
@@ -466,7 +469,10 @@ $$
 
 ### mathbb:
 $$
-\mathbb{ABCDEFGHIJKLMNOPQRSTUVWXYZ,abcdefghijklmnopqrstuvwxyz}
+\mathbb{ABCDEFGHIJKLMNOPQRSTUVWXYZ}
+$$
+$$
+\mathbb{abcdefghijklmnopqrstuvwxyz}
 $$
 
 ### mathscr:

@@ -12,7 +12,7 @@
 
 - 编辑现有文件
 
-<iframe src="//player.bilibili.com/player.html?aid=37130822&bvid=BV1Yt411X7mu&cid=65249143&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="860" height="600"> </iframe>
+<iframe src="//player.bilibili.com/player.html?aid=37130822&bvid=BV1Yt411X7mu&cid=65249143&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" height="460"> </iframe>
 ## 启动Vim
 
 Vim与基于GUI的编辑器略有不同，它可以从GUI和终端中启动和使用。

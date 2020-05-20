@@ -54,6 +54,7 @@ netstat -r # 显示路由表信息
 `tcpdump`是最广泛使用的网络包分析器或者包监控程序之一，它用于捕捉或者过滤网络上指定接口上接收或者传输的TCP/IP包。格式：
 
 ```bash
+apt install tcpdump -y
 tcpdump -i eth0 -c 3
 ```
 该命令不是系统自带的，可能需要自己搬运安装。命令执行效果如下：
@@ -66,7 +67,7 @@ tcpdump -i eth0 -c 3
 iostat -x -k 2 100 # 2表示刷新间隔，100表示刷新次数
 ```
 
-### `iotop``
+### `iotop`
 `iotop`命令是一个用来监视磁盘I/O使用状况的top类工具。iotop具有与top相似的UI，其中包括PID、用户、I/O、进程等相关信息。Linux下的IO统计工具如iostat，nmon等大多数是只能统计到per设备的读写情况，如果你想知道每个进程是如何使用IO的就比较麻烦，使用iotop命令可以很方便的查看。
 
 
@@ -93,7 +94,7 @@ glances
 ### dstat工具
 dstat命令是一个用来替换vmstat、iostat、netstat、nfsstat和ifstat这些命令的工具，是一个全能系统信息统计工具。与sysstat相比，dstat拥有一个彩色的界面，在手动观察性能状况时，数据比较显眼容易观察；而且dstat支持即时刷新，譬如输入dstat 3即每三秒收集一次，但最新的数据都会每秒刷新显示。
 
-直接使用dstat，默认使用的是-cdngy参数，分别显示cpu、disk、net、page、system信息，默认是1s显示一条信息。可以在最后指定显示一条信息的时间间隔，如`dstat 5`是没5s显示一条，`dstat 5 10`表示没5s显示一条，一共显示10条。
+直接使用dstat，默认使用的是-cdngy参数，分别显示cpu、disk、net、page、system信息，默认是1s显示一条信息。可以在最后指定显示一条信息的时间间隔，如`dstat 5`是每5s显示一条，`dstat 5 10`表示没5s显示一条，一共显示10条。
 ```bash
 apt install dstat -y
 dstat 5 10
@@ -105,6 +106,3 @@ dstat 5 10
 ## 本节作业
 ### 1. 创建文件，结果检查：
 ### 2. 对文件进行操作
-
-
-来源说明：https://www.freehao123.com/linux-cpu-io-xingnengpingjing/
